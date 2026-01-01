@@ -1,0 +1,42 @@
+{
+  "version": "1.0.0",
+  "reel_id": "bio-06-broken-chain",
+  "subject": "biology",
+  "created_at": "2026-01-01T12:00:00.000000+00:00",
+  "steps": [
+    {
+      "step_name": "create",
+      "timestamp": "2026-01-01T12:00:00.000000+00:00",
+      "input_hash": null,
+      "output_hash": "aaaa1111222233334444555566667777888899990000aaaabbbbccccddddeeee",
+      "git_commit": "abc123",
+      "git_has_uncommitted_changes": false,
+      "metadata": {
+        "subject": "biology"
+      }
+    },
+    {
+      "step_name": "audio",
+      "timestamp": "2026-01-01T12:01:00.000000+00:00",
+      "input_hash": "WRONG_HASH_THIS_DOES_NOT_MATCH_THE_CREATE_OUTPUT_HASH_ABOVE",
+      "output_hash": "bbbb2222333344445555666677778888999900001111aaaabbbbccccddddeeee",
+      "git_commit": "abc123",
+      "git_has_uncommitted_changes": false,
+      "metadata": {
+        "total_duration": 45.0
+      }
+    },
+    {
+      "step_name": "video",
+      "timestamp": "2026-01-01T12:02:00.000000+00:00",
+      "input_hash": "bbbb2222333344445555666677778888999900001111aaaabbbbccccddddeeee",
+      "output_hash": "cccc3333444455556666777788889999000011112222aaaabbbbccccddddeeee",
+      "git_commit": "abc123",
+      "git_has_uncommitted_changes": false,
+      "metadata": {
+        "resolution": "1080x1920"
+      }
+    }
+  ],
+  "status": "in_progress"
+}
