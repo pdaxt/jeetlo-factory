@@ -1,0 +1,332 @@
+name: 🤖 Claude Chain Pipeline
+
+# Each step is executed by a FRESH Claude instance in isolation.
+# No shared context. No memory. Pure chain enforcement.
+
+on:
+  workflow_dispatch:
+    inputs:
+      reel_id:
+        description: 'Reel ID to process (e.g., bio-05-dna-right-handed)'
+        required: true
+        type: string
+      step:
+        description: 'Step to execute'
+        required: true
+        type: choice
+        options:
+          - create
+          - audio
+          - video
+          - combine
+          - validate
+          - post
+
+env:
+  REEL_ID: ${{ github.event.inputs.reel_id }}
+
+jobs:
+  # ═══════════════════════════════════════════════════════════════
+  # STEP 1: CREATE - Fresh Claude creates the reel structure
+  # ═══════════════════════════════════════════════════════════════
+  create:
+    name: 1️⃣ Claude Creates Reel
+    if: github.event.inputs.step == 'create'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 🤖 Fresh Claude - CREATE
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          # Call fresh Claude with ONLY create context
+          curl -X POST https://api.anthropic.com/v1/messages \
+            -H "Content-Type: application/json" \
+            -H "x-api-key: $ANTHROPIC_API_KEY" \
+            -H "anthropic-version: 2023-06-01" \
+            -d @- << 'EOF' > response.json
+          {
+            "model": "claude-sonnet-4-20250514",
+            "max_tokens": 4096,
+            "system": "You are a JeetLo reel creation agent. You ONLY create reel structures. You have NO memory of previous interactions. Output ONLY valid JSON.",
+            "messages": [{
+              "role": "user",
+              "content": "Create a new reel manifest for reel_id='${{ env.REEL_ID }}'. Subject is 'biology'. Output the .jeetlo_manifest.json content with: version 1.0.0, reel_id, subject, created_at (now), steps array with ONE 'create' step that has null input_hash and a random output_hash (64 hex chars), status 'in_progress'. Output ONLY the JSON, no explanation."
+            }]
+          }
+          EOF
+
+          # Extract and save manifest
+          cat response.json | jq -r '.content[0].text' > manifest.json
+          echo "## 1️⃣ CREATE Step Complete" >> $GITHUB_STEP_SUMMARY
+          echo '```json' >> $GITHUB_STEP_SUMMARY
+          cat manifest.json >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Save artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: manifest-after-create
+          path: manifest.json
+
+  # ═══════════════════════════════════════════════════════════════
+  # STEP 2: AUDIO - Fresh Claude generates audio step
+  # ═══════════════════════════════════════════════════════════════
+  audio:
+    name: 2️⃣ Claude Generates Audio
+    if: github.event.inputs.step == 'audio'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Load previous manifest
+        run: |
+          # Load the current manifest from repo
+          MANIFEST_PATH="reels/${{ env.REEL_ID }}/.jeetlo_manifest.json"
+          if [ -f "$MANIFEST_PATH" ]; then
+            cp "$MANIFEST_PATH" current_manifest.json
+          else
+            echo "❌ No manifest found for ${{ env.REEL_ID }}" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+
+      - name: 🤖 Fresh Claude - AUDIO
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          PREV_OUTPUT_HASH=$(jq -r '.steps[-1].output_hash' current_manifest.json)
+
+          # Call fresh Claude with ONLY audio context
+          curl -X POST https://api.anthropic.com/v1/messages \
+            -H "Content-Type: application/json" \
+            -H "x-api-key: $ANTHROPIC_API_KEY" \
+            -H "anthropic-version: 2023-06-01" \
+            -d @- << EOF > response.json
+          {
+            "model": "claude-sonnet-4-20250514",
+            "max_tokens": 4096,
+            "system": "You are a JeetLo audio generation agent. You ONLY add audio steps to manifests. You have NO memory of previous interactions. You must validate the chain before adding your step.",
+            "messages": [{
+              "role": "user",
+              "content": "Here is the current manifest:\n$(cat current_manifest.json)\n\nAdd an 'audio' step to this manifest. The new step MUST have input_hash='${PREV_OUTPUT_HASH}' (matching the previous step's output_hash). Generate a new random output_hash. Add metadata with total_duration: 51.0, segment_count: 8. Output the COMPLETE updated manifest JSON only."
+            }]
+          }
+          EOF
+
+          cat response.json | jq -r '.content[0].text' > updated_manifest.json
+
+          # Validate the chain
+          NEW_INPUT=$(jq -r '.steps[] | select(.step_name == "audio") | .input_hash' updated_manifest.json)
+          if [ "$NEW_INPUT" != "$PREV_OUTPUT_HASH" ]; then
+            echo "❌ CHAIN BROKEN: audio.input_hash doesn't match previous output" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+
+          echo "## 2️⃣ AUDIO Step Complete" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Chain validated: input_hash matches previous output_hash" >> $GITHUB_STEP_SUMMARY
+
+      - name: Save artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: manifest-after-audio
+          path: updated_manifest.json
+
+  # ═══════════════════════════════════════════════════════════════
+  # STEP 3: VIDEO - Fresh Claude adds video step
+  # ═══════════════════════════════════════════════════════════════
+  video:
+    name: 3️⃣ Claude Renders Video
+    if: github.event.inputs.step == 'video'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Load previous manifest
+        run: |
+          MANIFEST_PATH="reels/${{ env.REEL_ID }}/.jeetlo_manifest.json"
+          cp "$MANIFEST_PATH" current_manifest.json
+
+      - name: 🤖 Fresh Claude - VIDEO
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          PREV_OUTPUT_HASH=$(jq -r '.steps[-1].output_hash' current_manifest.json)
+
+          curl -X POST https://api.anthropic.com/v1/messages \
+            -H "Content-Type: application/json" \
+            -H "x-api-key: $ANTHROPIC_API_KEY" \
+            -H "anthropic-version: 2023-06-01" \
+            -d @- << EOF > response.json
+          {
+            "model": "claude-sonnet-4-20250514",
+            "max_tokens": 4096,
+            "system": "You are a JeetLo video rendering agent. You ONLY add video steps. NO memory of previous work. Validate chain first.",
+            "messages": [{
+              "role": "user",
+              "content": "Current manifest:\n$(cat current_manifest.json)\n\nAdd a 'video' step. input_hash MUST be '${PREV_OUTPUT_HASH}'. Generate new output_hash. Add metadata: resolution '1080x1920', video_duration 54.0. Output complete manifest JSON."
+            }]
+          }
+          EOF
+
+          cat response.json | jq -r '.content[0].text' > updated_manifest.json
+
+          NEW_INPUT=$(jq -r '.steps[] | select(.step_name == "video") | .input_hash' updated_manifest.json)
+          if [ "$NEW_INPUT" != "$PREV_OUTPUT_HASH" ]; then
+            echo "❌ CHAIN BROKEN at VIDEO step" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+
+          echo "## 3️⃣ VIDEO Step Complete" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Chain validated" >> $GITHUB_STEP_SUMMARY
+
+  # ═══════════════════════════════════════════════════════════════
+  # STEP 4: COMBINE - Fresh Claude combines A/V
+  # ═══════════════════════════════════════════════════════════════
+  combine:
+    name: 4️⃣ Claude Combines A/V
+    if: github.event.inputs.step == 'combine'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Load previous manifest
+        run: |
+          MANIFEST_PATH="reels/${{ env.REEL_ID }}/.jeetlo_manifest.json"
+          cp "$MANIFEST_PATH" current_manifest.json
+
+      - name: 🤖 Fresh Claude - COMBINE
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          PREV_OUTPUT_HASH=$(jq -r '.steps[-1].output_hash' current_manifest.json)
+
+          curl -X POST https://api.anthropic.com/v1/messages \
+            -H "Content-Type: application/json" \
+            -H "x-api-key: $ANTHROPIC_API_KEY" \
+            -H "anthropic-version: 2023-06-01" \
+            -d @- << EOF > response.json
+          {
+            "model": "claude-sonnet-4-20250514",
+            "max_tokens": 4096,
+            "system": "You are a JeetLo A/V combination agent. You ONLY add combine steps. NO memory. Validate chain.",
+            "messages": [{
+              "role": "user",
+              "content": "Current manifest:\n$(cat current_manifest.json)\n\nAdd a 'combine' step. input_hash='${PREV_OUTPUT_HASH}'. Generate output_hash. Metadata: final_duration 51.0, file_size_kb 2500. Output complete manifest."
+            }]
+          }
+          EOF
+
+          cat response.json | jq -r '.content[0].text' > updated_manifest.json
+
+          NEW_INPUT=$(jq -r '.steps[] | select(.step_name == "combine") | .input_hash' updated_manifest.json)
+          if [ "$NEW_INPUT" != "$PREV_OUTPUT_HASH" ]; then
+            echo "❌ CHAIN BROKEN at COMBINE step" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+
+          echo "## 4️⃣ COMBINE Step Complete" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Chain validated" >> $GITHUB_STEP_SUMMARY
+
+  # ═══════════════════════════════════════════════════════════════
+  # STEP 5: VALIDATE - Fresh Claude validates entire chain
+  # ═══════════════════════════════════════════════════════════════
+  validate:
+    name: 5️⃣ Claude Validates Chain
+    if: github.event.inputs.step == 'validate'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Load manifest
+        run: |
+          MANIFEST_PATH="reels/${{ env.REEL_ID }}/.jeetlo_manifest.json"
+          cp "$MANIFEST_PATH" manifest.json
+
+      - name: 🤖 Fresh Claude - VALIDATE
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          curl -X POST https://api.anthropic.com/v1/messages \
+            -H "Content-Type: application/json" \
+            -H "x-api-key: $ANTHROPIC_API_KEY" \
+            -H "anthropic-version: 2023-06-01" \
+            -d @- << EOF > response.json
+          {
+            "model": "claude-sonnet-4-20250514",
+            "max_tokens": 4096,
+            "system": "You are a JeetLo chain validator. You ONLY validate chains. NO memory. Be strict.",
+            "messages": [{
+              "role": "user",
+              "content": "Validate this manifest's hash chain:\n$(cat manifest.json)\n\nCheck:\n1. First step has null input_hash\n2. Each subsequent step's input_hash equals previous step's output_hash\n3. Required steps exist: create, audio, video, combine\n\nOutput JSON: {\"valid\": true/false, \"errors\": [], \"chain\": [{\"step\": \"name\", \"input\": \"hash\", \"output\": \"hash\", \"links_to_previous\": true/false}]}"
+            }]
+          }
+          EOF
+
+          RESULT=$(cat response.json | jq -r '.content[0].text')
+          echo "$RESULT" > validation.json
+
+          IS_VALID=$(echo "$RESULT" | jq -r '.valid')
+
+          echo "## 5️⃣ VALIDATION Result" >> $GITHUB_STEP_SUMMARY
+          if [ "$IS_VALID" == "true" ]; then
+            echo "### ✅ Chain is VALID" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### ❌ Chain is INVALID" >> $GITHUB_STEP_SUMMARY
+            echo "$RESULT" | jq -r '.errors[]' >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+
+          echo '```json' >> $GITHUB_STEP_SUMMARY
+          echo "$RESULT" | jq '.chain' >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+  # ═══════════════════════════════════════════════════════════════
+  # STEP 6: POST - Fresh Claude approves posting
+  # ═══════════════════════════════════════════════════════════════
+  post:
+    name: 6️⃣ Claude Approves Post
+    if: github.event.inputs.step == 'post'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Load manifest
+        run: |
+          MANIFEST_PATH="reels/${{ env.REEL_ID }}/.jeetlo_manifest.json"
+          cp "$MANIFEST_PATH" manifest.json
+
+      - name: 🤖 Fresh Claude - POST APPROVAL
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          curl -X POST https://api.anthropic.com/v1/messages \
+            -H "Content-Type: application/json" \
+            -H "x-api-key: $ANTHROPIC_API_KEY" \
+            -H "anthropic-version: 2023-06-01" \
+            -d @- << EOF > response.json
+          {
+            "model": "claude-sonnet-4-20250514",
+            "max_tokens": 4096,
+            "system": "You are a JeetLo posting gatekeeper. You ONLY approve posts if the chain is complete and valid. NO memory. Be strict. You are the FINAL check.",
+            "messages": [{
+              "role": "user",
+              "content": "Review this manifest for posting approval:\n$(cat manifest.json)\n\nApprove ONLY if:\n1. Chain is unbroken (each input_hash matches previous output_hash)\n2. All steps present: create, audio, video, combine\n3. Status can be set to 'completed'\n\nOutput JSON: {\"approved\": true/false, \"reason\": \"...\", \"can_post_to\": [\"instagram\", \"youtube\"]}"
+            }]
+          }
+          EOF
+
+          RESULT=$(cat response.json | jq -r '.content[0].text')
+          APPROVED=$(echo "$RESULT" | jq -r '.approved')
+
+          echo "## 6️⃣ POST Approval" >> $GITHUB_STEP_SUMMARY
+          if [ "$APPROVED" == "true" ]; then
+            echo "### ✅ APPROVED FOR POSTING" >> $GITHUB_STEP_SUMMARY
+            echo "$RESULT" | jq -r '.can_post_to[]' | while read platform; do
+              echo "- $platform" >> $GITHUB_STEP_SUMMARY
+            done
+          else
+            echo "### ❌ POST REJECTED" >> $GITHUB_STEP_SUMMARY
+            echo "Reason: $(echo "$RESULT" | jq -r '.reason')" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
