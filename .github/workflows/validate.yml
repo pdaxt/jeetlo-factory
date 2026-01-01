@@ -1,65 +1,256 @@
-name: Validate Reels
+name: 🔗 Proof Chain Pipeline
 
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
-  workflow_dispatch:  # Allow manual triggers
+  workflow_dispatch:
 
 jobs:
-  validate:
+  # ═══════════════════════════════════════════════════════════════
+  # STEP 1: DISCOVER - Find all manifests
+  # ═══════════════════════════════════════════════════════════════
+  discover:
+    name: 📁 Discover Reels
     runs-on: ubuntu-latest
-    name: 🔗 Chain Validation
-
+    outputs:
+      manifests: ${{ steps.find.outputs.manifests }}
+      count: ${{ steps.find.outputs.count }}
     steps:
-      - name: 📥 Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: 🐍 Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: 📦 Install dependencies
-        run: |
-          pip install -e .
-
-      - name: 🔍 Find manifests
+      - name: Find manifests
         id: find
         run: |
-          count=$(find . -name ".jeetlo_manifest.json" | wc -l)
+          # Find all manifest files and create JSON array
+          manifests=$(find . -name ".jeetlo_manifest.json" -type f | jq -R -s -c 'split("\n") | map(select(length > 0))')
+          count=$(echo $manifests | jq 'length')
+          echo "manifests=$manifests" >> $GITHUB_OUTPUT
           echo "count=$count" >> $GITHUB_OUTPUT
           echo "### 📁 Found $count manifest(s)" >> $GITHUB_STEP_SUMMARY
 
-      - name: ✅ Validate chain integrity
-        if: steps.find.outputs.count != '0'
-        run: |
-          # Run chain-only validation (doesn't require media files)
-          python -m jeetlo_factory.ci . --chain-only 2>&1 | tee validation.log
+  # ═══════════════════════════════════════════════════════════════
+  # STEP 2: VALIDATE CREATE - Check reel was created properly
+  # ═══════════════════════════════════════════════════════════════
+  validate-create:
+    name: 1️⃣ Create Step
+    needs: discover
+    if: needs.discover.outputs.count != '0'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-          # Check result
-          if grep -q "CI PASSED" validation.log; then
-            echo "### ✅ All chains valid!" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "### ❌ Chain validation failed!" >> $GITHUB_STEP_SUMMARY
-            exit 1
-          fi
-
-      - name: 📊 Generate badge data
-        if: always()
+      - name: Validate CREATE step
         run: |
-          if [ "${{ job.status }}" == "success" ]; then
-            echo "BADGE_COLOR=brightgreen" >> $GITHUB_ENV
-            echo "BADGE_STATUS=passing" >> $GITHUB_ENV
-          else
-            echo "BADGE_COLOR=red" >> $GITHUB_ENV
-            echo "BADGE_STATUS=failing" >> $GITHUB_ENV
-          fi
+          echo "## 1️⃣ Validating CREATE Step" >> $GITHUB_STEP_SUMMARY
 
-      - name: 📝 No manifests found
-        if: steps.find.outputs.count == '0'
+          failed=0
+          for manifest in $(find . -name ".jeetlo_manifest.json"); do
+            reel_id=$(jq -r '.reel_id' "$manifest")
+
+            # Check create step exists
+            has_create=$(jq '.steps[] | select(.step_name == "create")' "$manifest")
+            if [ -n "$has_create" ]; then
+              # Check first step has null input_hash
+              first_input=$(jq -r '.steps[0].input_hash' "$manifest")
+              if [ "$first_input" == "null" ]; then
+                echo "✅ **$reel_id**: Create step valid" >> $GITHUB_STEP_SUMMARY
+              else
+                echo "❌ **$reel_id**: First step must have null input_hash" >> $GITHUB_STEP_SUMMARY
+                failed=1
+              fi
+            else
+              echo "❌ **$reel_id**: Missing CREATE step" >> $GITHUB_STEP_SUMMARY
+              failed=1
+            fi
+          done
+
+          exit $failed
+
+  # ═══════════════════════════════════════════════════════════════
+  # STEP 3: VALIDATE AUDIO - Check audio generation chain
+  # ═══════════════════════════════════════════════════════════════
+  validate-audio:
+    name: 2️⃣ Audio Step
+    needs: validate-create
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate AUDIO step chain
         run: |
-          echo "### ℹ️ No manifests to validate" >> $GITHUB_STEP_SUMMARY
+          echo "## 2️⃣ Validating AUDIO Step" >> $GITHUB_STEP_SUMMARY
+
+          failed=0
+          for manifest in $(find . -name ".jeetlo_manifest.json"); do
+            reel_id=$(jq -r '.reel_id' "$manifest")
+
+            # Check audio step exists
+            has_audio=$(jq '.steps[] | select(.step_name == "audio")' "$manifest")
+            if [ -n "$has_audio" ]; then
+              # Verify chain: audio.input_hash == create.output_hash
+              create_output=$(jq -r '.steps[] | select(.step_name == "create") | .output_hash' "$manifest")
+              audio_input=$(jq -r '.steps[] | select(.step_name == "audio") | .input_hash' "$manifest")
+
+              if [ "$create_output" == "$audio_input" ]; then
+                duration=$(jq -r '.steps[] | select(.step_name == "audio") | .metadata.total_duration // "?"' "$manifest")
+                echo "✅ **$reel_id**: Audio chain valid (${duration}s)" >> $GITHUB_STEP_SUMMARY
+              else
+                echo "❌ **$reel_id**: Audio input_hash doesn't match create output_hash" >> $GITHUB_STEP_SUMMARY
+                failed=1
+              fi
+            else
+              echo "⚠️ **$reel_id**: No audio step yet" >> $GITHUB_STEP_SUMMARY
+            fi
+          done
+
+          exit $failed
+
+  # ═══════════════════════════════════════════════════════════════
+  # STEP 4: VALIDATE VIDEO - Check video render chain
+  # ═══════════════════════════════════════════════════════════════
+  validate-video:
+    name: 3️⃣ Video Step
+    needs: validate-audio
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate VIDEO step chain
+        run: |
+          echo "## 3️⃣ Validating VIDEO Step" >> $GITHUB_STEP_SUMMARY
+
+          failed=0
+          for manifest in $(find . -name ".jeetlo_manifest.json"); do
+            reel_id=$(jq -r '.reel_id' "$manifest")
+
+            # Check video step exists
+            has_video=$(jq '.steps[] | select(.step_name == "video")' "$manifest")
+            if [ -n "$has_video" ]; then
+              # Verify chain: video.input_hash == audio.output_hash
+              audio_output=$(jq -r '.steps[] | select(.step_name == "audio") | .output_hash' "$manifest")
+              video_input=$(jq -r '.steps[] | select(.step_name == "video") | .input_hash' "$manifest")
+
+              if [ "$audio_output" == "$video_input" ]; then
+                resolution=$(jq -r '.steps[] | select(.step_name == "video") | .metadata.resolution // "?"' "$manifest")
+                echo "✅ **$reel_id**: Video chain valid ($resolution)" >> $GITHUB_STEP_SUMMARY
+              else
+                echo "❌ **$reel_id**: Video input_hash doesn't match audio output_hash" >> $GITHUB_STEP_SUMMARY
+                failed=1
+              fi
+            else
+              echo "⚠️ **$reel_id**: No video step yet" >> $GITHUB_STEP_SUMMARY
+            fi
+          done
+
+          exit $failed
+
+  # ═══════════════════════════════════════════════════════════════
+  # STEP 5: VALIDATE COMBINE - Check final combination
+  # ═══════════════════════════════════════════════════════════════
+  validate-combine:
+    name: 4️⃣ Combine Step
+    needs: validate-video
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate COMBINE step chain
+        run: |
+          echo "## 4️⃣ Validating COMBINE Step" >> $GITHUB_STEP_SUMMARY
+
+          failed=0
+          for manifest in $(find . -name ".jeetlo_manifest.json"); do
+            reel_id=$(jq -r '.reel_id' "$manifest")
+
+            # Check combine step exists
+            has_combine=$(jq '.steps[] | select(.step_name == "combine")' "$manifest")
+            if [ -n "$has_combine" ]; then
+              # Verify chain: combine.input_hash == video.output_hash
+              video_output=$(jq -r '.steps[] | select(.step_name == "video") | .output_hash' "$manifest")
+              combine_input=$(jq -r '.steps[] | select(.step_name == "combine") | .input_hash' "$manifest")
+
+              if [ "$video_output" == "$combine_input" ]; then
+                duration=$(jq -r '.steps[] | select(.step_name == "combine") | .metadata.final_duration // "?"' "$manifest")
+                echo "✅ **$reel_id**: Combine chain valid (${duration}s final)" >> $GITHUB_STEP_SUMMARY
+              else
+                echo "❌ **$reel_id**: Combine input_hash doesn't match video output_hash" >> $GITHUB_STEP_SUMMARY
+                failed=1
+              fi
+            else
+              echo "⚠️ **$reel_id**: No combine step yet" >> $GITHUB_STEP_SUMMARY
+            fi
+          done
+
+          exit $failed
+
+  # ═══════════════════════════════════════════════════════════════
+  # STEP 6: VALIDATE POST - Check posting status
+  # ═══════════════════════════════════════════════════════════════
+  validate-post:
+    name: 5️⃣ Post Step
+    needs: validate-combine
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate POST step
+        run: |
+          echo "## 5️⃣ Validating POST Step" >> $GITHUB_STEP_SUMMARY
+
+          for manifest in $(find . -name ".jeetlo_manifest.json"); do
+            reel_id=$(jq -r '.reel_id' "$manifest")
+            status=$(jq -r '.status' "$manifest")
+
+            # Check post step exists
+            has_post=$(jq '.steps[] | select(.step_name == "post")' "$manifest")
+            if [ -n "$has_post" ]; then
+              # Get platform statuses
+              instagram=$(jq -r '.steps[] | select(.step_name == "post") | .metadata.platforms.instagram.status // "not posted"' "$manifest")
+              youtube=$(jq -r '.steps[] | select(.step_name == "post") | .metadata.platforms.youtube.status // "not posted"' "$manifest")
+
+              echo "✅ **$reel_id**: Posted" >> $GITHUB_STEP_SUMMARY
+              echo "   - Instagram: $instagram" >> $GITHUB_STEP_SUMMARY
+              echo "   - YouTube: $youtube" >> $GITHUB_STEP_SUMMARY
+            else
+              if [ "$status" == "completed" ]; then
+                echo "⚠️ **$reel_id**: Status is 'completed' but no post step" >> $GITHUB_STEP_SUMMARY
+              else
+                echo "ℹ️ **$reel_id**: Not yet posted (status: $status)" >> $GITHUB_STEP_SUMMARY
+              fi
+            fi
+          done
+
+  # ═══════════════════════════════════════════════════════════════
+  # FINAL: SUMMARY - Overall chain status
+  # ═══════════════════════════════════════════════════════════════
+  summary:
+    name: 📊 Chain Summary
+    needs: [validate-create, validate-audio, validate-video, validate-combine, validate-post]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate summary
+        run: |
+          echo "# 🔗 Proof Chain Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Push a reel with \`.jeetlo_manifest.json\` to trigger validation." >> $GITHUB_STEP_SUMMARY
+
+          # Check each job status
+          echo "| Step | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| 1️⃣ Create | ${{ needs.validate-create.result == 'success' && '✅' || '❌' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 2️⃣ Audio | ${{ needs.validate-audio.result == 'success' && '✅' || '❌' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 3️⃣ Video | ${{ needs.validate-video.result == 'success' && '✅' || '❌' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 4️⃣ Combine | ${{ needs.validate-combine.result == 'success' && '✅' || '❌' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 5️⃣ Post | ${{ needs.validate-post.result == 'success' && '✅' || '❌' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Overall status
+          if [ "${{ needs.validate-combine.result }}" == "success" ]; then
+            echo "## ✅ Chain Valid - Ready to Post!" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "## ❌ Chain Broken - Cannot Post" >> $GITHUB_STEP_SUMMARY
+          fi
