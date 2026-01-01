@@ -806,15 +806,40 @@ CONFIG:
 - Subject color: $color
 - Subject: $SUBJECT
 
+MANIM-EDU LIBRARY (MANDATORY - use these for stunning visuals):
+Location: /Users/pran/Projects/libraries/manim-edu
+
+Available components by subject:
+- Physics: from manim_edu.physics import WaveSimulator, FieldVisualizer, MechanicsSimulator
+- Chemistry: from manim_edu.chemistry import MoleculeBuilder
+- Biology: from manim_edu.biology import CellVisualizer
+- Math: from manim_edu.mathematics import GraphAnimator
+
+Example usage:
+  field = FieldVisualizer()
+  dipole = field.electric_dipole()  # Beautiful field lines
+
+  wave = WaveSimulator()
+  sine = wave.sine_wave(amplitude=1, wavelength=2)
+
+  mol = MoleculeBuilder(scale=1.5)
+  water = mol.water()  # H2O with correct bond angles
+
 COMPLETE PYTHON FILE STRUCTURE:
 The file must start exactly like this:
 
 import sys
+sys.path.insert(0, '/Users/pran/Projects/libraries/manim-edu')
 sys.path.append('/Users/pran/Projects/ace/content-factory/brands/jeetlo/shared')
 from manim import *
-from jeetlo_style import JeetLoReelMixin, create_brand_watermark, add_cta_slide_${SUBJECT}
+from jeetlo_style import JeetLoReelMixin, create_brand_watermark
+
+# Import manim-edu components for ${SUBJECT}
+${import_line}
 
 class ${subject_cap}Reel(JeetLoReelMixin, Scene):
+    subject = "${SUBJECT}"
+
     def construct(self):
         self.camera.background_color = '$background'
         self.add(create_brand_watermark())
@@ -831,23 +856,36 @@ class ${subject_cap}Reel(JeetLoReelMixin, Scene):
             if method:
                 method(seg)
 
-        # Add CTA at end
-        add_cta_slide_${SUBJECT}(self)
-
     def segment_01_hook(self, timing):
         duration = timing['duration']
         # Animation code here...
         # Use: wait_time = (duration - total_animation_time) / num_waits
 
-    # ... more segment methods for each timing entry
+    # ... implement ALL segment methods from timings
+
+    def segment_07_cta(self, timing):
+        # CTA slide with JeetLo branding
+        duration = timing['duration']
+        logo = create_brand_watermark(opacity=1.0, scale=2.0)
+        logo.center()
+        cta_text = Text("Follow for more!", font_size=48, color=WHITE)
+        cta_text.next_to(logo, DOWN, buff=0.5)
+        url = Text("jeetlo.ai", font_size=36, color=YELLOW)
+        url.next_to(cta_text, DOWN, buff=0.3)
+
+        self.play(FadeIn(logo), run_time=0.8)
+        self.play(Write(cta_text), run_time=0.6)
+        self.play(Write(url), run_time=0.4)
+        self.wait(duration - 1.8)
 
 REQUIREMENTS:
 1. Create a segment method for EACH entry in timings (segment_01_hook, segment_02_setup, etc.)
-2. Each segment must use timing['duration'] to calculate wait times
-3. Use dynamic animations: Transform, GrowFromCenter, DrawBorderThenFill, Write
+2. Each segment must use timing['duration'] to calculate wait times correctly
+3. MUST use manim-edu components for stunning scientific visualizations
 4. Use 6+ colors from: RED, BLUE, GREEN, YELLOW, ORANGE, PURPLE, CYAN, PINK, WHITE
 5. Clear all objects at end of each segment with self.clear() or FadeOut
 6. Match the visual scenes described in the creative brief
+7. CTA segment must include jeetlo.ai and "Follow for more!"
 
 Output the complete Python file now:
 PROMPT_EOF
