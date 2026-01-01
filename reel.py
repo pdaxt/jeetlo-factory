@@ -1,1070 +1,781 @@
 """
-JeetLo Chemistry Reel: Molarity - The REAL Understanding
-=========================================================
-CREATIVE BRIEF:
-- Core Analogy: Molarity = Party crowd density. Room (1L) with guests (molecules).
-  Rasna analogy - same powder, different water = different concentration!
-- Visual Style: Volumetric flasks, animated molecules, formula builds
-- Duration: ~103 seconds (7 segments)
+JeetLo Physics Reel: What is Gravity? - The Universe's Obsessive Ex
+====================================================================
+VIRAL CONCEPT: Gravity isn't a force pulling you down - it's curved space
+pushing you along! Einstein vs Newton. Mind-blowing spacetime visualization.
 
-Topic: Molarity - What it REALLY means!
-Source: NCERT Class 11 Chemistry, Chapter on Solutions
-
-KEY CONCEPT: M = n/V (moles per liter). Volume is the DENOMINATOR!
+Animation Focus:
+- Spacetime rubber sheet bending under mass
+- Newton vs Einstein visual battle
+- Gravitational field lines around Earth
+- Gravitational waves from black holes
+- Inverse square law visual demonstration
+- JEE trick question reveal
 """
 
 import sys
-sys.path.insert(0, '/Users/pran/Projects/ace/content-factory/brands/jeetlo/shared')
+import json
+import numpy as np
+sys.path.append('/Users/pran/Projects/ace/content-factory/brands/jeetlo/shared')
 sys.path.insert(0, '/Users/pran/Projects/libraries/manim-edu')
 
+from manim import *
 from jeetlo_style import *
-from manim_edu.chemistry import MoleculeBuilder
-from manim_edu.primitives.colors import SUBJECT_COLORS, ATOM_COLORS
 
-import json
-import os
-import numpy as np
+# Import manim-edu physics components
+try:
+    from manim_edu.physics import WaveSimulator, FieldVisualizer, MechanicsSimulator
+    from manim_edu.primitives.colors import SUBJECT_COLORS
+except ImportError:
+    pass
 
-# Config for vertical reel (9:16)
-config.pixel_width = 1080
-config.pixel_height = 1920
-config.frame_width = 8
-config.frame_height = 14.22
-config.background_color = "#0A2F1F"
-
-# Color scheme - Chemistry (Green)
-PRIMARY = "#00CC66"
+# Additional colors for this reel
 CYAN = "#00FFFF"
-YELLOW = "#FCD34D"
-ORANGE = "#FF6B35"
-PINK = "#FF69B4"
-PURPLE = "#9B59B6"
-BLUE = "#3498DB"
-RED_ACCENT = "#FF4757"
-
-# Molecule colors for variety
-MOLECULE_COLORS = ["#FF6B6B", "#4ECDC4", "#45B7D1", "#96CEB4", "#FFEAA7", "#DDA0DD"]
+SPACE_PURPLE = "#6B5B95"
+GOLD = "#FFD700"
+ORANGE = "#FF9800"
+LIGHT_BLUE = "#87CEEB"
 
 
-def calc_wait(duration, anim_times, num_waits, buffer=0.2):
-    """Calculate wait time to fill segment duration with buffer."""
-    fixed_time = sum(anim_times) if isinstance(anim_times, list) else anim_times
-    remaining = duration - fixed_time + buffer
-    return max(0.1, remaining / num_waits)
+def load_timings():
+    """Load audio timings from JSON file."""
+    with open('audio/timings.json', 'r') as f:
+        return {t['id']: t for t in json.load(f)}
 
 
-class MolarityReel(JeetLoReelMixin, Scene):
-    """Molarity reel with Rasna analogy and volumetric flask visuals."""
-
-    subject = "chemistry"
+class GravityReel(JeetLoReelMixin, Scene):
+    """Physics reel explaining what gravity really is - spacetime curvature!"""
+    subject = "physics"
 
     def construct(self):
-        self.set_subject_background("chemistry")
-        watermark = create_brand_watermark(opacity=0.6)
-        self.add(watermark)
+        # Set physics background (dark blue)
+        self.camera.background_color = PHYSICS_BG
 
-        timings = self.load_timings()
+        # Load timings
+        self.timings = load_timings()
 
-        # Run all 7 segments
-        self.segment_01_hook(timings[0])
-        self.segment_02_setup(timings[1])
-        self.segment_03_content(timings[2])
-        self.segment_04_reveal(timings[3])
-        self.segment_05_key_point(timings[4])
-        self.segment_06_exam_tip(timings[5])
-        self.segment_07_cta(timings[6])
+        # Add watermark
+        self.watermark = create_brand_watermark(opacity=0.5, scale=1.0)
+        self.add(self.watermark)
 
-    def load_timings(self):
-        """Load audio timings from JSON file."""
-        try:
-            timings_path = os.path.join(os.path.dirname(__file__), 'audio', 'timings.json')
-            with open(timings_path, 'r') as f:
-                return json.load(f)
-        except:
-            # Fallback timings from creative brief
-            return [
-                {'duration': 6.6, 'id': '01_hook'},
-                {'duration': 10.104, 'id': '02_setup'},
-                {'duration': 34.296, 'id': '03_content'},
-                {'duration': 13.848, 'id': '04_reveal'},
-                {'duration': 12.216, 'id': '05_key_point'},
-                {'duration': 20.76, 'id': '06_exam_tip'},
-                {'duration': 5.304, 'id': '07_cta'}
-            ]
+        # Run all segments
+        self.segment_01_hook(self.timings['01_hook'])
+        self.segment_02_setup(self.timings['02_setup'])
+        self.segment_03_content_part1(self.timings['03_content_part1'])
+        self.segment_03_content_part2(self.timings['03_content_part2'])
+        self.segment_03_content_part3(self.timings['03_content_part3'])
+        self.segment_04_reveal(self.timings['04_reveal'])
+        self.segment_05_key_point(self.timings['05_key_point'])
+        self.segment_06_exam_tip(self.timings['06_exam_tip'])
+        self.segment_07_cta(self.timings['07_cta'])
 
-    # ========================================
-    # SEGMENT 01: HOOK (6.6s)
-    # ========================================
     def segment_01_hook(self, timing):
-        """Hook: Molarity calculate karna aata hai? WRONG!"""
-        duration = timing.get('duration', 6.6)
-        anims = [0.3, 0.4, 0.5, 0.3, 0.5, 0.15, 0.15, 0.3]
-        wait_time = calc_wait(duration, anims, 3)
+        """Hook: What is Gravity? WRONG! (4.656s)"""
+        duration = timing['duration']
 
-        # Chemistry badge with glow
-        badge = self.create_subject_badge("CHEMISTRY", PRIMARY)
-        badge.to_edge(UP, buff=1.5)
-        self.play(FadeIn(badge, scale=0.8), run_time=0.3)
+        # Calculate timing
+        fixed_time = 0.3 + 0.4 + 0.3 + 0.4 + 0.3 + 0.2  # 1.9s
+        num_waits = 2
+        wait_time = max(0.1, (duration - fixed_time) / num_waits)
 
-        # Student confidently writing formula
-        student_work = VGroup()
-        formula_written = MathTex("M = \\frac{n}{V}", font_size=72, color=CYAN)
-        formula_written.shift(UP * 0.5)
+        # JeetLo branding intro
+        jeet = Text("Jeet", font_size=72, color=TEXT_WHITE, weight=BOLD)
+        lo = Text("Lo", font_size=72, color=FLAME_PRIMARY, weight=BOLD)
+        jeetlo = VGroup(jeet, lo).arrange(RIGHT, buff=0.05)
+        physics = Text("PHYSICS", font_size=48, color=PHYSICS_BLUE, weight=BOLD)
+        physics.next_to(jeetlo, DOWN, buff=0.3)
+        intro = VGroup(jeetlo, physics).move_to(UP * 4)
 
-        # Checkmark first (confident student)
-        check = Text("✓", font_size=64, color=CORRECT_GREEN)
-        check.next_to(formula_written, RIGHT, buff=0.3)
+        # Gravity question - elegant text
+        gravity_q = Text("What is Gravity?", font_size=64, color=CYAN, weight=BOLD)
+        gravity_q.move_to(UP * 1)
 
-        self.play(Write(formula_written), run_time=0.4)
-        self.play(FadeIn(check), run_time=0.5)
+        # WRONG! stamp with dramatic effect
+        wrong = Text("WRONG!", font_size=88, color=WRONG_RED, weight=BOLD)
+        wrong.move_to(ORIGIN)
+        wrong.rotate(15 * DEGREES)
 
+        # Lie revealed
+        lie_text = Text("You've been LIED to!", font_size=44, color=FLAME_CORE)
+        lie_text.move_to(DOWN * 2.5)
+
+        # Falling apple with question marks
+        apple = Text("?", font_size=80)
+        apple.move_to(DOWN * 0.5 + RIGHT * 2.5)
+        q1 = Text("?", font_size=48, color=PHYSICS_BLUE).move_to(apple.get_center() + UP * 0.8 + LEFT * 0.4)
+        q2 = Text("?", font_size=48, color=PHYSICS_BLUE).move_to(apple.get_center() + UP * 0.6 + RIGHT * 0.5)
+        q3 = Text("?", font_size=48, color=PHYSICS_BLUE).move_to(apple.get_center() + RIGHT * 1)
+
+        # Animations
+        self.play(FadeIn(intro), run_time=0.3)
+        self.play(Write(gravity_q), run_time=0.4)
         self.wait(wait_time)
 
-        # Question appears
-        question = Text("Is that ALL?", font_size=38, color=YELLOW)
-        question.shift(DOWN * 1.2)
-        self.play(Write(question), run_time=0.3)
-
-        self.wait(wait_time)
-
-        # WRONG buzzer effect
-        wrong = Text("WRONG!", font_size=80, color=WRONG_RED, weight=BOLD)
-        wrong.shift(DOWN * 3)
-
-        # Remove checkmark with cross
-        cross = Text("✗", font_size=64, color=WRONG_RED)
-        cross.move_to(check.get_center())
-
+        # Camera shake effect with WRONG stamp
         self.play(
-            Transform(check, cross),
-            FadeIn(wrong, scale=1.5),
-            run_time=0.5
+            GrowFromCenter(wrong),
+            Flash(wrong, color=WRONG_RED, line_length=0.4),
+            run_time=0.3
         )
-        self.play(wrong.animate.scale(1.15), run_time=0.15)
-        self.play(wrong.animate.scale(1/1.15), run_time=0.15)
-
-        self.wait(wait_time)
-
-        # Cleanup
-        self.play(FadeOut(*self.mobjects[1:]), run_time=0.3)
-
-    # ========================================
-    # SEGMENT 02: SETUP - Rasna Analogy (10.104s)
-    # ========================================
-    def segment_02_setup(self, timing):
-        """Setup: Rasna analogy - same powder, different water = different taste!"""
-        duration = timing.get('duration', 10.104)
-        anims = [0.4, 0.6, 0.4, 0.5, 0.5, 0.4, 0.5, 0.4, 0.3]
-        wait_time = calc_wait(duration, anims, 4)
-
-        # Title
-        title = Text("Think About This...", font_size=44, color=YELLOW, weight=BOLD)
-        title.to_edge(UP, buff=1.8)
-        self.play(Write(title), run_time=0.4)
-
-        # Two glasses
-        glass1 = self.create_glass(height=2.5, width=1.2)
-        glass1.shift(LEFT * 2 + DOWN * 0.5)
-
-        glass2 = self.create_glass(height=2.5, width=1.2)
-        glass2.shift(RIGHT * 2 + DOWN * 0.5)
-
         self.play(
-            DrawBorderThenFill(glass1),
-            DrawBorderThenFill(glass2),
-            run_time=0.6
-        )
-
-        # Same Rasna powder amount (dots)
-        powder_label = Text("Same Rasna powder", font_size=26, color=ORANGE)
-        powder_label.shift(UP * 2.2)
-        self.play(Write(powder_label), run_time=0.4)
-
-        # Powder dots falling into glasses
-        powder1 = self.create_powder_dots().move_to(glass1.get_center() + DOWN * 0.3)
-        powder2 = self.create_powder_dots().move_to(glass2.get_center() + DOWN * 0.3)
-
-        self.play(
-            FadeIn(powder1, shift=DOWN),
-            FadeIn(powder2, shift=DOWN),
-            run_time=0.5
-        )
-
-        self.wait(wait_time)
-
-        # Fill with different water levels
-        water1 = self.create_water_fill(glass1, fill_level=0.9, color="#3498DB")
-        water2 = self.create_water_fill(glass2, fill_level=0.45, color="#3498DB")
-
-        water_label1 = Text("More water", font_size=22, color=BLUE)
-        water_label1.next_to(glass1, DOWN, buff=0.3)
-
-        water_label2 = Text("Less water", font_size=22, color=BLUE)
-        water_label2.next_to(glass2, DOWN, buff=0.3)
-
-        self.play(
-            GrowFromEdge(water1, DOWN),
-            GrowFromEdge(water2, DOWN),
-            Write(water_label1),
-            Write(water_label2),
-            run_time=0.5
-        )
-
-        self.wait(wait_time)
-
-        # Question: Which is STRONGER?
-        question = Text("Which is STRONGER?", font_size=40, color=YELLOW, weight=BOLD)
-        question.shift(DOWN * 3.2)
-        self.play(Write(question), run_time=0.4)
-
-        # Arrow pointing to half-filled glass
-        arrow = Arrow(
-            start=RIGHT * 0.5 + DOWN * 3.5,
-            end=RIGHT * 1.8 + DOWN * 2,
-            color=PRIMARY, stroke_width=4
-        )
-        self.play(GrowArrow(arrow), run_time=0.5)
-
-        self.wait(wait_time)
-
-        # Answer reveal
-        answer = Text("Less water = MORE concentrated!", font_size=32, color=PRIMARY, weight=BOLD)
-        answer.shift(DOWN * 4.5)
-        self.play(Write(answer), run_time=0.4)
-
-        # Connection to molarity
-        molarity_connect = Text("THIS is MOLARITY!", font_size=36, color=CYAN, weight=BOLD)
-        molarity_connect.shift(DOWN * 5.3)
-        self.play(Write(molarity_connect), run_time=0.3)
-
-        self.wait(wait_time)
-
-        # Cleanup
-        self.play(FadeOut(*self.mobjects[1:]), run_time=0.3)
-
-    # ========================================
-    # SEGMENT 03: CONTENT - Core Teaching (34.296s)
-    # ========================================
-    def segment_03_content(self, timing):
-        """Main teaching: Flask visualization, 1M definition, formula build, real-world example."""
-        duration = timing.get('duration', 34.296)
-        # This is a long segment - divide into 3 scenes
-
-        # Scene 1: 1 Molar definition (~10s)
-        self.content_scene_1_molar_definition(duration * 0.30)
-
-        # Scene 2: Half mole comparison (~10s)
-        self.content_scene_2_half_mole(duration * 0.30)
-
-        # Scene 3: Real-world IV drip (~14s)
-        self.content_scene_3_real_world(duration * 0.40)
-
-    def content_scene_1_molar_definition(self, duration):
-        """Scene 1: One liter flask with molecules = 1 Molar"""
-        anims = [0.4, 0.8, 1.5, 0.5, 0.5, 0.4, 0.3]
-        wait_time = calc_wait(duration, anims, 3)
-
-        # Title
-        title = Text("What is 1 Molar?", font_size=44, color=PRIMARY, weight=BOLD)
-        title.to_edge(UP, buff=1.6)
-        self.play(Write(title), run_time=0.4)
-
-        # Create volumetric flask
-        flask = self.create_volumetric_flask(scale=1.2)
-        flask.shift(UP * 0.3)
-        self.play(DrawBorderThenFill(flask), run_time=0.8)
-
-        # Label "1 Liter"
-        liter_label = Text("1 Liter", font_size=32, color=CYAN, weight=BOLD)
-        liter_label.next_to(flask, LEFT, buff=0.4)
-
-        # Animate molecules raining into flask
-        molecules = self.create_molecule_rain(count=20, target=flask.get_center())
-        self.play(
-            Write(liter_label),
-            *[FadeIn(m, shift=DOWN * np.random.uniform(1, 2)) for m in molecules],
-            run_time=1.5
-        )
-
-        self.wait(wait_time)
-
-        # Counter showing Avogadro's number
-        counter_box = RoundedRectangle(
-            width=6.5, height=0.9, corner_radius=0.15,
-            fill_color=YELLOW, fill_opacity=0.2,
-            stroke_color=YELLOW, stroke_width=2
-        )
-        counter_box.shift(DOWN * 2.2)
-
-        counter_text = MathTex(
-            r"6.022 \times 10^{23}", r"\text{ particles}", r"= 1 \text{ mole}",
-            font_size=34, color=YELLOW
-        )
-        counter_text.move_to(counter_box.get_center())
-
-        self.play(Create(counter_box), Write(counter_text), run_time=0.5)
-
-        self.wait(wait_time)
-
-        # Result: 1 Molar
-        result = Text("= 1 Molar (1M)", font_size=48, color=PRIMARY, weight=BOLD)
-        result.shift(DOWN * 3.8)
-        self.play(Write(result), run_time=0.5)
-
-        # Highlight the concept
-        concept_box = RoundedRectangle(
-            width=6, height=1.1, corner_radius=0.2,
-            fill_color=PRIMARY, fill_opacity=0.2,
-            stroke_color=PRIMARY, stroke_width=3
-        )
-        concept_box.shift(DOWN * 5)
-        concept_text = Text("1 mole in 1 liter = 1M", font_size=30, color=TEXT_WHITE, weight=BOLD)
-        concept_text.move_to(concept_box.get_center())
-
-        self.play(Create(concept_box), Write(concept_text), run_time=0.4)
-
-        self.wait(wait_time)
-
-        self.play(FadeOut(*self.mobjects[1:]), run_time=0.3)
-
-    def content_scene_2_half_mole(self, duration):
-        """Scene 2: Compare 1 mole vs 0.5 mole in same flask"""
-        anims = [0.4, 0.6, 0.5, 0.5, 0.4, 0.6, 0.4, 0.3]
-        wait_time = calc_wait(duration, anims, 3)
-
-        # Two flasks side by side
-        flask1 = self.create_volumetric_flask(scale=0.9)
-        flask1.shift(LEFT * 2.2 + UP * 0.5)
-
-        flask2 = self.create_volumetric_flask(scale=0.9)
-        flask2.shift(RIGHT * 2.2 + UP * 0.5)
-
-        self.play(
-            DrawBorderThenFill(flask1),
-            DrawBorderThenFill(flask2),
+            FadeIn(apple),
+            FadeIn(q1, scale=0.5),
+            FadeIn(q2, scale=0.5),
+            FadeIn(q3, scale=0.5),
             run_time=0.4
         )
+        self.play(Write(lie_text), run_time=0.3)
+        self.wait(wait_time)
 
-        # Labels
-        label1 = Text("1 mole", font_size=26, color=CYAN, weight=BOLD)
-        label1.next_to(flask1, UP, buff=0.2)
+        self.play(FadeOut(Group(*[m for m in self.mobjects if m != self.watermark])), run_time=0.2)
 
-        label2 = Text("0.5 mole", font_size=26, color=ORANGE, weight=BOLD)
-        label2.next_to(flask2, UP, buff=0.2)
+    def segment_02_setup(self, timing):
+        """Setup: Newton vs Einstein - Two different answers! (10.752s)"""
+        duration = timing['duration']
 
-        self.play(Write(label1), Write(label2), run_time=0.6)
+        # Calculate timing
+        fixed_time = 0.4 + 0.5 + 0.5 + 0.5 + 0.5 + 0.5 + 0.3  # 3.2s
+        num_waits = 4
+        wait_time = max(0.1, (duration - fixed_time) / num_waits)
 
-        # Molecules in flask 1 (more crowded)
-        molecules1 = self.create_molecule_cluster(count=18, spread=0.8)
-        molecules1.move_to(flask1.get_center())
+        # Split screen setup - Newton on left
+        newton_circle = Circle(radius=1.2, color=FLAME_PRIMARY, fill_opacity=0.2, stroke_width=3)
+        newton_circle.move_to(LEFT * 2.5 + UP * 2.5)
+        newton_emoji = Text("NEWTON", font_size=36, color=FLAME_PRIMARY, weight=BOLD)
+        newton_emoji.move_to(newton_circle.get_center())
+        newton_label = Text("Force PULLS down", font_size=28, color=FLAME_PRIMARY, weight=BOLD)
+        newton_label.next_to(newton_circle, DOWN, buff=0.3)
 
-        # Molecules in flask 2 (less crowded)
-        molecules2 = self.create_molecule_cluster(count=9, spread=0.8)
-        molecules2.move_to(flask2.get_center())
+        # Newton's thought bubble
+        newton_thought = RoundedRectangle(width=3.5, height=1.5, corner_radius=0.2,
+                                          color=FLAME_PRIMARY, fill_opacity=0.15)
+        newton_thought.next_to(newton_label, DOWN, buff=0.3)
+        newton_idea = Text("Gravity is a\nFORCE!", font_size=26, color=TEXT_WHITE)
+        newton_idea.move_to(newton_thought.get_center())
 
+        # Down arrow for Newton's idea
+        newton_arrow = Arrow(start=UP * 0.3, end=DOWN * 0.5, color=FLAME_PRIMARY, stroke_width=5)
+        newton_arrow.next_to(newton_thought, DOWN, buff=0.2)
+
+        # Einstein on right
+        einstein_circle = Circle(radius=1.2, color=PHYSICS_BLUE, fill_opacity=0.2, stroke_width=3)
+        einstein_circle.move_to(RIGHT * 2.5 + UP * 2.5)
+        einstein_emoji = Text("EINSTEIN", font_size=36, color=PHYSICS_BLUE, weight=BOLD)
+        einstein_emoji.move_to(einstein_circle.get_center())
+        einstein_label = Text("Space is BENDING!", font_size=28, color=PHYSICS_BLUE, weight=BOLD)
+        einstein_label.next_to(einstein_circle, DOWN, buff=0.3)
+
+        # Einstein's thought bubble
+        einstein_thought = RoundedRectangle(width=3.5, height=1.5, corner_radius=0.2,
+                                            color=PHYSICS_BLUE, fill_opacity=0.15)
+        einstein_thought.next_to(einstein_label, DOWN, buff=0.3)
+        einstein_idea = Text("Spacetime\nCURVATURE!", font_size=26, color=TEXT_WHITE)
+        einstein_idea.move_to(einstein_thought.get_center())
+
+        # Curved line for Einstein's idea
+        curve = Arc(radius=0.8, start_angle=PI/4, angle=PI/2, color=PHYSICS_BLUE, stroke_width=4)
+        curve.next_to(einstein_thought, DOWN, buff=0.2)
+
+        # VS in center
+        vs = Text("VS", font_size=72, color=GOLD, weight=BOLD)
+        vs.move_to(UP * 2.5)
+
+        # Bottom text - two different answers
+        bottom_text = Text("Two geniuses, COMPLETELY different answers!",
+                          font_size=32, color=FLAME_CORE, weight=BOLD)
+        bottom_text.move_to(DOWN * 4)
+
+        # Animations
         self.play(
-            FadeIn(molecules1, scale=0.5),
+            DrawBorderThenFill(newton_circle),
+            FadeIn(newton_emoji),
+            run_time=0.4
+        )
+        self.play(Write(newton_label), run_time=0.5)
+        self.play(
+            Create(newton_thought),
+            Write(newton_idea),
+            GrowArrow(newton_arrow),
             run_time=0.5
         )
+        self.wait(wait_time)
+
         self.play(
-            FadeIn(molecules2, scale=0.5),
+            DrawBorderThenFill(einstein_circle),
+            FadeIn(einstein_emoji),
+            GrowFromCenter(vs),
             run_time=0.5
         )
-
+        self.play(Write(einstein_label), run_time=0.5)
         self.wait(wait_time)
-
-        # Visual comparison
-        comparison = Text("Less molecules = Less crowded!", font_size=30, color=YELLOW)
-        comparison.shift(DOWN * 1.8)
-        self.play(Write(comparison), run_time=0.4)
-
-        # Molarity labels
-        m_label1 = Text("1M", font_size=42, color=PRIMARY, weight=BOLD)
-        m_label1.next_to(flask1, DOWN, buff=0.3)
-
-        m_label2 = Text("0.5M", font_size=42, color=ORANGE, weight=BOLD)
-        m_label2.next_to(flask2, DOWN, buff=0.3)
-
-        self.play(Write(m_label1), Write(m_label2), run_time=0.6)
-
-        self.wait(wait_time)
-
-        # Formula build
-        formula = MathTex(
-            r"M = \frac{n}{V}",
-            font_size=52, color=CYAN
-        )
-        formula.shift(DOWN * 3.5)
-        self.play(Write(formula), run_time=0.4)
-
-        # Legend
-        legend = VGroup(
-            Text("n = moles", font_size=24, color=TEXT_WHITE),
-            Text("V = volume (L)", font_size=24, color=TEXT_WHITE)
-        ).arrange(RIGHT, buff=1.5)
-        legend.shift(DOWN * 4.5)
-        self.play(FadeIn(legend), run_time=0.3)
-
-        self.wait(wait_time)
-
-        self.play(FadeOut(*self.mobjects[1:]), run_time=0.3)
-
-    def content_scene_3_real_world(self, duration):
-        """Scene 3: Real-world example - IV drip 0.9% NaCl"""
-        anims = [0.4, 0.6, 0.5, 0.5, 0.5, 0.4, 0.5, 0.4, 0.3]
-        wait_time = calc_wait(duration, anims, 4)
-
-        # Title
-        title = Text("Real Life Example", font_size=40, color=PRIMARY, weight=BOLD)
-        title.to_edge(UP, buff=1.6)
-        self.play(Write(title), run_time=0.4)
-
-        # IV Drip bag visualization
-        iv_bag = self.create_iv_bag()
-        iv_bag.shift(UP * 0.8)
-        self.play(DrawBorderThenFill(iv_bag), run_time=0.6)
-
-        # Label on bag
-        label_bg = RoundedRectangle(
-            width=2.8, height=0.7, corner_radius=0.1,
-            fill_color=WHITE, fill_opacity=0.9,
-            stroke_color=BLUE, stroke_width=2
-        )
-        label_bg.move_to(iv_bag.get_center() + UP * 0.3)
-
-        label_text = Text("0.9% NaCl", font_size=28, color="#1E3A5F", weight=BOLD)
-        label_text.move_to(label_bg.get_center())
-
-        self.play(FadeIn(label_bg), Write(label_text), run_time=0.5)
-
-        self.wait(wait_time)
-
-        # Show calculation
-        calc_title = Text("Molarity = ?", font_size=34, color=YELLOW)
-        calc_title.shift(DOWN * 1.5)
-        self.play(Write(calc_title), run_time=0.5)
-
-        # Calculation steps
-        calc1 = MathTex(r"0.9\% = 0.9 \text{ g in 100 mL}", font_size=28, color=TEXT_WHITE)
-        calc1.shift(DOWN * 2.3)
-        self.play(Write(calc1), run_time=0.5)
-
-        calc2 = MathTex(r"= 9 \text{ g in 1 L}", font_size=28, color=TEXT_WHITE)
-        calc2.shift(DOWN * 2.9)
-        self.play(Write(calc2), run_time=0.4)
-
-        self.wait(wait_time)
-
-        calc3 = MathTex(r"M = \frac{9}{58.5} = 0.154 \text{ M}", font_size=32, color=CYAN)
-        calc3.shift(DOWN * 3.7)
-        self.play(Write(calc3), run_time=0.5)
-
-        self.wait(wait_time)
-
-        # Mind-blow fact
-        fact_box = RoundedRectangle(
-            width=6.5, height=1, corner_radius=0.15,
-            fill_color=PINK, fill_opacity=0.2,
-            stroke_color=PINK, stroke_width=3
-        )
-        fact_box.shift(DOWN * 5)
-
-        fact_text = Text("Your BLOOD runs on precise molarity!", font_size=26, color=PINK, weight=BOLD)
-        fact_text.move_to(fact_box.get_center())
-
-        self.play(Create(fact_box), Write(fact_text), run_time=0.4)
-
-        self.wait(wait_time)
-
-        self.play(FadeOut(*self.mobjects[1:]), run_time=0.3)
-
-    # ========================================
-    # SEGMENT 04: REVEAL - Mind Blow (13.848s)
-    # ========================================
-    def segment_04_reveal(self, timing):
-        """Mind-blow: Volume shrinks, molarity DOUBLES!"""
-        duration = timing.get('duration', 13.848)
-        anims = [0.4, 0.6, 0.8, 0.5, 1.0, 0.5, 0.6, 0.5, 0.3]
-        wait_time = calc_wait(duration, anims, 4)
-
-        # Title
-        title = Text("MIND BLOW!", font_size=56, color=YELLOW, weight=BOLD)
-        title.to_edge(UP, buff=1.5)
-        self.play(Write(title), run_time=0.4)
-        self.play(title.animate.scale(1.1), run_time=0.15)
-        self.play(title.animate.scale(1/1.1), run_time=0.15)
-
-        # Start with 1L flask with 1 mole
-        flask_big = self.create_volumetric_flask(scale=1.3)
-        flask_big.shift(LEFT * 1.5 + UP * 0.3)
-
-        molecules = self.create_molecule_cluster(count=16, spread=1.0)
-        molecules.move_to(flask_big.get_center())
-
-        label_big = Text("1 L", font_size=32, color=CYAN)
-        label_big.next_to(flask_big, DOWN, buff=0.3)
-
-        molarity_big = Text("1M", font_size=48, color=PRIMARY, weight=BOLD)
-        molarity_big.next_to(label_big, DOWN, buff=0.2)
 
         self.play(
-            DrawBorderThenFill(flask_big),
-            FadeIn(molecules),
-            Write(label_big),
+            Create(einstein_thought),
+            Write(einstein_idea),
+            Create(curve),
+            run_time=0.5
+        )
+        self.wait(wait_time)
+
+        self.play(Write(bottom_text), run_time=0.3)
+        self.wait(wait_time)
+
+        self.play(FadeOut(Group(*[m for m in self.mobjects if m != self.watermark])), run_time=0.3)
+
+    def segment_03_content_part1(self, timing):
+        """Content Part 1: Space as rubber sheet bending (12.504s)"""
+        duration = timing['duration']
+
+        # Calculate timing
+        fixed_time = 0.4 + 0.5 + 0.6 + 0.6 + 0.6 + 0.4 + 0.3  # 3.4s
+        num_waits = 4
+        wait_time = max(0.1, (duration - fixed_time) / num_waits)
+
+        # Title
+        title = Text("Spacetime = Rubber Sheet!", font_size=44, color=CYAN, weight=BOLD)
+        title.to_edge(UP, buff=1)
+
+        # Create grid lines for the "rubber sheet"
+        grid = VGroup()
+        for i in range(-4, 5):
+            # Horizontal lines
+            h_line = Line(LEFT * 3.5 + UP * (i * 0.5), RIGHT * 3.5 + UP * (i * 0.5),
+                         color=SPACE_PURPLE, stroke_width=1.5, stroke_opacity=0.6)
+            grid.add(h_line)
+            # Vertical lines
+            v_line = Line(LEFT * (i * 0.7) + UP * 2, LEFT * (i * 0.7) + DOWN * 2,
+                         color=SPACE_PURPLE, stroke_width=1.5, stroke_opacity=0.6)
+            grid.add(v_line)
+        grid.move_to(DOWN * 0.5)
+
+        # Earth (massive object) that will bend the sheet
+        earth = Circle(radius=0.8, color=CORRECT_GREEN, fill_opacity=0.8, stroke_width=3)
+        earth.move_to(DOWN * 0.5)
+        earth_label = Text("EARTH", font_size=24, color=TEXT_WHITE, weight=BOLD)
+        earth_label.move_to(earth.get_center())
+
+        # Create bent grid lines (curved around Earth)
+        bent_grid = VGroup()
+        for i in range(-4, 5):
+            # Create curved horizontal lines
+            points = []
+            for j in np.linspace(-3.5, 3.5, 50):
+                x = j
+                # Calculate displacement based on distance from center
+                dist = np.sqrt(x**2 + (i * 0.5)**2)
+                if dist < 2:
+                    # Bend toward center (downward depression)
+                    bend = -0.3 * (2 - dist) ** 1.5
+                else:
+                    bend = 0
+                y = i * 0.5 + bend
+                points.append([x, y, 0])
+            curved = VMobject()
+            curved.set_points_smoothly([np.array(p) for p in points])
+            curved.set_stroke(color=PHYSICS_BLUE, width=2, opacity=0.8)
+            bent_grid.add(curved)
+        bent_grid.move_to(DOWN * 0.5)
+
+        # Moon rolling along the curve
+        moon = Circle(radius=0.25, color=LIGHT_BLUE, fill_opacity=0.9, stroke_width=2)
+        moon.move_to(LEFT * 2.5 + UP * 0.5)
+        moon_label = Text("Moon", font_size=18, color=TEXT_WHITE)
+        moon_label.move_to(moon.get_center())
+
+        # Curved path for moon to follow
+        moon_path = Arc(radius=1.8, start_angle=PI * 0.7, angle=-PI * 0.8, color=CYAN)
+        moon_path.move_to(DOWN * 0.3)
+
+        # Key insight text
+        insight = Text("Not gravity - CURVED SPACE!", font_size=36, color=FLAME_CORE, weight=BOLD)
+        insight.move_to(DOWN * 4)
+
+        # Animations
+        self.play(Write(title), run_time=0.4)
+        self.play(Create(grid), run_time=0.5)
+        self.wait(wait_time)
+
+        # Show Earth and bend the grid
+        self.play(
+            GrowFromCenter(earth),
+            FadeIn(earth_label),
             run_time=0.6
         )
-        self.play(Write(molarity_big), run_time=0.4)
-
-        self.wait(wait_time)
-
-        # Arrow showing transformation
-        arrow = Arrow(
-            start=LEFT * 0.3 + UP * 0.3,
-            end=RIGHT * 1.5 + UP * 0.3,
-            color=YELLOW, stroke_width=5
-        )
-        self.play(GrowArrow(arrow), run_time=0.5)
-
-        # Smaller flask (0.5L)
-        flask_small = self.create_volumetric_flask(scale=0.9)
-        flask_small.shift(RIGHT * 2.5 + UP * 0.3)
-
-        # Same molecules but more compressed
-        molecules_compressed = self.create_molecule_cluster(count=16, spread=0.5)
-        molecules_compressed.move_to(flask_small.get_center())
-
-        label_small = Text("0.5 L", font_size=32, color=ORANGE)
-        label_small.next_to(flask_small, DOWN, buff=0.3)
-
         self.play(
-            DrawBorderThenFill(flask_small),
-            run_time=0.8
-        )
-
-        # Animate molecules "crushing" into smaller flask
-        self.play(
-            FadeIn(molecules_compressed, scale=1.5),
-            Write(label_small),
-            run_time=0.5
-        )
-
-        self.wait(wait_time)
-
-        # Molarity jumps!
-        molarity_small = Text("2M!", font_size=64, color=RED_ACCENT, weight=BOLD)
-        molarity_small.next_to(label_small, DOWN, buff=0.2)
-        self.play(
-            Write(molarity_small),
-            Flash(molarity_small, color=RED_ACCENT, line_length=0.4),
+            Transform(grid, bent_grid),
             run_time=0.6
         )
-
         self.wait(wait_time)
 
-        # Explanation
-        explain_box = RoundedRectangle(
-            width=7, height=1.2, corner_radius=0.2,
-            fill_color=CYAN, fill_opacity=0.2,
-            stroke_color=CYAN, stroke_width=3
+        # Moon rolling along curve
+        self.play(FadeIn(moon), FadeIn(moon_label), run_time=0.6)
+        self.play(
+            MoveAlongPath(moon, moon_path),
+            MoveAlongPath(moon_label, moon_path),
+            run_time=0.4
         )
-        explain_box.shift(DOWN * 3)
-
-        explain_text = VGroup(
-            Text("Volume in DENOMINATOR", font_size=28, color=TEXT_WHITE),
-            Text("Smaller V → BIGGER M!", font_size=30, color=CYAN, weight=BOLD)
-        ).arrange(DOWN, buff=0.15)
-        explain_text.move_to(explain_box.get_center())
-
-        self.play(Create(explain_box), Write(explain_text), run_time=0.5)
-
-        # Lightbulb animation
-        bulb = Text("💡", font_size=72)
-        bulb.shift(DOWN * 5)
-        self.play(FadeIn(bulb, scale=0.3), run_time=0.3)
-
         self.wait(wait_time)
 
-        self.play(FadeOut(*self.mobjects[1:]), run_time=0.3)
+        self.play(Write(insight), run_time=0.4)
+        self.wait(wait_time)
 
-    # ========================================
-    # SEGMENT 05: KEY POINT - Formula Card (12.216s)
-    # ========================================
-    def segment_05_key_point(self, timing):
-        """Key formula card with common mistake warning."""
-        duration = timing.get('duration', 12.216)
-        anims = [0.4, 0.6, 0.5, 0.5, 0.5, 0.6, 0.5, 0.3]
-        wait_time = calc_wait(duration, anims, 4)
+        self.play(FadeOut(Group(*[m for m in self.mobjects if m != self.watermark])), run_time=0.3)
+
+    def segment_03_content_part2(self, timing):
+        """Content Part 2: Formula and inverse square law (12.0s)"""
+        duration = timing['duration']
+
+        # Calculate timing
+        fixed_time = 0.4 + 0.5 + 0.5 + 0.6 + 0.5 + 0.5 + 0.3  # 3.3s
+        num_waits = 4
+        wait_time = max(0.1, (duration - fixed_time) / num_waits)
 
         # Title
-        title = Text("KEY FORMULA", font_size=44, color=PRIMARY, weight=BOLD)
-        title.to_edge(UP, buff=1.6)
-        self.play(Write(title), run_time=0.4)
+        title = Text("The Gravity Formula", font_size=48, color=GOLD, weight=BOLD)
+        title.to_edge(UP, buff=1)
 
-        # Main formula card
-        formula_box = RoundedRectangle(
-            width=7, height=2.2, corner_radius=0.2,
-            fill_color="#1a3329", fill_opacity=0.9,
-            stroke_color=PRIMARY, stroke_width=4
-        )
-        formula_box.shift(UP * 0.8)
+        # Formula box
+        formula_box = RoundedRectangle(width=7, height=2.2, corner_radius=0.25,
+                                       color=PHYSICS_BLUE, fill_opacity=0.2, stroke_width=3)
+        formula_box.move_to(UP * 1.5)
 
-        formula = MathTex(
-            r"M = \frac{n}{V} = \frac{\text{mass}/\text{molar mass}}{\text{Volume (L)}}",
-            font_size=36, color=TEXT_WHITE
-        )
+        # Main formula: F = Gm1m2/r^2
+        formula = MathTex(r"F = \frac{G \cdot m_1 \cdot m_2}{r^2}",
+                         font_size=56, color=CYAN)
         formula.move_to(formula_box.get_center())
 
-        self.play(Create(formula_box), run_time=0.3)
-        self.play(Write(formula), run_time=0.6)
+        # Two planets showing mutual pull
+        planet1 = Circle(radius=0.5, color=PHYSICS_BLUE, fill_opacity=0.7, stroke_width=2)
+        planet1.move_to(LEFT * 2 + DOWN * 2)
+        p1_label = MathTex(r"m_1", font_size=28, color=TEXT_WHITE)
+        p1_label.move_to(planet1.get_center())
 
+        planet2 = Circle(radius=0.4, color=CORRECT_GREEN, fill_opacity=0.7, stroke_width=2)
+        planet2.move_to(RIGHT * 2 + DOWN * 2)
+        p2_label = MathTex(r"m_2", font_size=28, color=TEXT_WHITE)
+        p2_label.move_to(planet2.get_center())
+
+        # Arrows showing mutual attraction
+        arrow1 = Arrow(start=LEFT * 1.2 + DOWN * 2, end=RIGHT * 0.8 + DOWN * 2,
+                      color=FLAME_PRIMARY, stroke_width=4)
+        arrow2 = Arrow(start=RIGHT * 1.2 + DOWN * 2, end=LEFT * 0.8 + DOWN * 2,
+                      color=FLAME_PRIMARY, stroke_width=4)
+
+        pull_text = Text("BOTH objects pull each other!", font_size=32, color=FLAME_CORE)
+        pull_text.move_to(DOWN * 4)
+
+        # Inverse square law demonstration
+        inverse_title = Text("Distance 2x? Gravity = 1/4!", font_size=36, color=GOLD, weight=BOLD)
+        inverse_title.move_to(DOWN * 5.5)
+
+        # Animations
+        self.play(Write(title), run_time=0.4)
+        self.play(Create(formula_box), run_time=0.5)
+        self.play(Write(formula), run_time=0.5)
         self.wait(wait_time)
 
-        # Three boxes showing relationship
-        box1 = self.create_info_box("n", "moles", CYAN, 1.8)
-        box1.shift(LEFT * 2.5 + DOWN * 1.5)
-
-        box2 = self.create_info_box("M", "molarity", PRIMARY, 1.8)
-        box2.shift(DOWN * 1.5)
-
-        box3 = self.create_info_box("V", "volume (L)", ORANGE, 1.8)
-        box3.shift(RIGHT * 2.5 + DOWN * 1.5)
-
+        # Show the planets
         self.play(
-            FadeIn(box1, scale=0.8),
-            FadeIn(box2, scale=0.8),
-            FadeIn(box3, scale=0.8),
+            DrawBorderThenFill(planet1), FadeIn(p1_label),
+            DrawBorderThenFill(planet2), FadeIn(p2_label),
+            run_time=0.6
+        )
+        self.wait(wait_time)
+
+        # Show mutual attraction
+        self.play(GrowArrow(arrow1), GrowArrow(arrow2), run_time=0.5)
+        self.play(Write(pull_text), run_time=0.5)
+        self.wait(wait_time)
+
+        self.play(Write(inverse_title), run_time=0.5)
+        self.wait(wait_time)
+
+        self.play(FadeOut(Group(*[m for m in self.mobjects if m != self.watermark])), run_time=0.3)
+
+    def segment_03_content_part3(self, timing):
+        """Content Part 3: Gravitational waves and 8-minute fact (10.896s)"""
+        duration = timing['duration']
+
+        # Calculate timing
+        fixed_time = 0.4 + 0.6 + 0.5 + 0.5 + 0.5 + 0.4 + 0.3  # 3.2s
+        num_waits = 4
+        wait_time = max(0.1, (duration - fixed_time) / num_waits)
+
+        # Title
+        title = Text("SHOCKING FACT!", font_size=52, color=WRONG_RED, weight=BOLD)
+        title.to_edge(UP, buff=1)
+
+        # Speed of gravity
+        speed_text = Text("Gravity travels at LIGHT SPEED!", font_size=40, color=CYAN, weight=BOLD)
+        speed_text.move_to(UP * 2.5)
+
+        # Sun and Earth setup
+        sun = Circle(radius=0.8, color=GOLD, fill_opacity=0.9, stroke_width=3)
+        sun.move_to(LEFT * 2 + DOWN * 0.5)
+        sun_label = Text("SUN", font_size=24, color=TEXT_WHITE, weight=BOLD)
+        sun_label.move_to(sun.get_center())
+
+        earth = Circle(radius=0.4, color=PHYSICS_BLUE, fill_opacity=0.8, stroke_width=2)
+        earth.move_to(RIGHT * 2.5 + DOWN * 0.5)
+        earth_label = Text("Earth", font_size=18, color=TEXT_WHITE)
+        earth_label.move_to(earth.get_center())
+
+        # Orbit path
+        orbit = Circle(radius=2.2, color=TEXT_GRAY, stroke_width=1, stroke_opacity=0.5)
+        orbit.move_to(LEFT * 0.3 + DOWN * 0.5)
+
+        # Gravitational wave ripples
+        waves = VGroup()
+        for i in range(1, 5):
+            wave = Circle(radius=i * 0.5, color=SPACE_PURPLE, stroke_width=2,
+                         stroke_opacity=1 - i * 0.2)
+            wave.move_to(sun.get_center())
+            waves.add(wave)
+
+        # 8 minutes text
+        eight_min = Text("8 MINUTES to reach Earth!", font_size=36, color=FLAME_CORE)
+        eight_min.move_to(DOWN * 3)
+
+        # Mind-blow scenario
+        disappear_text = Text("If Sun DISAPPEARED...", font_size=32, color=TEXT_WHITE)
+        disappear_text.move_to(DOWN * 4.2)
+
+        orbit_text = Text("We orbit NOTHING for 8 minutes!", font_size=34, color=GOLD, weight=BOLD)
+        orbit_text.move_to(DOWN * 5.5)
+
+        # Animations
+        self.play(Write(title), run_time=0.4)
+        self.play(Write(speed_text), run_time=0.6)
+        self.wait(wait_time)
+
+        # Show Sun and Earth with orbit
+        self.play(
+            GrowFromCenter(sun), FadeIn(sun_label),
+            Create(orbit),
+            GrowFromCenter(earth), FadeIn(earth_label),
             run_time=0.5
         )
 
-        self.wait(wait_time)
-
-        # Highlight: ALWAYS convert to LITERS
-        warning_box = RoundedRectangle(
-            width=6.5, height=0.9, corner_radius=0.15,
-            fill_color=YELLOW, fill_opacity=0.2,
-            stroke_color=YELLOW, stroke_width=3
+        # Show gravitational waves
+        self.play(
+            AnimationGroup(*[GrowFromCenter(w) for w in waves], lag_ratio=0.15),
+            run_time=0.5
         )
-        warning_box.shift(DOWN * 3)
-
-        warning_text = Text("ALWAYS convert to LITERS!", font_size=30, color=YELLOW, weight=BOLD)
-        warning_text.move_to(warning_box.get_center())
-
-        self.play(Create(warning_box), Write(warning_text), run_time=0.5)
-
         self.wait(wait_time)
 
-        # Common mistake animation
-        mistake_title = Text("Common Mistake:", font_size=30, color=WRONG_RED, weight=BOLD)
-        mistake_title.shift(DOWN * 4.2)
-        self.play(Write(mistake_title), run_time=0.5)
-
-        # Student using mL
-        wrong_calc = MathTex(r"M = \frac{n}{500 \text{ mL}}", font_size=32, color=WRONG_RED)
-        wrong_calc.shift(DOWN * 5)
-
-        cross = Text("✗", font_size=48, color=WRONG_RED)
-        cross.next_to(wrong_calc, RIGHT, buff=0.3)
-
-        wrong_result = Text("1000× WRONG!", font_size=28, color=WRONG_RED, weight=BOLD)
-        wrong_result.shift(DOWN * 5.8)
-
-        self.play(Write(wrong_calc), FadeIn(cross), run_time=0.6)
-        self.play(Write(wrong_result), run_time=0.5)
-
+        self.play(Write(eight_min), run_time=0.5)
+        self.play(Write(disappear_text), run_time=0.4)
         self.wait(wait_time)
 
-        self.play(FadeOut(*self.mobjects[1:]), run_time=0.3)
-
-    # ========================================
-    # SEGMENT 06: EXAM TIP - JEE/NEET (20.76s)
-    # ========================================
-    def segment_06_exam_tip(self, timing):
-        """JEE/NEET question solve with mL trap warning."""
-        duration = timing.get('duration', 20.76)
-        anims = [0.4, 0.5, 0.6, 0.5, 0.5, 0.4, 0.4, 0.4, 0.5, 0.4, 0.5, 0.4, 0.3]
-        wait_time = calc_wait(duration, anims, 5)
-
-        # JEE/NEET badge
-        badge = self.create_exam_badge("JEE / NEET", ORANGE)
-        badge.to_edge(UP, buff=1.4)
-        self.play(FadeIn(badge, scale=0.8), run_time=0.4)
-
-        # Question box
-        q_box = RoundedRectangle(
-            width=7, height=1.8, corner_radius=0.2,
-            fill_color="#1a3329", fill_opacity=0.9,
-            stroke_color=CYAN, stroke_width=3
+        # Sun disappears effect
+        self.play(
+            sun.animate.set_opacity(0.3),
+            sun_label.animate.set_opacity(0.3),
+            Write(orbit_text),
+            run_time=0.3
         )
-        q_box.shift(UP * 1.8)
-
-        q_text = VGroup(
-            Text("Question:", font_size=28, color=CYAN, weight=BOLD),
-            Text("4g NaOH in 500 mL", font_size=30, color=TEXT_WHITE),
-            Text("Find Molarity (M)", font_size=28, color=YELLOW)
-        ).arrange(DOWN, buff=0.15)
-        q_text.move_to(q_box.get_center())
-
-        self.play(Create(q_box), run_time=0.3)
-        self.play(Write(q_text), run_time=0.6)
-
         self.wait(wait_time)
 
-        # Solution steps
-        sol_title = Text("Solution:", font_size=32, color=PRIMARY, weight=BOLD)
-        sol_title.shift(DOWN * 0.2)
-        self.play(Write(sol_title), run_time=0.5)
+        self.play(FadeOut(Group(*[m for m in self.mobjects if m != self.watermark])), run_time=0.3)
 
-        # Step 1: Calculate moles
-        step1 = MathTex(r"n = \frac{\text{mass}}{\text{molar mass}} = \frac{4}{40}", font_size=30, color=TEXT_WHITE)
-        step1.shift(DOWN * 0.9)
-        self.play(Write(step1), run_time=0.5)
+    def segment_04_reveal(self, timing):
+        """Reveal: Gravity = curved space pushing you! (11.064s)"""
+        duration = timing['duration']
 
-        step1_result = MathTex(r"= 0.1 \text{ mol}", font_size=30, color=CYAN)
-        step1_result.next_to(step1, RIGHT, buff=0.2)
-        self.play(Write(step1_result), run_time=0.4)
+        # Calculate timing
+        fixed_time = 0.4 + 0.6 + 0.6 + 0.5 + 0.5 + 0.5 + 0.3  # 3.4s
+        num_waits = 4
+        wait_time = max(0.1, (duration - fixed_time) / num_waits)
 
+        # Epic title
+        title = Text("THE REAL ANSWER!", font_size=56, color=GOLD, weight=BOLD)
+        title.to_edge(UP, buff=1)
+
+        # First reveal - NOT a force
+        not_force = Text("Gravity is NOT a FORCE!", font_size=44, color=WRONG_RED, weight=BOLD)
+        not_force.move_to(UP * 2.5)
+
+        # Strike through "FORCE"
+        strike = Line(LEFT * 1.2, RIGHT * 1.2, color=WRONG_RED, stroke_width=6)
+        strike.move_to(not_force.get_center() + RIGHT * 1)
+
+        # Second reveal - curved space
+        curved = Text("It's CURVED SPACE!", font_size=48, color=CYAN, weight=BOLD)
+        curved.move_to(UP * 0.5)
+
+        # Push vs Pull visualization
+        push_text = Text("That PUSHES you along!", font_size=40, color=CORRECT_GREEN, weight=BOLD)
+        push_text.move_to(DOWN * 1)
+
+        # Obsessive ex callback
+        ex_box = RoundedRectangle(width=6.5, height=2, corner_radius=0.3,
+                                  color=FLAME_PRIMARY, fill_opacity=0.2, stroke_width=3)
+        ex_box.move_to(DOWN * 3.5)
+
+        ex_text = Text("Like the Universe's\nOBSESSIVE EX!", font_size=36, color=FLAME_CORE, weight=BOLD)
+        ex_text.move_to(ex_box.get_center())
+
+        never_lets_go = Text("NEVER lets go!", font_size=32, color=WRONG_RED)
+        never_lets_go.move_to(DOWN * 5.5)
+
+        # Animations
+        self.play(Write(title), run_time=0.4)
+        self.play(Write(not_force), run_time=0.6)
+        self.play(Create(strike), run_time=0.6)
         self.wait(wait_time)
-
-        # Step 2: Convert volume to L (HIGHLIGHT!)
-        step2_box = RoundedRectangle(
-            width=6, height=0.8, corner_radius=0.1,
-            fill_color=YELLOW, fill_opacity=0.3,
-            stroke_color=YELLOW, stroke_width=2
-        )
-        step2_box.shift(DOWN * 1.9)
-
-        step2 = MathTex(r"V = 500 \text{ mL} = 0.5 \text{ L}", font_size=30, color=YELLOW)
-        step2.move_to(step2_box.get_center())
-
-        self.play(Create(step2_box), Write(step2), run_time=0.4)
-
-        # TRAP warning
-        trap_text = Text("← TRAP! Always convert!", font_size=24, color=WRONG_RED, weight=BOLD)
-        trap_text.next_to(step2_box, RIGHT, buff=0.2)
-        self.play(Write(trap_text), run_time=0.4)
-
-        self.wait(wait_time)
-
-        # Step 3: Calculate M
-        step3 = MathTex(r"M = \frac{n}{V} = \frac{0.1}{0.5}", font_size=30, color=TEXT_WHITE)
-        step3.shift(DOWN * 2.9)
-        self.play(Write(step3), run_time=0.5)
-
-        # Final answer with box
-        ans_box = RoundedRectangle(
-            width=4, height=1, corner_radius=0.2,
-            fill_color=PRIMARY, fill_opacity=0.3,
-            stroke_color=PRIMARY, stroke_width=4
-        )
-        ans_box.shift(DOWN * 4)
-
-        answer = MathTex(r"M = 0.2 \text{ M}", font_size=40, color=PRIMARY)
-        answer.move_to(ans_box.get_center())
-
-        self.play(Create(ans_box), Write(answer), run_time=0.4)
-
-        # Checkmark
-        check = Text("✓", font_size=56, color=CORRECT_GREEN)
-        check.next_to(ans_box, RIGHT, buff=0.3)
-        self.play(FadeIn(check), run_time=0.5)
-
-        self.wait(wait_time)
-
-        # Pro tip badge
-        tip_box = RoundedRectangle(
-            width=7, height=1, corner_radius=0.15,
-            fill_color=ORANGE, fill_opacity=0.2,
-            stroke_color=ORANGE, stroke_width=3
-        )
-        tip_box.shift(DOWN * 5.5)
-
-        tip_text = Text("They LOVE giving volume in mL to confuse you!", font_size=24, color=ORANGE, weight=BOLD)
-        tip_text.move_to(tip_box.get_center())
-
-        self.play(Create(tip_box), Write(tip_text), run_time=0.4)
-
-        self.wait(wait_time)
-
-        self.play(FadeOut(*self.mobjects[1:]), run_time=0.3)
-
-    # ========================================
-    # SEGMENT 07: CTA (5.304s)
-    # ========================================
-    def segment_07_cta(self, timing):
-        """CTA with molecules forming FOLLOW text."""
-        duration = timing.get('duration', 5.304)
-
-        # Use the standard CTA from mixin
-        self._create_chemistry_cta(duration)
-
-    def _create_chemistry_cta(self, duration):
-        """Chemistry-specific CTA with molecule visual."""
-        anims = [0.4, 0.4, 0.4, 0.3, 0.3, 0.2, 0.2]
-        wait_time = calc_wait(duration, anims, 2, buffer=0.5)
-
-        # Molecule dots forming pattern
-        mol_dots = VGroup()
-        for i in range(12):
-            dot = Dot(
-                radius=0.15,
-                color=MOLECULE_COLORS[i % len(MOLECULE_COLORS)],
-                fill_opacity=0.8
-            )
-            dot.move_to(np.array([
-                np.random.uniform(-3, 3),
-                np.random.uniform(3, 5),
-                0
-            ]))
-            mol_dots.add(dot)
 
         self.play(
-            *[FadeIn(d, scale=0.3) for d in mol_dots],
-            run_time=0.4
+            GrowFromCenter(curved),
+            Flash(curved, color=CYAN),
+            run_time=0.5
         )
+        self.wait(wait_time)
 
-        # Official flame icon
-        flame = create_brand_flame(scale=0.7)
-        flame.move_to(UP * 3.5)
+        self.play(Write(push_text), run_time=0.5)
+        self.wait(wait_time)
+
+        self.play(
+            Create(ex_box),
+            Write(ex_text),
+            run_time=0.5
+        )
+        self.play(Write(never_lets_go), run_time=0.3)
+        self.wait(wait_time)
+
+        self.play(FadeOut(Group(*[m for m in self.mobjects if m != self.watermark])), run_time=0.3)
+
+    def segment_05_key_point(self, timing):
+        """Key Point: g = 9.8 m/s^2, formula g = GM/R^2 (10.2s)"""
+        duration = timing['duration']
+
+        # Calculate timing
+        fixed_time = 0.4 + 0.5 + 0.5 + 0.5 + 0.5 + 0.3  # 2.7s
+        num_waits = 4
+        wait_time = max(0.1, (duration - fixed_time) / num_waits)
+
+        # Title
+        title = Text("Key Formula!", font_size=52, color=PHYSICS_BLUE, weight=BOLD)
+        title.to_edge(UP, buff=1)
+
+        # Main formula box
+        formula_box = RoundedRectangle(width=6, height=2.5, corner_radius=0.25,
+                                       color=PHYSICS_BLUE, fill_opacity=0.2, stroke_width=3)
+        formula_box.move_to(UP * 1.5)
+
+        # Formula: g = GM/R^2
+        formula = MathTex(r"g = \frac{GM}{R^2}", font_size=64, color=CYAN)
+        formula.move_to(formula_box.get_center())
+
+        # Earth with radius marked
+        earth = Circle(radius=1.2, color=CORRECT_GREEN, fill_opacity=0.5, stroke_width=3)
+        earth.move_to(DOWN * 2 + LEFT * 2)
+        earth_label = Text("EARTH", font_size=24, color=TEXT_WHITE, weight=BOLD)
+        earth_label.move_to(earth.get_center())
+
+        # Radius arrow
+        radius_arrow = Arrow(start=earth.get_center(), end=earth.get_right(),
+                            color=GOLD, stroke_width=4)
+        r_label = Text("R", font_size=28, color=GOLD, weight=BOLD)
+        r_label.next_to(radius_arrow, UP, buff=0.1)
+
+        # Mass label
+        m_label = Text("M", font_size=28, color=TEXT_WHITE, weight=BOLD)
+        m_label.move_to(earth.get_center())
+
+        # Value at Earth's surface
+        value_box = RoundedRectangle(width=5, height=1.5, corner_radius=0.2,
+                                     color=CORRECT_GREEN, fill_opacity=0.2, stroke_width=2)
+        value_box.move_to(DOWN * 2 + RIGHT * 2)
+
+        g_value = MathTex(r"g = 9.8 \text{ m/s}^2", font_size=40, color=CORRECT_GREEN)
+        g_value.move_to(value_box.get_center())
+
+        at_surface = Text("At Earth's surface", font_size=28, color=TEXT_GRAY)
+        at_surface.next_to(value_box, DOWN, buff=0.3)
+
+        # Key reminder
+        remember = Text("Remember: R = Earth's radius!", font_size=32, color=FLAME_CORE)
+        remember.move_to(DOWN * 5)
+
+        # Animations
+        self.play(Write(title), run_time=0.4)
+        self.play(Create(formula_box), Write(formula), run_time=0.5)
+        self.wait(wait_time)
+
+        self.play(
+            DrawBorderThenFill(earth),
+            FadeIn(earth_label),
+            run_time=0.5
+        )
+        self.play(
+            GrowArrow(radius_arrow),
+            FadeIn(r_label),
+            FadeIn(m_label),
+            run_time=0.5
+        )
+        self.wait(wait_time)
+
+        self.play(Create(value_box), Write(g_value), run_time=0.5)
+        self.play(Write(at_surface), run_time=0.3)
+        self.wait(wait_time)
+
+        self.play(Write(remember), run_time=0.3)
+        self.wait(wait_time)
+
+        self.play(FadeOut(Group(*[m for m in self.mobjects if m != self.watermark])), run_time=0.3)
+
+    def segment_06_exam_tip(self, timing):
+        """Exam Tip: JEE trick - height where g is half (14.664s)"""
+        duration = timing['duration']
+
+        # Calculate timing
+        fixed_time = 0.4 + 0.5 + 0.6 + 0.6 + 0.5 + 0.5 + 0.4 + 0.3  # 3.8s
+        num_waits = 5
+        wait_time = max(0.1, (duration - fixed_time) / num_waits)
+
+        # Header
+        header_box = RoundedRectangle(width=5, height=1.2, corner_radius=0.2,
+                                      color=ORANGE, fill_opacity=0.9, stroke_width=0)
+        header_box.to_edge(UP, buff=1)
+        header = Text("JEE TRICK!", font_size=48, color=TEXT_WHITE, weight=BOLD)
+        header.move_to(header_box.get_center())
+
+        # Question
+        question = Text("At what height is g reduced to HALF?", font_size=36, color=CYAN, weight=BOLD)
+        question.move_to(UP * 2)
+
+        # Working box
+        work_box = RoundedRectangle(width=7, height=3.5, corner_radius=0.25,
+                                    color=PHYSICS_BLUE, fill_opacity=0.15, stroke_width=2)
+        work_box.move_to(DOWN * 0.5)
+
+        # Step by step
+        step1 = MathTex(r"g' = \frac{g}{2}", font_size=36, color=TEXT_WHITE)
+        step1.move_to(work_box.get_top() + DOWN * 0.6)
+
+        step2 = MathTex(r"\frac{GM}{(R+h)^2} = \frac{1}{2} \cdot \frac{GM}{R^2}",
+                       font_size=32, color=TEXT_WHITE)
+        step2.move_to(work_box.get_center())
+
+        # Answer highlight
+        answer_box = RoundedRectangle(width=6, height=1.3, corner_radius=0.2,
+                                      color=CORRECT_GREEN, fill_opacity=0.3, stroke_width=3)
+        answer_box.move_to(DOWN * 2.8)
+
+        answer = MathTex(r"h = (\sqrt{2} - 1)R \approx 0.414R",
+                        font_size=40, color=CORRECT_GREEN)
+        answer.move_to(answer_box.get_center())
+
+        # Common mistake warning
+        mistake_box = RoundedRectangle(width=7, height=1.5, corner_radius=0.2,
+                                       color=WRONG_RED, fill_opacity=0.2, stroke_width=3)
+        mistake_box.move_to(DOWN * 5)
+
+        mistake_text = Text("NOT half the distance!", font_size=32, color=WRONG_RED, weight=BOLD)
+        mistake_text.move_to(mistake_box.get_center() + UP * 0.2)
+
+        avoid = Text("Common mistake - AVOID this!", font_size=26, color=FLAME_CORE)
+        avoid.move_to(mistake_box.get_center() + DOWN * 0.4)
+
+        # Red circle around common mistake
+        red_circle = Circle(radius=0.6, color=WRONG_RED, stroke_width=4)
+        red_circle.move_to(answer.get_center() + LEFT * 2)
+
+        # Animations
+        self.play(Create(header_box), Write(header), run_time=0.4)
+        self.play(Write(question), run_time=0.5)
+        self.wait(wait_time)
+
+        self.play(Create(work_box), Write(step1), run_time=0.6)
+        self.play(Write(step2), run_time=0.6)
+        self.wait(wait_time)
+
+        self.play(Create(answer_box), Write(answer), run_time=0.5)
+        self.wait(wait_time)
+
+        self.play(
+            Create(mistake_box),
+            Write(mistake_text),
+            run_time=0.5
+        )
+        self.play(Write(avoid), run_time=0.4)
+        self.wait(wait_time)
+
+        self.play(Create(red_circle), run_time=0.3)
+        self.wait(wait_time)
+
+        self.play(FadeOut(Group(*[m for m in self.mobjects if m != self.watermark])), run_time=0.3)
+
+    def segment_07_cta(self, timing):
+        """CTA: Gravity never lets go... neither do we! (4.8s)"""
+        duration = timing['duration']
+
+        # Remove watermark for CTA slide
+        self.remove(self.watermark)
+
+        # Calculate timing
+        fixed_time = 0.4 + 0.3 + 0.3 + 0.3 + 0.3 + 0.3  # 1.9s
+        num_waits = 2
+        wait_time = max(0.1, (duration - fixed_time) / num_waits)
+
+        # Official brand flame
+        flame = create_brand_flame(scale=0.8)
+        flame.move_to(UP * 4)
+
+        # Hearts orbiting (obsessive ex callback)
+        hearts = VGroup()
+        for i, angle in enumerate([0, PI/3, 2*PI/3, PI, 4*PI/3, 5*PI/3]):
+            heart = Text("*", font_size=36, color=WRONG_RED)
+            heart.move_to(UP * 4 + np.array([1.5 * np.cos(angle), 1.5 * np.sin(angle), 0]))
+            hearts.add(heart)
+
+        # Main CTA text
+        gravity_text = Text("Gravity never lets go...", font_size=40, color=TEXT_WHITE)
+        gravity_text.move_to(UP * 1.5)
+
+        neither = Text("neither do we!", font_size=44, color=FLAME_CORE, weight=BOLD)
+        neither.move_to(UP * 0.3)
+
+        # JeetLo Physics
+        jeetlo = VGroup(
+            Text("Jeet", font_size=52, color=TEXT_WHITE, weight=BOLD),
+            Text("Lo", font_size=52, color=FLAME_PRIMARY, weight=BOLD),
+            Text(" Physics!", font_size=52, color=PHYSICS_BLUE, weight=BOLD)
+        ).arrange(RIGHT, buff=0.05)
+        jeetlo.move_to(DOWN * 1.2)
+
+        # Follow CTA
+        follow = Text("Follow for more!", font_size=40, color=GOLD, weight=BOLD)
+        follow.move_to(DOWN * 2.8)
+
+        # URL box
+        url_box = RoundedRectangle(width=5, height=1.1, corner_radius=0.3,
+                                   color=PHYSICS_BLUE, fill_opacity=0.15, stroke_width=3)
+        url_box.move_to(DOWN * 4.5)
+        url = Text("jeetlo.ai", font_size=44, color=PHYSICS_BLUE, weight=BOLD)
+        url.move_to(url_box.get_center())
+
+        # Animations
         self.play(FadeIn(flame, scale=0.5), run_time=0.4)
-
-        # JeetLo Chemistry!
-        jeet = Text("Jeet", font_size=52, color=TEXT_WHITE, weight=BOLD)
-        lo = Text("Lo", font_size=52, color=PRIMARY, weight=BOLD)
-        chem = Text(" Chemistry!", font_size=52, color=TEXT_WHITE, weight=BOLD)
-        jeetlo = VGroup(jeet, lo, chem).arrange(RIGHT, buff=0.05)
-        jeetlo.move_to(UP * 1.5)
-        self.play(FadeIn(jeetlo, scale=1.2), run_time=0.4)
-
-        # Follow tagline
-        follow = Text("Follow for more!", font_size=36, color=FLAME_CORE, weight=BOLD)
-        follow.move_to(DOWN * 0.3)
-        self.play(FadeIn(follow, shift=UP), run_time=0.3)
-
+        self.play(AnimationGroup(*[FadeIn(h, scale=0.5) for h in hearts], lag_ratio=0.1), run_time=0.3)
         self.wait(wait_time)
 
-        # URL
-        url = Text("jeetlo.ai", font_size=40, color=PHYSICS_BLUE, weight=BOLD)
-        url.move_to(DOWN * 2)
-        self.play(Write(url), run_time=0.3)
-
-        # Pricing
-        pricing = Text("All courses ₹499/month", font_size=26, color=TEXT_WHITE)
-        pricing.move_to(DOWN * 3)
-        self.play(FadeIn(pricing), run_time=0.2)
-
-        # Pulse flame
-        self.play(flame.animate.scale(1.15), run_time=0.1)
-        self.play(flame.animate.scale(1/1.15), run_time=0.1)
-
+        self.play(Write(gravity_text), run_time=0.3)
+        self.play(Write(neither), run_time=0.3)
+        self.play(FadeIn(jeetlo, scale=1.1), run_time=0.3)
         self.wait(wait_time)
 
-    # ========================================
-    # HELPER METHODS
-    # ========================================
-    def create_subject_badge(self, text, color):
-        """Create a subject badge with glow."""
-        badge_bg = RoundedRectangle(
-            width=4.5, height=0.85, corner_radius=0.2,
-            fill_color=color, fill_opacity=0.3,
-            stroke_color=color, stroke_width=3
-        )
-        badge_text = Text(text, font_size=34, color=color, weight=BOLD)
-        badge_text.move_to(badge_bg.get_center())
-        return VGroup(badge_bg, badge_text)
+        self.play(Write(follow), run_time=0.3)
+        self.play(Create(url_box), Write(url), run_time=0.3)
 
-    def create_exam_badge(self, text, color):
-        """Create an exam badge."""
-        badge = RoundedRectangle(
-            width=4, height=0.8, corner_radius=0.2,
-            fill_color=color, fill_opacity=0.3,
-            stroke_color=color, stroke_width=3
-        )
-        label = Text(text, font_size=28, color=color, weight=BOLD)
-        label.move_to(badge.get_center())
-        return VGroup(badge, label)
-
-    def create_volumetric_flask(self, scale=1.0):
-        """Create a volumetric flask shape."""
-        flask = VGroup()
-
-        # Neck (narrow tube)
-        neck = Rectangle(
-            width=0.4 * scale, height=1.0 * scale,
-            fill_color="#0A2F1F", fill_opacity=0.5,
-            stroke_color=CYAN, stroke_width=2
-        )
-        neck.shift(UP * 1.2 * scale)
-
-        # Body (bulb shape - approximated with ellipse)
-        body = Ellipse(
-            width=2.2 * scale, height=1.8 * scale,
-            fill_color="#0A2F1F", fill_opacity=0.5,
-            stroke_color=CYAN, stroke_width=2
-        )
-
-        # Base
-        base = Rectangle(
-            width=2.4 * scale, height=0.2 * scale,
-            fill_color=CYAN, fill_opacity=0.3,
-            stroke_color=CYAN, stroke_width=2
-        )
-        base.shift(DOWN * 0.9 * scale)
-
-        # Graduation mark
-        mark = Line(
-            start=LEFT * 1.1 * scale, end=RIGHT * 1.1 * scale,
-            color=CYAN, stroke_width=1
-        )
-        mark.shift(UP * 0.4 * scale)
-
-        flask.add(neck, body, base, mark)
-        return flask
-
-    def create_glass(self, height=2.5, width=1.2):
-        """Create a simple drinking glass."""
-        glass = VGroup()
-
-        # Glass body (trapezoid-ish)
-        left_line = Line(
-            start=np.array([-width/2 * 0.8, -height/2, 0]),
-            end=np.array([-width/2, height/2, 0]),
-            color=CYAN, stroke_width=2
-        )
-        right_line = Line(
-            start=np.array([width/2 * 0.8, -height/2, 0]),
-            end=np.array([width/2, height/2, 0]),
-            color=CYAN, stroke_width=2
-        )
-        bottom = Line(
-            start=np.array([-width/2 * 0.8, -height/2, 0]),
-            end=np.array([width/2 * 0.8, -height/2, 0]),
-            color=CYAN, stroke_width=2
-        )
-
-        glass.add(left_line, right_line, bottom)
-        return glass
-
-    def create_water_fill(self, glass, fill_level=0.8, color="#3498DB"):
-        """Create water fill inside a glass."""
-        glass_center = glass.get_center()
-        glass_bottom = glass.get_bottom()
-
-        # Approximate dimensions
-        width = 1.0
-        height = 2.0 * fill_level
-
-        water = Rectangle(
-            width=width, height=height,
-            fill_color=color, fill_opacity=0.5,
-            stroke_width=0
-        )
-        water.move_to(glass_bottom + UP * height/2)
-        return water
-
-    def create_powder_dots(self, count=5):
-        """Create Rasna powder dots."""
-        dots = VGroup()
-        for i in range(count):
-            dot = Dot(
-                radius=0.08,
-                color=ORANGE,
-                fill_opacity=0.9
-            )
-            dot.shift(np.array([
-                np.random.uniform(-0.3, 0.3),
-                np.random.uniform(-0.2, 0.2),
-                0
-            ]))
-            dots.add(dot)
-        return dots
-
-    def create_molecule_rain(self, count=20, target=ORIGIN):
-        """Create molecules that will 'rain' into a flask."""
-        molecules = VGroup()
-        for i in range(count):
-            mol = Dot(
-                radius=0.12,
-                color=MOLECULE_COLORS[i % len(MOLECULE_COLORS)],
-                fill_opacity=0.8
-            )
-            # Position around target with some spread
-            mol.move_to(target + np.array([
-                np.random.uniform(-0.7, 0.7),
-                np.random.uniform(-0.5, 0.5),
-                0
-            ]))
-            molecules.add(mol)
-        return molecules
-
-    def create_molecule_cluster(self, count=15, spread=0.8):
-        """Create a cluster of molecules."""
-        cluster = VGroup()
-        for i in range(count):
-            mol = Dot(
-                radius=0.1,
-                color=MOLECULE_COLORS[i % len(MOLECULE_COLORS)],
-                fill_opacity=0.85
-            )
-            mol.shift(np.array([
-                np.random.uniform(-spread, spread),
-                np.random.uniform(-spread * 0.6, spread * 0.6),
-                0
-            ]))
-            cluster.add(mol)
-        return cluster
-
-    def create_iv_bag(self):
-        """Create an IV drip bag visualization."""
-        bag = VGroup()
-
-        # Main bag body
-        body = RoundedRectangle(
-            width=2.5, height=3.2, corner_radius=0.3,
-            fill_color="#E8F4FD", fill_opacity=0.8,
-            stroke_color=BLUE, stroke_width=2
-        )
-
-        # Hanging hook
-        hook = Line(
-            start=UP * 1.6, end=UP * 2.2,
-            color=GRAY, stroke_width=3
-        )
-        hook_top = Circle(
-            radius=0.15, color=GRAY,
-            fill_opacity=0.5, stroke_width=2
-        )
-        hook_top.shift(UP * 2.35)
-
-        # Tube at bottom
-        tube = Rectangle(
-            width=0.15, height=0.6,
-            fill_color=CYAN, fill_opacity=0.5,
-            stroke_color=CYAN, stroke_width=1
-        )
-        tube.shift(DOWN * 1.9)
-
-        bag.add(body, hook, hook_top, tube)
-        return bag
-
-    def create_info_box(self, symbol, label, color, width=2.0):
-        """Create a small info box with symbol and label."""
-        box = VGroup()
-
-        bg = RoundedRectangle(
-            width=width, height=1.0, corner_radius=0.15,
-            fill_color=color, fill_opacity=0.2,
-            stroke_color=color, stroke_width=2
-        )
-
-        sym = Text(symbol, font_size=32, color=color, weight=BOLD)
-        sym.shift(UP * 0.15)
-
-        lab = Text(label, font_size=18, color=TEXT_WHITE)
-        lab.shift(DOWN * 0.25)
-
-        box.add(bg, sym, lab)
-        return box
+        # Subtle pulse on flame
+        self.play(flame.animate.scale(1.1), run_time=0.15)
+        self.play(flame.animate.scale(1/1.1), run_time=0.15)
 
 
-# Exports
-__all__ = ['MolarityReel']
+# Manim config for 9:16 vertical video
+config.pixel_width = PIXEL_WIDTH
+config.pixel_height = PIXEL_HEIGHT
+config.frame_width = FRAME_WIDTH
+config.frame_height = FRAME_HEIGHT
+config.background_color = PHYSICS_BG

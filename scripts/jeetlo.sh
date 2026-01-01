@@ -527,7 +527,9 @@ generate_audio() {
     # Combine audio
     echo ""
     echo "Combining segments..."
-    ls "$WORK_DIR/audio/"*.mp3 | sort | while read f; do
+    # Remove old combined file first, then list segment files (exclude combined_audio.mp3)
+    rm -f "$WORK_DIR/audio/combined_audio.mp3"
+    ls "$WORK_DIR/audio/"*.mp3 | grep -v combined_audio | sort | while read f; do
         echo "file '$(basename "$f")'"
     done > "$WORK_DIR/audio/concat.txt"
 
