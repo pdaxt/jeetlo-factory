@@ -1,0 +1,69 @@
+name: 📋 Track Request
+
+# Triggers when a new request is created in the requests/ folder
+# This is STATUS TRACKING ONLY - execution happens locally via jeetlo.sh
+
+on:
+  push:
+    paths:
+      - 'requests/*.json'
+    branches:
+      - main
+
+jobs:
+  track-new-request:
+    name: 📋 New Request Detected
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Detect new requests
+        id: detect
+        run: |
+          # Find newly added request files
+          NEW_REQUESTS=$(git diff --name-only --diff-filter=A HEAD~1 HEAD -- 'requests/*.json' || true)
+
+          if [ -z "$NEW_REQUESTS" ]; then
+            echo "No new requests detected"
+            echo "has_new=false" >> $GITHUB_OUTPUT
+          else
+            echo "New requests: $NEW_REQUESTS"
+            echo "has_new=true" >> $GITHUB_OUTPUT
+
+            # Get first request for summary
+            FIRST_REQUEST=$(echo "$NEW_REQUESTS" | head -1)
+            REEL_ID=$(basename "$FIRST_REQUEST" .json)
+            echo "reel_id=$REEL_ID" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Update summary
+        if: steps.detect.outputs.has_new == 'true'
+        run: |
+          REEL_ID="${{ steps.detect.outputs.reel_id }}"
+          REQUEST_FILE="requests/${REEL_ID}.json"
+
+          echo "# 📋 New Reel Request: $REEL_ID" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ -f "$REQUEST_FILE" ]; then
+            SUBJECT=$(jq -r '.subject // "unknown"' "$REQUEST_FILE")
+            TOPIC=$(jq -r '.topic // "unknown"' "$REQUEST_FILE")
+            HOOK=$(jq -r '.hook // "N/A"' "$REQUEST_FILE")
+
+            echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
+            echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
+            echo "| **Subject** | $SUBJECT |" >> $GITHUB_STEP_SUMMARY
+            echo "| **Topic** | $TOPIC |" >> $GITHUB_STEP_SUMMARY
+            echo "| **Hook** | $HOOK |" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "## ⏳ Awaiting Local Execution" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Run locally to process this request:" >> $GITHUB_STEP_SUMMARY
+          echo '```bash' >> $GITHUB_STEP_SUMMARY
+          echo "cd /Users/pran/Projects/libraries/jeetlo-factory" >> $GITHUB_STEP_SUMMARY
+          echo "./scripts/jeetlo.sh $REEL_ID" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY

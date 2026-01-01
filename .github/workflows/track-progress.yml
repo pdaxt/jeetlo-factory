@@ -1,0 +1,154 @@
+name: 📊 Track Progress
+
+# Triggers when proof chain is updated (local script pushes results)
+# This is STATUS TRACKING ONLY - validates chain integrity
+
+on:
+  push:
+    paths:
+      - 'reels/**/.proof_chain.json'
+      - 'db/reels.json'
+    branches:
+      - main
+
+jobs:
+  validate-chain:
+    name: 🔗 Validate Proof Chain
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Find updated chains
+        id: find
+        run: |
+          # Find all proof chain files that were modified
+          CHAINS=$(find reels -name '.proof_chain.json' -type f 2>/dev/null || true)
+
+          if [ -z "$CHAINS" ]; then
+            echo "No proof chains found"
+            echo "has_chains=false" >> $GITHUB_OUTPUT
+          else
+            echo "Found proof chains:"
+            echo "$CHAINS"
+            echo "has_chains=true" >> $GITHUB_OUTPUT
+            echo "chains<<EOF" >> $GITHUB_OUTPUT
+            echo "$CHAINS" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Validate all chains
+        if: steps.find.outputs.has_chains == 'true'
+        run: |
+          echo "# 🔗 Proof Chain Status" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          VALID_COUNT=0
+          INVALID_COUNT=0
+
+          for chain_file in ${{ steps.find.outputs.chains }}; do
+            REEL_ID=$(dirname "$chain_file" | xargs basename)
+
+            # Validate chain integrity
+            VALID=true
+            PREV_OUTPUT=""
+
+            STEPS=$(jq -c '.steps[]' "$chain_file" 2>/dev/null || echo "")
+
+            if [ -z "$STEPS" ]; then
+              VALID=false
+            else
+              while IFS= read -r step; do
+                STEP_NAME=$(echo "$step" | jq -r '.step')
+                INPUT_HASH=$(echo "$step" | jq -r '.input_hash')
+                OUTPUT_HASH=$(echo "$step" | jq -r '.output_hash')
+
+                if [ -n "$PREV_OUTPUT" ] && [ "$INPUT_HASH" != "$PREV_OUTPUT" ]; then
+                  VALID=false
+                  break
+                fi
+                PREV_OUTPUT="$OUTPUT_HASH"
+              done <<< "$STEPS"
+            fi
+
+            # Get chain info
+            STEP_COUNT=$(jq '.steps | length' "$chain_file" 2>/dev/null || echo "0")
+            STATUS=$(jq -r '.status // "in_progress"' "$chain_file" 2>/dev/null || echo "unknown")
+            SUBJECT=$(jq -r '.subject // "unknown"' "$chain_file" 2>/dev/null || echo "unknown")
+
+            if [ "$VALID" = true ]; then
+              VALID_COUNT=$((VALID_COUNT + 1))
+              echo "## ✅ $REEL_ID" >> $GITHUB_STEP_SUMMARY
+            else
+              INVALID_COUNT=$((INVALID_COUNT + 1))
+              echo "## ❌ $REEL_ID (CHAIN BROKEN)" >> $GITHUB_STEP_SUMMARY
+            fi
+
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "| Property | Value |" >> $GITHUB_STEP_SUMMARY
+            echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
+            echo "| Subject | $SUBJECT |" >> $GITHUB_STEP_SUMMARY
+            echo "| Steps | $STEP_COUNT |" >> $GITHUB_STEP_SUMMARY
+            echo "| Status | $STATUS |" >> $GITHUB_STEP_SUMMARY
+            echo "| Valid | $VALID |" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+
+            # Show step details
+            echo "<details><summary>Chain Steps</summary>" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "| Step | Input Hash | Output Hash |" >> $GITHUB_STEP_SUMMARY
+            echo "|------|------------|-------------|" >> $GITHUB_STEP_SUMMARY
+            jq -r '.steps[] | "| \(.step) | \(.input_hash[0:12])... | \(.output_hash[0:12])... |"' "$chain_file" >> $GITHUB_STEP_SUMMARY 2>/dev/null || true
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "</details>" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          done
+
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Summary**: $VALID_COUNT valid, $INVALID_COUNT invalid" >> $GITHUB_STEP_SUMMARY
+
+          if [ "$INVALID_COUNT" -gt 0 ]; then
+            echo "::warning::Found $INVALID_COUNT broken proof chains"
+          fi
+
+  update-dashboard:
+    name: 📈 Update Dashboard Data
+    runs-on: ubuntu-latest
+    needs: validate-chain
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate dashboard data
+        run: |
+          # Create a summary JSON for the dashboard
+          mkdir -p db
+
+          # Count reels by status
+          PENDING=$(find requests -name '*.json' 2>/dev/null | wc -l | tr -d ' ')
+          IN_PROGRESS=$(find reels -name '.proof_chain.json' -exec jq -r 'select(.status == "in_progress" or .status == null) | .reel_id' {} \; 2>/dev/null | wc -l | tr -d ' ')
+          READY=$(find reels -name '.proof_chain.json' -exec jq -r 'select(.status == "ready_to_post") | .reel_id' {} \; 2>/dev/null | wc -l | tr -d ' ')
+          POSTED=$(find reels -name '.proof_chain.json' -exec jq -r 'select(.status == "posted") | .reel_id' {} \; 2>/dev/null | wc -l | tr -d ' ')
+
+          cat > db/dashboard.json << EOF
+          {
+            "updated_at": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
+            "counts": {
+              "pending_requests": $PENDING,
+              "in_progress": $IN_PROGRESS,
+              "ready_to_post": $READY,
+              "posted": $POSTED
+            },
+            "note": "Execution happens locally via jeetlo.sh"
+          }
+          EOF
+
+          echo "Dashboard data updated"
+          cat db/dashboard.json
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add db/dashboard.json
+          git diff --staged --quiet || git commit -m "Update dashboard data [skip ci]"
+          git push || true
