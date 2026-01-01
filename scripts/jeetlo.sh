@@ -453,7 +453,7 @@ generate_audio() {
 
     local voice=$(echo "$SUBJECT_CONFIG" | jq -r --arg s "$SUBJECT" '.[$s].voice')
     local speaking_rate=$(echo "$VOICE_SETTINGS" | jq -r '.speakingRate')
-    local token=$(gcloud auth print-access-token)
+    local token=$(gcloud auth application-default print-access-token)
 
     echo "Voice: $voice"
     echo "Speaking Rate: $speaking_rate (authoritative)"
