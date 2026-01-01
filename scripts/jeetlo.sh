@@ -575,54 +575,52 @@ create_video_script() {
     done
 
     claude --print --dangerously-skip-permissions --output-format json \
-        "You are a Manim animation expert. Create reel.py for this educational reel.
+        "TASK: Generate a Manim Python file for an educational reel.
+
+CRITICAL: Output ONLY raw Python code. NO markdown, NO explanation, NO summary.
+Start IMMEDIATELY with 'import' or 'from' - the first character must be code.
 
 CREATIVE BRIEF:
 $creative_brief
 
-TIMINGS (sync animations to these):
+TIMINGS:
 $timings
 
-VIDEO RULES (MANDATORY):
-$(echo "$VIDEO_RULES" | jq '.')
-
-SUBJECT CONFIG:
+CONFIG:
 - Background: $background
-- Accent Color: $color
+- Color: $color
 - Subject: $SUBJECT
 
-REQUIRED IMPORTS (manim-edu):
+REQUIRED STRUCTURE:
+\`\`\`python
+import sys
+sys.path.append('/Users/pran/Projects/ace/content-factory/brands/jeetlo/shared')
+from manim import *
+from jeetlo_style import JeetLoReelMixin, create_brand_watermark, add_cta_slide_$SUBJECT
 $import_line
-from manim_edu.primitives.colors import SUBJECT_COLORS
 
-REQUIRED PATTERNS:
-1. Import jeetlo_style: sys.path.append('/Users/pran/Projects/ace/content-factory/brands/jeetlo/shared')
-2. Use JeetLoReelMixin
-3. Load timings: self.timings = load_timings()
-4. Each segment method: segment_01_hook(self, timing), segment_02_setup(self, timing), etc.
-5. Use manim-edu primitives for visualizations
-6. Add watermark: create_brand_watermark()
-7. Add CTA at end: add_cta_slide_{subject}()
+class ${SUBJECT^}Reel(JeetLoReelMixin, Scene):
+    def construct(self):
+        self.camera.background_color = '$background'
+        self.add(create_brand_watermark())
+        # Call each segment method with timing
+        for seg in self.timings:
+            method = getattr(self, f'segment_{seg[\"id\"]}', None)
+            if method:
+                method(seg)
+        add_cta_slide_$SUBJECT(self)
 
-ANIMATION QUALITY REQUIREMENTS:
-- Use dynamic animations: Transform, GrowFromCenter, DrawBorderThenFill (not just FadeIn)
-- Color variety: 6+ unique colors
-- Motion: shift, move_to, rotate (objects MOVE)
-- Visual hierarchy: 4+ font sizes
-- Timing variety: Different run_times for rhythm
+    def segment_01_hook(self, timing):
+        duration = timing['duration']
+        # Calculate wait time from duration minus animation times
+        ...
+\`\`\`
 
-TIMING FORMULA (prevents audio/video desync):
-def segment_XX(self, timing):
-    duration = timing['duration']
-    fixed_anim_time = 0.6 + 0.5 + 0.3  # Sum of all run_time values
-    num_waits = 3  # Count of self.wait() calls
-    wait_time = max(0.1, (duration - fixed_anim_time) / num_waits)
-
-    self.play(Write(text), run_time=0.6)
-    self.wait(wait_time)
-    ...
-
-Output the COMPLETE reel.py code. Start with imports, end with the class." 2>/dev/null | jq -r '.result // .' > "$WORK_DIR/reel.py"
+RULES:
+- Each segment method takes timing dict with duration/startTime/endTime
+- Use calc_wait pattern: wait_time = (duration - sum_of_run_times) / num_waits
+- 6+ colors, dynamic animations (Transform, GrowFromCenter, not just FadeIn)
+- NO explanations - ONLY Python code" 2>/dev/null | jq -r '.result // .' | sed 's/^```python//;s/^```$//' | grep -v '^$' | head -1000 > "$WORK_DIR/reel.py"
 
     # Basic validation
     if grep -q "class.*Scene" "$WORK_DIR/reel.py" && grep -q "def construct" "$WORK_DIR/reel.py"; then
