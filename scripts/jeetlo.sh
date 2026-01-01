@@ -302,27 +302,57 @@ extract_json_object() {
     local input_file="$1"
     local output_file="$2"
 
-    # Try to extract from ```json blocks first
-    if grep -q '```json' "$input_file"; then
-        sed -n '/```json/,/```/{/```/d;p}' "$input_file" | jq '.' > "$output_file" 2>/dev/null
-        if [ -s "$output_file" ]; then return 0; fi
-    fi
-
-    # Try ```  blocks
-    if grep -q '```' "$input_file"; then
-        sed -n '/```/,/```/{/```/d;p}' "$input_file" | jq '.' > "$output_file" 2>/dev/null
-        if [ -s "$output_file" ]; then return 0; fi
-    fi
-
-    # Try to find JSON starting with { and ending with }
+    # Use Python for reliable cross-platform JSON extraction
     python3 << EOF
 import re
 import json
+import sys
 
 with open('$input_file') as f:
     content = f.read()
 
-# Find JSON object pattern
+# Method 1: Try to extract from \`\`\`json blocks
+json_block_match = re.search(r'\`\`\`json\s*\n(.*?)\n\s*\`\`\`', content, re.DOTALL)
+if json_block_match:
+    try:
+        obj = json.loads(json_block_match.group(1))
+        with open('$output_file', 'w') as f:
+            json.dump(obj, f, indent=2)
+        sys.exit(0)
+    except json.JSONDecodeError:
+        pass
+
+# Method 2: Try generic code blocks
+code_block_match = re.search(r'\`\`\`\s*\n(.*?)\n\s*\`\`\`', content, re.DOTALL)
+if code_block_match:
+    try:
+        obj = json.loads(code_block_match.group(1))
+        with open('$output_file', 'w') as f:
+            json.dump(obj, f, indent=2)
+        sys.exit(0)
+    except json.JSONDecodeError:
+        pass
+
+# Method 3: Find JSON object directly (handles nested objects)
+# Find all { positions and try to parse from each
+brace_positions = [i for i, c in enumerate(content) if c == '{']
+for start in brace_positions:
+    depth = 0
+    for i, c in enumerate(content[start:], start):
+        if c == '{':
+            depth += 1
+        elif c == '}':
+            depth -= 1
+            if depth == 0:
+                try:
+                    obj = json.loads(content[start:i+1])
+                    with open('$output_file', 'w') as f:
+                        json.dump(obj, f, indent=2)
+                    sys.exit(0)
+                except json.JSONDecodeError:
+                    break
+
+# Method 4: Old regex pattern for simple JSON
 match = re.search(r'\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}', content, re.DOTALL)
 if match:
     try:
@@ -342,28 +372,41 @@ extract_json_array() {
     local input_file="$1"
     local output_file="$2"
 
-    # Try to extract from ```json blocks first
-    if grep -q '```json' "$input_file"; then
-        sed -n '/```json/,/```/{/```/d;p}' "$input_file" | jq '.' > "$output_file" 2>/dev/null
-        if [ -s "$output_file" ]; then return 0; fi
-    fi
-
-    # Try ``` blocks
-    if grep -q '```' "$input_file"; then
-        sed -n '/```/,/```/{/```/d;p}' "$input_file" | jq '.' > "$output_file" 2>/dev/null
-        if [ -s "$output_file" ]; then return 0; fi
-    fi
-
-    # Try to find JSON array starting with [ and ending with ]
+    # Use Python for reliable cross-platform JSON extraction
     python3 << EOF
 import re
 import json
+import sys
 
 with open('$input_file') as f:
     content = f.read()
 
-# Find JSON array pattern
-match = re.search(r'\[[\s\S]*?\](?=\s*$|\s*```|\s*\n\n)', content)
+# Method 1: Try to extract from \`\`\`json blocks
+json_block_match = re.search(r'\`\`\`json\s*\n(.*?)\n\s*\`\`\`', content, re.DOTALL)
+if json_block_match:
+    try:
+        arr = json.loads(json_block_match.group(1))
+        if isinstance(arr, list):
+            with open('$output_file', 'w') as f:
+                json.dump(arr, f, indent=2)
+            sys.exit(0)
+    except json.JSONDecodeError:
+        pass
+
+# Method 2: Try generic code blocks
+code_block_match = re.search(r'\`\`\`\s*\n(.*?)\n\s*\`\`\`', content, re.DOTALL)
+if code_block_match:
+    try:
+        arr = json.loads(code_block_match.group(1))
+        if isinstance(arr, list):
+            with open('$output_file', 'w') as f:
+                json.dump(arr, f, indent=2)
+            sys.exit(0)
+    except json.JSONDecodeError:
+        pass
+
+# Method 3: Find JSON array pattern
+match = re.search(r'\[[\s\S]*?\](?=\s*$|\s*\`\`\`|\s*\n\n)', content)
 if match:
     try:
         arr = json.loads(match.group())
@@ -647,41 +690,56 @@ extract_python_code() {
     local input_file="$1"
     local output_file="$2"
 
-    # Try multiple extraction methods
+    # Use Python for reliable cross-platform extraction
+    python3 << EOF
+import re
+import sys
 
-    # Method 1: Extract from ```python ... ``` blocks
-    if grep -q '```python' "$input_file"; then
-        sed -n '/```python/,/```/{/```python/d;/```/d;p}' "$input_file" > "$output_file"
-        if [ -s "$output_file" ] && grep -q "class.*Scene" "$output_file"; then
-            return 0
-        fi
-    fi
+with open('$input_file') as f:
+    content = f.read()
 
-    # Method 2: Extract from ``` ... ``` blocks (generic code blocks)
-    if grep -q '```' "$input_file"; then
-        sed -n '/```/,/```/{/```/d;p}' "$input_file" | head -n -0 > "$output_file"
-        if [ -s "$output_file" ] && grep -q "class.*Scene" "$output_file"; then
-            return 0
-        fi
-    fi
+# Method 1: Extract from \`\`\`python ... \`\`\` blocks
+python_match = re.search(r'\`\`\`python\s*\n(.*?)\n\s*\`\`\`', content, re.DOTALL)
+if python_match:
+    code = python_match.group(1)
+    if 'class' in code and 'Scene' in code:
+        with open('$output_file', 'w') as f:
+            f.write(code)
+        sys.exit(0)
 
-    # Method 3: Find lines starting with import/from/class and take everything after
-    if grep -q "^import\|^from\|^class" "$input_file"; then
-        grep -n "^import\|^from" "$input_file" | head -1 | cut -d: -f1 | while read start_line; do
-            tail -n +$start_line "$input_file" > "$output_file"
-        done
-        if [ -s "$output_file" ] && grep -q "class.*Scene" "$output_file"; then
-            return 0
-        fi
-    fi
+# Method 2: Extract from generic \`\`\` ... \`\`\` blocks
+code_match = re.search(r'\`\`\`\s*\n(.*?)\n\s*\`\`\`', content, re.DOTALL)
+if code_match:
+    code = code_match.group(1)
+    if 'class' in code and 'Scene' in code:
+        with open('$output_file', 'w') as f:
+            f.write(code)
+        sys.exit(0)
 
-    # Method 4: Just copy as-is if it looks like Python
-    if grep -q "class.*Scene" "$input_file" && grep -q "def construct" "$input_file"; then
-        cp "$input_file" "$output_file"
-        return 0
-    fi
+# Method 3: Find code starting with import/from/class
+lines = content.split('\n')
+start_idx = None
+for i, line in enumerate(lines):
+    if line.startswith('import ') or line.startswith('from ') or line.startswith('class '):
+        start_idx = i
+        break
 
-    return 1
+if start_idx is not None:
+    code = '\n'.join(lines[start_idx:])
+    if 'class' in code and 'Scene' in code:
+        with open('$output_file', 'w') as f:
+            f.write(code)
+        sys.exit(0)
+
+# Method 4: Copy as-is if it looks like Python
+if 'class' in content and 'Scene' in content and 'def construct' in content:
+    with open('$output_file', 'w') as f:
+        f.write(content)
+    sys.exit(0)
+
+sys.exit(1)
+EOF
+    return $?
 }
 
 create_video_script() {
