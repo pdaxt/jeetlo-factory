@@ -882,7 +882,7 @@ REQUIREMENTS:
 1. Create a segment method for EACH entry in timings (segment_01_hook, segment_02_setup, etc.)
 2. Each segment must use timing['duration'] to calculate wait times correctly
 3. MUST use manim-edu components for stunning scientific visualizations
-4. Use 6+ colors from: RED, BLUE, GREEN, YELLOW, ORANGE, PURPLE, CYAN, PINK, WHITE
+4. Use 6+ colors from: RED, BLUE, GREEN, YELLOW, ORANGE, PURPLE, TEAL, PINK, WHITE, GOLD (NOT CYAN - use TEAL instead)
 5. Clear all objects at end of each segment with self.clear() or FadeOut
 6. Match the visual scenes described in the creative brief
 7. CTA segment must include jeetlo.ai and "Follow for more!"
