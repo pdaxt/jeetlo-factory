@@ -779,24 +779,21 @@ create_video_script() {
     while [ $attempt -le $max_attempts ] && [ "$success" = false ]; do
         echo "Attempt $attempt of $max_attempts..."
 
+        # Pre-compute capitalized subject for class name
+        local subject_cap=$(echo "${SUBJECT:0:1}" | tr '[:lower:]' '[:upper:]')${SUBJECT:1}
+
         # Use different prompts for retries
         local prompt_prefix=""
         if [ $attempt -eq 2 ]; then
-            prompt_prefix="IMPORTANT: Your previous response was not valid Python code. This time, output ONLY the Python code with NO explanations, summaries, or markdown.
-
-"
+            prompt_prefix="IMPORTANT: Your previous response was not valid Python code. This time, output ONLY the Python code with NO explanations, summaries, or markdown."
         elif [ $attempt -eq 3 ]; then
-            prompt_prefix="FINAL ATTEMPT - OUTPUT ONLY PYTHON CODE.
-Do not say anything before or after the code.
-Start with 'import sys' and end with the last method.
-NO markdown code fences. NO explanations. JUST CODE.
-
-"
+            prompt_prefix="FINAL ATTEMPT - OUTPUT ONLY PYTHON CODE. No markdown. Start with import sys."
         fi
 
-        # Generate the video script
-        claude --print --dangerously-skip-permissions \
-            "${prompt_prefix}Generate a complete Manim Python file for an educational reel.
+        # Build prompt file to avoid bash substitution issues
+        cat > "$WORK_DIR/prompt_$attempt.txt" << PROMPT_EOF
+${prompt_prefix}
+Generate a complete Manim Python file for an educational reel.
 
 CREATIVE BRIEF:
 $creative_brief
@@ -815,9 +812,9 @@ The file must start exactly like this:
 import sys
 sys.path.append('/Users/pran/Projects/ace/content-factory/brands/jeetlo/shared')
 from manim import *
-from jeetlo_style import JeetLoReelMixin, create_brand_watermark, add_cta_slide_$SUBJECT
+from jeetlo_style import JeetLoReelMixin, create_brand_watermark, add_cta_slide_${SUBJECT}
 
-class ${SUBJECT^}Reel(JeetLoReelMixin, Scene):
+class ${subject_cap}Reel(JeetLoReelMixin, Scene):
     def construct(self):
         self.camera.background_color = '$background'
         self.add(create_brand_watermark())
@@ -829,13 +826,13 @@ class ${SUBJECT^}Reel(JeetLoReelMixin, Scene):
 
         # Call each segment
         for seg in self.timings:
-            method_name = f\"segment_{seg['id']}\"
+            method_name = f"segment_{seg['id']}"
             method = getattr(self, method_name, None)
             if method:
                 method(seg)
 
         # Add CTA at end
-        add_cta_slide_$SUBJECT(self)
+        add_cta_slide_${SUBJECT}(self)
 
     def segment_01_hook(self, timing):
         duration = timing['duration']
@@ -852,7 +849,11 @@ REQUIREMENTS:
 5. Clear all objects at end of each segment with self.clear() or FadeOut
 6. Match the visual scenes described in the creative brief
 
-Output the complete Python file now:" 2>&1 > "$WORK_DIR/reel_raw_$attempt.txt"
+Output the complete Python file now:
+PROMPT_EOF
+
+        # Generate the video script using the prompt file
+        claude --print --dangerously-skip-permissions "$(cat "$WORK_DIR/prompt_$attempt.txt")" 2>&1 > "$WORK_DIR/reel_raw_$attempt.txt"
 
         # Extract Python code from the output
         if extract_python_code "$WORK_DIR/reel_raw_$attempt.txt" "$WORK_DIR/reel.py"; then
