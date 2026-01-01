@@ -1,0 +1,15 @@
+{
+  "reel_id": "bio-XX-topic-name",
+  "subject": "biology",
+  "topic": "Describe the topic you want to create a reel about",
+  "hook": "What surprising question or fact will grab attention?",
+  "key_fact": "What is the main scientific fact to teach?",
+  "why_it_matters": "Why should students care about this?",
+  "exam_relevance": "How does this appear in JEE/NEET exams?",
+  "cta": "Follow for more science facts!",
+  "style": {
+    "tone": "curious and engaging",
+    "language": "hinglish",
+    "target_duration_seconds": 45
+  }
+}

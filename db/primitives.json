@@ -1,0 +1,61 @@
+{
+  "version": "1.0.0",
+  "manim_edu_path": "/Users/pran/Projects/libraries/manim-edu",
+  "last_synced": "2026-01-01T00:00:00Z",
+  "available": {
+    "chemistry": {
+      "MoleculeBuilder": {
+        "methods": ["water", "methane", "ethanol", "benzene", "generic_molecule"],
+        "description": "Creates 3D molecular structures"
+      }
+    },
+    "biology": {
+      "CellVisualizer": {
+        "methods": ["animal_cell", "plant_cell"],
+        "description": "Creates cell diagrams with organelles"
+      }
+    },
+    "physics": {
+      "WaveSimulator": {
+        "methods": ["sine_wave", "standing_wave", "interference"],
+        "description": "Wave animations"
+      },
+      "FieldVisualizer": {
+        "methods": ["electric_field", "magnetic_field", "gravitational_field"],
+        "description": "Field line visualizations"
+      },
+      "MechanicsSimulator": {
+        "methods": ["projectile", "pendulum", "spring"],
+        "description": "Mechanics simulations"
+      }
+    },
+    "mathematics": {
+      "GraphAnimator": {
+        "methods": ["bar_chart", "line_chart", "pie_chart", "function_plot"],
+        "description": "Chart and graph animations"
+      }
+    },
+    "effects": {
+      "ParticleSystem": {
+        "methods": ["explosion", "flow", "random"],
+        "description": "Particle effects"
+      }
+    },
+    "primitives": {
+      "Atom": {
+        "description": "Single atom sphere with color and radius"
+      },
+      "Bond": {
+        "description": "Chemical bond between atoms"
+      },
+      "DashedBond": {
+        "description": "Dashed bond for 3D perspective"
+      },
+      "Projection3D": {
+        "description": "3D to 2D projection utilities"
+      }
+    }
+  },
+  "pending_requests": [],
+  "approved_requests": []
+}

@@ -1,0 +1,57 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2026-01-01T00:00:00Z",
+  "counters": {
+    "biology": 5,
+    "chemistry": 15,
+    "physics": 0,
+    "mathematics": 0
+  },
+  "reels": [
+    {
+      "reel_id": "bio-01-bacteria-vs-human",
+      "subject": "biology",
+      "topic": "More bacteria than human cells",
+      "status": "posted",
+      "created_at": "2024-12-01T00:00:00Z",
+      "posted_at": "2024-12-01T12:00:00Z",
+      "platforms": ["instagram", "youtube"]
+    },
+    {
+      "reel_id": "bio-02-mitochondria-powerhouse",
+      "subject": "biology",
+      "topic": "Mitochondria is the powerhouse",
+      "status": "posted",
+      "created_at": "2024-12-02T00:00:00Z",
+      "posted_at": "2024-12-02T12:00:00Z",
+      "platforms": ["instagram", "youtube"]
+    },
+    {
+      "reel_id": "bio-03-plant-vs-animal-cell",
+      "subject": "biology",
+      "topic": "Plant vs Animal cell differences",
+      "status": "posted",
+      "created_at": "2024-12-03T00:00:00Z",
+      "posted_at": "2024-12-03T12:00:00Z",
+      "platforms": ["instagram", "youtube"]
+    },
+    {
+      "reel_id": "bio-04-rbc-no-nucleus",
+      "subject": "biology",
+      "topic": "RBC has no nucleus",
+      "status": "posted",
+      "created_at": "2024-12-04T00:00:00Z",
+      "posted_at": "2024-12-04T12:00:00Z",
+      "platforms": ["instagram", "youtube"]
+    },
+    {
+      "reel_id": "bio-05-dna-right-handed",
+      "subject": "biology",
+      "topic": "DNA is right-handed helix",
+      "status": "posted",
+      "created_at": "2024-12-05T00:00:00Z",
+      "posted_at": "2024-12-05T12:00:00Z",
+      "platforms": ["instagram", "youtube"]
+    }
+  ]
+}
