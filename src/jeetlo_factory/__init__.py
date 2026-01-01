@@ -27,3 +27,7 @@ from .exceptions import (
 
 __version__ = "1.0.0"
 __all__ = ["Reel", "Manifest"]
+
+# Style module path for importing in reels
+import os
+STYLE_PATH = os.path.dirname(__file__)
