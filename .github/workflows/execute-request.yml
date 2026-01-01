@@ -1,0 +1,118 @@
+name: 🚀 Execute Request
+
+# Triggers when a new request is created - runs on self-hosted Mac runner
+# This is the EXECUTION workflow - runs jeetlo.sh pipeline locally
+
+on:
+  push:
+    paths:
+      - 'requests/*.json'
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      reel_id:
+        description: 'Reel ID to process (e.g., phy-01-gravity)'
+        required: true
+        type: string
+
+jobs:
+  execute-pipeline:
+    name: 🎬 Execute Pipeline
+    runs-on: [self-hosted, jeetlo]
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Detect pending requests
+        id: detect
+        run: |
+          if [ -n "${{ github.event.inputs.reel_id }}" ]; then
+            # Manual trigger with specific reel
+            REEL_ID="${{ github.event.inputs.reel_id }}"
+            echo "Manual trigger for: $REEL_ID"
+          else
+            # Auto-trigger from push
+            NEW_REQUESTS=$(git diff --name-only --diff-filter=A HEAD~1 HEAD -- 'requests/*.json' || true)
+
+            if [ -z "$NEW_REQUESTS" ]; then
+              # Check for modified requests with pending status
+              PENDING=$(find requests -name "*.json" -exec sh -c 'jq -e ".status == \"pending\"" "$1" > /dev/null 2>&1 && basename "$1" .json' _ {} \; | head -1)
+              REEL_ID="$PENDING"
+            else
+              REEL_ID=$(basename "$(echo "$NEW_REQUESTS" | head -1)" .json)
+            fi
+          fi
+
+          if [ -z "$REEL_ID" ]; then
+            echo "No pending requests to process"
+            echo "has_request=false" >> $GITHUB_OUTPUT
+          else
+            echo "Processing: $REEL_ID"
+            echo "has_request=true" >> $GITHUB_OUTPUT
+            echo "reel_id=$REEL_ID" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Execute jeetlo.sh
+        if: steps.detect.outputs.has_request == 'true'
+        env:
+          REEL_ID: ${{ steps.detect.outputs.reel_id }}
+          JEETLO_FACTORY_DIR: ${{ github.workspace }}
+        run: |
+          echo "# 🎬 Executing Pipeline: $REEL_ID" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Started at: $(date)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Run the pipeline
+          cd "$JEETLO_FACTORY_DIR"
+          ./scripts/jeetlo.sh "$REEL_ID" 2>&1 | tee pipeline.log
+
+          EXIT_CODE=${PIPESTATUS[0]}
+
+          if [ $EXIT_CODE -eq 0 ]; then
+            echo "## ✅ Pipeline Completed Successfully" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "## ❌ Pipeline Failed (exit code: $EXIT_CODE)" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Last 50 lines of log:" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            tail -50 pipeline.log >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            exit $EXIT_CODE
+          fi
+
+      - name: Push results
+        if: steps.detect.outputs.has_request == 'true' && success()
+        run: |
+          git config user.name "JeetLo Bot"
+          git config user.email "bot@jeetlo.ai"
+
+          # Add any changed files (proof chain, etc.)
+          git add -A
+
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "🤖 Pipeline complete: ${{ steps.detect.outputs.reel_id }}"
+            git push
+          fi
+
+      - name: Cleanup on failure
+        if: failure()
+        run: |
+          REEL_ID="${{ steps.detect.outputs.reel_id }}"
+          if [ -n "$REEL_ID" ] && [ -f "requests/${REEL_ID}.json" ]; then
+            # Mark as failed
+            jq '.status = "failed"' "requests/${REEL_ID}.json" > tmp.json
+            mv tmp.json "requests/${REEL_ID}.json"
+
+            git config user.name "JeetLo Bot"
+            git config user.email "bot@jeetlo.ai"
+            git add "requests/${REEL_ID}.json"
+            git commit -m "❌ Pipeline failed: $REEL_ID"
+            git push || true
+          fi
