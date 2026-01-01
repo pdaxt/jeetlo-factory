@@ -1,0 +1,83 @@
+{
+  "version": "1.0.0",
+  "reel_id": "bio-05-dna-right-handed",
+  "subject": "biology",
+  "created_at": "2026-01-01T06:06:16.604222+00:00",
+  "steps": [
+    {
+      "step_name": "create",
+      "timestamp": "2026-01-01T06:06:16.661699+00:00",
+      "input_hash": null,
+      "output_hash": "3d6ea95c49e6a459a67dc05f1564f71d067edbf8b96b3fbfeb2ddc29be9d77af",
+      "git_commit": "bf3ee21ecb59fb5368fa3c04e34d5d7d9e7873eb",
+      "git_has_uncommitted_changes": false,
+      "metadata": {
+        "subject": "biology",
+        "config": {
+          "color": "#CC66FF",
+          "voice": "hi-IN-Chirp3-HD-Leda",
+          "speaking_rate": 0.9
+        }
+      }
+    },
+    {
+      "step_name": "audio",
+      "timestamp": "2026-01-01T06:07:26.945719+00:00",
+      "input_hash": "3d6ea95c49e6a459a67dc05f1564f71d067edbf8b96b3fbfeb2ddc29be9d77af",
+      "output_hash": "f121a01624787f9d88588473218ccec34f8928752a6bd293df578182bdfffaba",
+      "git_commit": "bf3ee21ecb59fb5368fa3c04e34d5d7d9e7873eb",
+      "git_has_uncommitted_changes": false,
+      "metadata": {
+        "voice": "hi-IN-Chirp3-HD-Leda",
+        "speaking_rate": 0.9,
+        "segment_count": 8,
+        "total_duration": 51.144
+      }
+    },
+    {
+      "step_name": "video",
+      "timestamp": "2026-01-01T11:41:00.000000+00:00",
+      "input_hash": "f121a01624787f9d88588473218ccec34f8928752a6bd293df578182bdfffaba",
+      "output_hash": "2a35b4e8193e67264ed0f9fd361a44670c3d1eb00072b98806fe5ed0d3d46fa6",
+      "git_commit": "bf3ee21ecb59fb5368fa3c04e34d5d7d9e7873eb",
+      "git_has_uncommitted_changes": false,
+      "metadata": {
+        "class_name": "DNARightHandedReel",
+        "video_duration": 54.27,
+        "resolution": "1080x1920"
+      }
+    },
+    {
+      "step_name": "combine",
+      "timestamp": "2026-01-01T11:42:00.000000+00:00",
+      "input_hash": "2a35b4e8193e67264ed0f9fd361a44670c3d1eb00072b98806fe5ed0d3d46fa6",
+      "output_hash": "a14038c6d11b4a0b35b6bf3e7bfc25b3f8e35a822de4210576de0c67e5999eae",
+      "git_commit": "bf3ee21ecb59fb5368fa3c04e34d5d7d9e7873eb",
+      "git_has_uncommitted_changes": false,
+      "metadata": {
+        "final_duration": 51.12,
+        "file_size_kb": 2534
+      }
+    },
+    {
+      "step_name": "post",
+      "timestamp": "2026-01-01T12:06:00.000000+00:00",
+      "input_hash": "a14038c6d11b4a0b35b6bf3e7bfc25b3f8e35a822de4210576de0c67e5999eae",
+      "output_hash": "a14038c6d11b4a0b35b6bf3e7bfc25b3f8e35a822de4210576de0c67e5999eae",
+      "git_commit": "bf3ee21ecb59fb5368fa3c04e34d5d7d9e7873eb",
+      "git_has_uncommitted_changes": false,
+      "metadata": {
+        "platforms": {
+          "instagram": {
+            "post_id": "18078270716223954",
+            "status": "success"
+          },
+          "youtube": {
+            "status": "quota_exceeded"
+          }
+        }
+      }
+    }
+  ],
+  "status": "completed"
+}

@@ -3,43 +3,70 @@ name: Validate Reels
 on:
   push:
     branches: [main]
-    paths:
-      - 'reels/**'
-      - '.jeetlo_manifest.json'
   pull_request:
     branches: [main]
-    paths:
-      - 'reels/**'
-      - '.jeetlo_manifest.json'
+  workflow_dispatch:  # Allow manual triggers
 
 jobs:
   validate:
     runs-on: ubuntu-latest
+    name: 🔗 Chain Validation
 
     steps:
-      - name: Checkout code
+      - name: 📥 Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: 🐍 Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install FFmpeg
+      - name: 📦 Install dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg
+          pip install -e .
 
-      - name: Install jeetlo-factory
+      - name: 🔍 Find manifests
+        id: find
         run: |
-          pip install -e ./src
+          count=$(find . -name ".jeetlo_manifest.json" | wc -l)
+          echo "count=$count" >> $GITHUB_OUTPUT
+          echo "### 📁 Found $count manifest(s)" >> $GITHUB_STEP_SUMMARY
 
-      - name: Validate all reels
+      - name: ✅ Validate chain integrity
+        if: steps.find.outputs.count != '0'
         run: |
-          python -m jeetlo_factory.ci . --fail-on-warnings
+          echo "## 🔗 Chain Validation Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
 
-      - name: Post validation results
+          # Run validation and capture output
+          python -m jeetlo_factory.ci . 2>&1 | tee validation.log
+
+          # Parse results for summary
+          if grep -q "CI PASSED" validation.log; then
+            echo "### ✅ All chains valid!" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### ❌ Chain validation failed!" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            grep -A2 "FAILED\|error\|Error" validation.log >> $GITHUB_STEP_SUMMARY || true
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+
+      - name: 📊 Generate badge data
         if: always()
         run: |
-          echo "Validation complete"
-          echo "Check the logs above for details"
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "BADGE_COLOR=brightgreen" >> $GITHUB_ENV
+            echo "BADGE_STATUS=passing" >> $GITHUB_ENV
+          else
+            echo "BADGE_COLOR=red" >> $GITHUB_ENV
+            echo "BADGE_STATUS=failing" >> $GITHUB_ENV
+          fi
+
+      - name: 📝 No manifests found
+        if: steps.find.outputs.count == '0'
+        run: |
+          echo "### ℹ️ No manifests to validate" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Push a reel with \`.jeetlo_manifest.json\` to trigger validation." >> $GITHUB_STEP_SUMMARY

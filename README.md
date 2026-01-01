@@ -1,5 +1,7 @@
 # JeetLo Factory
 
+[![Chain Validation](https://github.com/pdaxt/jeetlo-factory/actions/workflows/validate.yml/badge.svg)](https://github.com/pdaxt/jeetlo-factory/actions/workflows/validate.yml)
+
 **The ONLY way to create JeetLo reels.**
 
 This library enforces a cryptographic chain for all content creation. Every step is tracked, validated, and verified by CI. **You cannot bypass this system.**
