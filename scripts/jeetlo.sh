@@ -258,8 +258,8 @@ EOF
         gcloud auth application-default set-quota-project fabled-variety-482120-b2
     fi
 
-    # Verify with test request
-    local token=$(gcloud auth print-access-token 2>/dev/null)
+    # Verify with test request (use application-default for service account style auth)
+    local token=$(gcloud auth application-default print-access-token 2>/dev/null)
     if [ -z "$token" ]; then
         print_error "Failed to get access token"
         echo "Run manually: gcloud auth application-default login"
