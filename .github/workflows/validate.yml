@@ -35,21 +35,14 @@ jobs:
       - name: ✅ Validate chain integrity
         if: steps.find.outputs.count != '0'
         run: |
-          echo "## 🔗 Chain Validation Results" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
+          # Run chain-only validation (doesn't require media files)
+          python -m jeetlo_factory.ci . --chain-only 2>&1 | tee validation.log
 
-          # Run validation and capture output
-          python -m jeetlo_factory.ci . 2>&1 | tee validation.log
-
-          # Parse results for summary
+          # Check result
           if grep -q "CI PASSED" validation.log; then
             echo "### ✅ All chains valid!" >> $GITHUB_STEP_SUMMARY
           else
             echo "### ❌ Chain validation failed!" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-            grep -A2 "FAILED\|error\|Error" validation.log >> $GITHUB_STEP_SUMMARY || true
-            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
 
