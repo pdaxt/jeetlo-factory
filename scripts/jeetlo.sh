@@ -1061,11 +1061,28 @@ render_video() {
     echo ""
 
     # Create a wrapper script that sets up paths
+    # Use specific Python with manim installed
     cat > "$WORK_DIR/render.sh" << 'RENDER_EOF'
 #!/bin/bash
 cd "$1"
-export PATH="$PATH:/opt/homebrew/bin:/Library/TeX/texbin"
-python3 -m manim render -qh reel.py 2>&1
+export PATH="/opt/homebrew/bin:/Library/TeX/texbin:$PATH"
+
+# Find Python with manim installed
+PYTHON=""
+for py in /opt/homebrew/bin/python3.11 /opt/homebrew/bin/python3 /usr/bin/python3; do
+    if [ -x "$py" ] && $py -c "import manim" 2>/dev/null; then
+        PYTHON="$py"
+        break
+    fi
+done
+
+if [ -z "$PYTHON" ]; then
+    echo "ERROR: No Python with manim found"
+    exit 1
+fi
+
+echo "Using Python: $PYTHON"
+$PYTHON -m manim render -qh reel.py 2>&1
 RENDER_EOF
     chmod +x "$WORK_DIR/render.sh"
 
