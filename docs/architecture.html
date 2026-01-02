@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JeetLo Factory Architecture</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #0d1117; color: #c9d1d9; padding: 40px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { color: #58a6ff; border-bottom: 1px solid #30363d; padding-bottom: 16px; }
+        h2 { color: #f0883e; margin-top: 40px; }
+        .diagram { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 30px; margin: 20px 0; }
+        .flow { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+        .box { background: #21262d; border: 2px solid #30363d; border-radius: 8px; padding: 20px; min-width: 200px; text-align: center; }
+        .box.github { border-color: #238636; }
+        .box.local { border-color: #58a6ff; }
+        .box.manual { border-color: #f0883e; background: #3d2a1e; }
+        .box h3 { margin: 0 0 10px 0; font-size: 14px; }
+        .box p { margin: 0; font-size: 12px; color: #8b949e; }
+        .arrow { font-size: 24px; color: #484f58; }
+        .status { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+        .status.works { background: #238636; color: white; }
+        .status.missing { background: #da3633; color: white; }
+        .status.manual { background: #f0883e; color: black; }
+        .issue { background: #3d1f1f; border: 1px solid #da3633; border-radius: 8px; padding: 20px; margin: 20px 0; }
+        .issue h3 { color: #f85149; margin: 0 0 10px 0; }
+        .solution { background: #1f3d1f; border: 1px solid #238636; border-radius: 8px; padding: 20px; margin: 20px 0; }
+        .solution h3 { color: #3fb950; margin: 0 0 10px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #30363d; padding: 12px; text-align: left; }
+        th { background: #21262d; }
+        code { background: #21262d; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+        .big-arrow { font-size: 40px; text-align: center; padding: 20px; color: #da3633; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏭 JeetLo Factory Architecture</h1>
+
+        <h2>Current Architecture (BROKEN)</h2>
+
+        <div class="diagram">
+            <div class="flow">
+                <div class="box github">
+                    <h3>📝 GitHub: Create Request</h3>
+                    <p>Push to requests/*.json</p>
+                    <p><span class="status works">✓ Works</span></p>
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="box github">
+                    <h3>🔔 GitHub Actions</h3>
+                    <p>track-request.yml triggers</p>
+                    <p>Updates step summary</p>
+                    <p><span class="status works">✓ Works</span></p>
+                </div>
+
+                <div class="arrow" style="color: #da3633; font-weight: bold;">✗</div>
+
+                <div class="box manual">
+                    <h3>🖥️ LOCAL: Run jeetlo.sh</h3>
+                    <p>MANUAL execution required!</p>
+                    <p>No auto-trigger exists</p>
+                    <p><span class="status missing">⚠ MANUAL</span></p>
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="box local">
+                    <h3>🎬 Production Pipeline</h3>
+                    <p>Claude CLI → TTS → Manim</p>
+                    <p><span class="status works">✓ Fixed</span></p>
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="box github">
+                    <h3>📊 GitHub: Track Progress</h3>
+                    <p>Push proof chain</p>
+                    <p>track-progress.yml validates</p>
+                    <p><span class="status works">✓ Works</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="issue">
+            <h3>❌ THE GAP: No Automatic Trigger</h3>
+            <p>When a request is created on GitHub, there is <strong>NO mechanism</strong> to automatically start the local jeetlo.sh pipeline.</p>
+            <p>Current workflow requires someone to manually run:</p>
+            <code>./scripts/jeetlo.sh phy-01-gravity</code>
+        </div>
+
+        <h2>What Each Component Does</h2>
+
+        <table>
+            <tr>
+                <th>Component</th>
+                <th>Location</th>
+                <th>Trigger</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                <td><code>track-request.yml</code></td>
+                <td>GitHub Actions</td>
+                <td>Push to <code>requests/*.json</code></td>
+                <td>Logs "New request detected" - <strong>DOES NOT execute anything</strong></td>
+            </tr>
+            <tr>
+                <td><code>track-progress.yml</code></td>
+                <td>GitHub Actions</td>
+                <td>Push to <code>reels/**/.proof_chain.json</code></td>
+                <td>Validates proof chain integrity, updates dashboard</td>
+            </tr>
+            <tr>
+                <td><code>jeetlo.sh</code></td>
+                <td>Local machine</td>
+                <td><strong>MANUAL</strong></td>
+                <td>Full pipeline: Creative Brief → Audio → Video → QA → Post</td>
+            </tr>
+        </table>
+
+        <h2>Options to Fix This</h2>
+
+        <div class="solution">
+            <h3>Option 1: GitHub Actions Self-Hosted Runner</h3>
+            <p>Run a self-hosted runner on your Mac that can execute jeetlo.sh when requests come in.</p>
+            <pre style="background: #0d1117; padding: 15px; border-radius: 6px; overflow-x: auto;">
+# Install runner on your Mac
+# Add workflow step:
+jobs:
+  execute-locally:
+    runs-on: self-hosted
+    steps:
+      - run: ./scripts/jeetlo.sh ${{ github.event.inputs.reel_id }}
+            </pre>
+            <p><strong>Pros:</strong> Fully automatic, uses GitHub's trigger system</p>
+            <p><strong>Cons:</strong> Mac must be always on, security considerations</p>
+        </div>
+
+        <div class="solution">
+            <h3>Option 2: Polling Daemon</h3>
+            <p>Run a local daemon that polls GitHub for new requests and executes them.</p>
+            <pre style="background: #0d1117; padding: 15px; border-radius: 6px; overflow-x: auto;">
+# jeetlo-daemon.sh (runs continuously)
+while true; do
+    git pull
+    for request in requests/*.json; do
+        status=$(jq -r '.status' "$request")
+        if [ "$status" == "pending" ]; then
+            reel_id=$(basename "$request" .json)
+            ./scripts/jeetlo.sh "$reel_id"
+        fi
+    done
+    sleep 60  # Check every minute
+done
+            </pre>
+            <p><strong>Pros:</strong> Simple, works with existing setup</p>
+            <p><strong>Cons:</strong> Polling delay, must keep daemon running</p>
+        </div>
+
+        <div class="solution">
+            <h3>Option 3: Webhook + Local Server</h3>
+            <p>GitHub webhook → ngrok/cloudflare tunnel → local server → jeetlo.sh</p>
+            <pre style="background: #0d1117; padding: 15px; border-radius: 6px; overflow-x: auto;">
+GitHub Push Event
+       ↓
+  Webhook POST to https://your-tunnel.ngrok.io/webhook
+       ↓
+  Local Express server receives request
+       ↓
+  Spawns: ./scripts/jeetlo.sh $reel_id
+            </pre>
+            <p><strong>Pros:</strong> Instant execution, proper event-driven</p>
+            <p><strong>Cons:</strong> More complex setup, tunnel must stay open</p>
+        </div>
+
+        <h2>Recommended: Option 2 (Polling Daemon)</h2>
+
+        <p>Given your setup, a polling daemon is the simplest solution. It already exists at:</p>
+        <code>/Users/pran/Projects/libraries/jeetlo-factory/scripts/jeetlo-daemon.sh</code>
+
+        <div class="diagram">
+            <h3>Target Architecture</h3>
+            <div class="flow">
+                <div class="box github">
+                    <h3>📝 Create Request</h3>
+                    <p>GitHub / Manual</p>
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="box local" style="border-color: #3fb950;">
+                    <h3>🔄 Daemon (NEW)</h3>
+                    <p>Polls every 60s</p>
+                    <p>Finds pending requests</p>
+                    <p>Auto-runs jeetlo.sh</p>
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="box local">
+                    <h3>🎬 jeetlo.sh</h3>
+                    <p>Full pipeline</p>
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="box github">
+                    <h3>📊 Track Progress</h3>
+                    <p>Auto-push results</p>
+                </div>
+            </div>
+        </div>
+
+        <h2>Quick Start</h2>
+        <pre style="background: #0d1117; padding: 15px; border-radius: 6px; overflow-x: auto; color: #c9d1d9;">
+# Start the daemon (keeps running)
+cd /Users/pran/Projects/libraries/jeetlo-factory
+./scripts/jeetlo-daemon.sh
+
+# Or run as background process
+nohup ./scripts/jeetlo-daemon.sh > logs/daemon.log 2>&1 &
+        </pre>
+    </div>
+</body>
+</html>

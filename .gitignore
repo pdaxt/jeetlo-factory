@@ -37,3 +37,7 @@ Thumbs.db
 
 # Test outputs
 /tests/output/
+
+# Local runner and logs
+/runner/
+/logs/
