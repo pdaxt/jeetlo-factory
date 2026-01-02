@@ -1,0 +1,58 @@
+[
+  {
+    "id": "01_hook",
+    "text": "अभी इस moment... आप FALL हो रहे हो! हाँ, बैठे बैठे भी... आप Earth की तरफ गिर रहे हो!",
+    "duration": 6.144000,
+    "startTime": 0,
+    "endTime": 6.144000
+  },
+  {
+    "id": "02_setup",
+    "text": "Newton ने apple गिरते देखा... फिर Moon को देखा... और realize किया - SAME force! Apple गिरता है... Moon भी गिर रहा है! लेकिन कैसे?",
+    "duration": 10.104000,
+    "startTime": 6.144000,
+    "endTime": 16.248000
+  },
+  {
+    "id": "03_content_part1",
+    "text": "सोचो Earth एक CLINGY EX है... जो आपको जाने नहीं देती! Formula है F equals G m one m two over r squared. G है universe का relationship constant. m one m two है कितना mass... मतलब कितना emotional baggage! और r squared? Distance बढ़ी... grip WEAK हुई!",
+    "duration": 18.960000,
+    "startTime": 16.248000,
+    "endTime": 35.208000
+  },
+  {
+    "id": "03_content_part2",
+    "text": "देखो gravity field... Earth के around spider web जैसा! पास हो? Lines DENSE... pull STRONG! दूर गए? Lines sparse... pull weak! यही inverse square law है भाई!",
+    "duration": 12.048000,
+    "startTime": 35.208000,
+    "endTime": 47.256000
+  },
+  {
+    "id": "04_reveal",
+    "text": "अब MIND BLOW! Moon Earth की तरफ FALL कर रहा है... हर SECOND! लेकिन sideways इतना fast move करता है... कि Earth को MISS करता रहता है! Orbit मतलब... perpetual falling! आप space में float नहीं करते... आप बस गिरते गिरते MISS करते रहते हो!",
+    "duration": 15.696000,
+    "startTime": 47.256000,
+    "endTime": 62.952000
+  },
+  {
+    "id": "05_key_point",
+    "text": "याद रखो - distance DOUBLE हुई? Force ONE FOURTH हो गई! क्यों? Because r SQUARED है denominator में! Square that distance... SQUARE IT!",
+    "duration": 9.744000,
+    "startTime": 62.952000,
+    "endTime": 72.696000
+  },
+  {
+    "id": "06_exam_tip",
+    "text": "J. E. E. favourite question - g equals g naught by four कहाँ होगा? Answer - r equals two R! मतलब surface से ONE Earth radius ऊपर! Common mistake - four R from center लिख देते हैं... WRONG!",
+    "duration": 15.144000,
+    "startTime": 72.696000,
+    "endTime": 87.840000
+  },
+  {
+    "id": "07_cta",
+    "text": "Gravity कभी छोड़ती नहीं... और हम भी नहीं छोड़ेंगे आपको! JeetLo! Follow कीजिए!",
+    "duration": 5.304000,
+    "startTime": 87.840000,
+    "endTime": 93.144000
+  }
+]

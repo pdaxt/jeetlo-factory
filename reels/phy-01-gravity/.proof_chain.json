@@ -1,0 +1,99 @@
+{
+  "reel_id": "phy-01-gravity",
+  "subject": "physics",
+  "created_at": "2026-01-02T20:22:16Z",
+  "genesis_hash": "5c7702ee9a7fb83a8ea480e0f46a7ef3e4b56240f0d2f2b89596df4a593984da",
+  "steps": [
+    {
+      "step": "setup",
+      "input_hash": "genesis",
+      "output_hash": "e4fb06e78da36859bb957b9755441fbdf1166f046f34ad4d806d6fa123f618cd",
+      "timestamp": "2026-01-02T21:35:03Z"
+    },
+    {
+      "step": "setup",
+      "input_hash": "e4fb06e78da36859bb957b9755441fbdf1166f046f34ad4d806d6fa123f618cd",
+      "output_hash": "e4fb06e78da36859bb957b9755441fbdf1166f046f34ad4d806d6fa123f618cd",
+      "timestamp": "2026-01-02T21:35:11Z"
+    },
+    {
+      "step": "creative_brief",
+      "input_hash": "e4fb06e78da36859bb957b9755441fbdf1166f046f34ad4d806d6fa123f618cd",
+      "output_hash": "dc90908dac8490c3dac8e21be2910582418803aea9335682012ddb4bd01c68df",
+      "timestamp": "2026-01-02T21:35:48Z"
+    },
+    {
+      "step": "creative_brief",
+      "input_hash": "dc90908dac8490c3dac8e21be2910582418803aea9335682012ddb4bd01c68df",
+      "output_hash": "dc90908dac8490c3dac8e21be2910582418803aea9335682012ddb4bd01c68df",
+      "timestamp": "2026-01-02T21:35:49Z"
+    },
+    {
+      "step": "audio_script",
+      "input_hash": "dc90908dac8490c3dac8e21be2910582418803aea9335682012ddb4bd01c68df",
+      "output_hash": "051ad2c8a38b8c1dbec3980415abcc105e688558730c5f9b9e80fa11783d9337",
+      "timestamp": "2026-01-02T21:36:12Z"
+    },
+    {
+      "step": "audio_script",
+      "input_hash": "051ad2c8a38b8c1dbec3980415abcc105e688558730c5f9b9e80fa11783d9337",
+      "output_hash": "034f47cb7085c21b84d57cbf3444bc625821b9aa3fe11966aace5d90a2481826",
+      "timestamp": "2026-01-02T21:36:13Z"
+    },
+    {
+      "step": "generate_audio",
+      "input_hash": "034f47cb7085c21b84d57cbf3444bc625821b9aa3fe11966aace5d90a2481826",
+      "output_hash": "fc97acb68c18598058864db567ff93bafc3601f7cd0bbc85079201d24e1f1fcc",
+      "timestamp": "2026-01-02T21:36:37Z"
+    },
+    {
+      "step": "video_script",
+      "input_hash": "fc97acb68c18598058864db567ff93bafc3601f7cd0bbc85079201d24e1f1fcc",
+      "output_hash": "fdea307876848c6ec60e272efb240d915455db0b319a5f4bb59551dac7011824",
+      "timestamp": "2026-01-02T21:42:15Z"
+    },
+    {
+      "step": "validate_manim_edu",
+      "input_hash": "fdea307876848c6ec60e272efb240d915455db0b319a5f4bb59551dac7011824",
+      "output_hash": "badd00678b701eae7090a3ef0ee7b75e12ba923e6f08f1ee3d012c9601d385ee",
+      "timestamp": "2026-01-02T21:42:15Z"
+    },
+    {
+      "step": "render_video",
+      "input_hash": "badd00678b701eae7090a3ef0ee7b75e12ba923e6f08f1ee3d012c9601d385ee",
+      "output_hash": "73ef7e3e409c384be5d7c406ae15459dd8a1bd966ca522bc4e67f307525b7bbd",
+      "timestamp": "2026-01-02T21:43:24Z"
+    },
+    {
+      "step": "validate_sync",
+      "input_hash": "73ef7e3e409c384be5d7c406ae15459dd8a1bd966ca522bc4e67f307525b7bbd",
+      "output_hash": "03b155a7df42e4658274605d36579a917018f019599ad0e9bfaa23fc2d174657",
+      "timestamp": "2026-01-02T21:43:24Z"
+    },
+    {
+      "step": "frame_qa",
+      "input_hash": "03b155a7df42e4658274605d36579a917018f019599ad0e9bfaa23fc2d174657",
+      "output_hash": "41c76b7a4e6e1ff572ea83d5a5826d5bc6f4f6f7f33496f387ff31b39714246a",
+      "timestamp": "2026-01-02T21:43:25Z"
+    },
+    {
+      "step": "combine_av",
+      "input_hash": "41c76b7a4e6e1ff572ea83d5a5826d5bc6f4f6f7f33496f387ff31b39714246a",
+      "output_hash": "581f60358360d711cdb003f70bb0ef27fd4c8d506cf99acb4e897cc4931f51e8",
+      "timestamp": "2026-01-02T21:43:30Z"
+    },
+    {
+      "step": "thumbnail",
+      "input_hash": "581f60358360d711cdb003f70bb0ef27fd4c8d506cf99acb4e897cc4931f51e8",
+      "output_hash": "54a96e2bffa05c14dff4368d07181bac37673152a5b0fef6f9aad9234e75f9a3",
+      "timestamp": "2026-01-02T21:43:30Z"
+    },
+    {
+      "step": "final_qa",
+      "input_hash": "54a96e2bffa05c14dff4368d07181bac37673152a5b0fef6f9aad9234e75f9a3",
+      "output_hash": "9f8ed2fbc4b9a0458282ff2f4f6d4a33299c51f19be01c377da25c708afe5104",
+      "timestamp": "2026-01-02T21:43:31Z"
+    }
+  ],
+  "status": "ready_to_post"
+}

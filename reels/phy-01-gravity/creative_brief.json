@@ -1,0 +1,39 @@
+{
+  "core_analogy": "Gravity = Earth is a CLINGY EX who refuses to let you go. The closer you are, the harder they hold on. The more massive they are (emotionally heavy), the stronger their grip. You can run to the moon but they'll STILL pull at you, just weaker.",
+  "subconscious_hook": "Identity challenge + curiosity gap. 'You're falling RIGHT NOW' attacks their sense of reality. Creates instant cognitive dissonance - 'Wait, I'm sitting still, how am I falling?' They MUST keep watching to resolve the mental itch.",
+  "visual_scenes": {
+    "01_hook": "Person sitting on couch, suddenly the 'floor' becomes transparent revealing Earth below. Zoom out to show them actually falling TOWARD Earth's center. Big red arrow pointing down. Text: 'You're FALLING right now'",
+    "02_setup": "Split screen: Left shows apple falling from tree (Newton story), Right shows Moon orbiting Earth. Question mark between them. 'Same force. SAME. FORCE.' The apple and moon get connected by a glowing thread.",
+    "03_content_part1": "Earth visualized as a 'clingy ex' character with grabby hands. Show formula F = Gm\u2081m\u2082/r\u00b2 appearing piece by piece. Each variable gets a metaphor label: m\u2081m\u2082 = 'how much you both care', r\u00b2 = 'distance makes heart grow... weaker', G = 'the universe's relationship constant'",
+    "03_content_part2": "FieldVisualizer showing gravity field lines around Earth like a spider web. Person at different distances - close (strong pull, dense lines), far (weak pull, sparse lines). Numbers showing actual force values.",
+    "04_reveal": "Zoom out from Earth to show Moon also 'falling' toward Earth but missing because it's moving sideways. Draw the curved path. 'Orbiting IS falling. You just keep MISSING the ground!' Mind-explosion animation.",
+    "05_key_point": "MechanicsSimulator showing inverse square relationship. Distance doubles \u2192 force becomes 1/4. Visual: Four identical weights at 1x distance become one weight at 2x distance. 'Square that r. SQUARE IT.'",
+    "06_exam_tip": "JEE question flash: 'At what height is g = g\u2080/4?' Answer appears: 'r = 2R (one Earth radius above surface)'. Common mistake highlighted in red: 'NOT 4R from center!'",
+    "07_cta": "Earth character waving goodbye but still pulling. 'Gravity never lets go. Neither do we. Follow for more physics that hits different.'"
+  },
+  "virality_factor": "The 'orbiting is just falling and missing' revelation. People will screenshot this to show friends. Also the 'clingy ex' analogy is memorable and shareable - students will use this in their friend groups.",
+  "mind_blow_moment": "The Moon is FALLING toward Earth every single second - it just moves sideways fast enough to keep missing. Orbit = perpetual fall. This reframes everything they thought about 'floating' in space.",
+  "duration_target": "80s",
+  "simplification_strategy": "Zero equations until minute 0:30. Start with feeling (you're falling), then everyday object (apple), then scale up (moon). Every Greek letter gets an English translation ON SCREEN. 'r squared' not 'r\u00b2'. Force shown as literal hands pulling, not abstract arrows.",
+  "logic_flow": "Hook (you're falling) \u2192 Setup (apple and moon = same force?!) \u2192 Content (the clingy ex formula explained) \u2192 Reveal (orbiting IS falling!) \u2192 Key Point (distance squared = weak fast) \u2192 Exam Tip (JEE height trick) \u2192 CTA (gravity never lets go)",
+  "manim_edu_components": [
+    "FieldVisualizer",
+    "MechanicsSimulator",
+    "WaveSimulator"
+  ],
+  "segment_durations": {
+    "01_hook": "5s",
+    "02_setup": "8s",
+    "03_content_part1": "15s",
+    "03_content_part2": "12s",
+    "04_reveal": "12s",
+    "05_key_point": "10s",
+    "06_exam_tip": "10s",
+    "07_cta": "8s"
+  },
+  "audio_notes": {
+    "emotion_arc": "Shock \u2192 Curiosity \u2192 Learning \u2192 WHOA \u2192 Serious \u2192 Practical \u2192 Warm",
+    "pace": "Fast hook, slow down for formula, speed up for reveal, measured for exam tip",
+    "hinglish_moments": "\u092d\u093e\u0908 \u0938\u094b\u091a\u094b - you're falling RIGHT NOW, \u092c\u0938 Earth miss \u0939\u094b \u0930\u0939\u093e \u0939\u0948"
+  }
+}
