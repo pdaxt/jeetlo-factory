@@ -887,6 +887,9 @@ graph = GraphAnimator()
 
 === ANIMATION PATTERNS (REVOLUTIONARY!) ===
 
+# IMPORTANT: For Arrows, use Create() not GrowArrow() - GrowArrow has compatibility issues
+# For multiple arrows: self.play(LaggedStart(*[Create(a) for a in arrows], lag_ratio=0.1))
+
 # Visual first, text reinforces
 formula = Chem("H2O", element_colors={"H": BLUE, "O": RED})
 self.play(FadeIn(formula))  # Show first
@@ -1170,6 +1173,12 @@ EOF
 
 render_video() {
     print_step "6" "RENDER VIDEO (Manim)"
+
+    # Update manim-edu to get latest fixes
+    echo "Updating manim-edu library..."
+    if [ -d "/Users/pran/Projects/libraries/manim-edu" ]; then
+        (cd /Users/pran/Projects/libraries/manim-edu && git pull origin main 2>/dev/null) || true
+    fi
 
     echo "Rendering with Manim..."
     echo "Resolution: 1080x1920 (9:16 vertical)"
