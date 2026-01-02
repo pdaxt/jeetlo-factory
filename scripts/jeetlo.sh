@@ -813,33 +813,94 @@ CRITICAL RULES:
 1. NEVER use MathTex, Tex, or raw LaTeX - these are FORBIDDEN
 2. ALWAYS use manim-edu components for formulas and scientific visuals
 3. Use Text() for simple text labels
-4. Read the manim-edu README before generating code
+4. Create REVOLUTIONARY visualizations that make students say "Why didn't my teacher explain it like THIS?!"
 
-Available components by subject:
-- Physics: from manim_edu.physics import WaveSimulator, FieldVisualizer, MechanicsSimulator, FormulaRenderer
-- Chemistry: from manim_edu.chemistry import MoleculeBuilder, FormulaRenderer
-- Biology: from manim_edu.biology import CellVisualizer
-- Math: from manim_edu.mathematics import GraphAnimator, FormulaRenderer
+=== ATOMIC FORMULA SYSTEM (NEW - USE THIS!) ===
 
-For formulas, use FormulaRenderer (NOT MathTex):
-  from manim_edu.formulas import FormulaRenderer
-  formula = FormulaRenderer()
-  gravity_eq = formula.gravity()      # F = Gm₁m₂/r²
-  energy_eq = formula.energy()        # E = mc²
-  wave_eq = formula.wave_equation()   # Custom formula rendering
+from manim_edu.formulas import (
+    Char,          # Single character: Char("x", BLUE, 60)
+    CharSeq,       # Per-char colors: CharSeq("RAINBOW", colors=[RED, ORANGE, ...])
+    SmartUnit,     # Element + sub/sup: SmartUnit("H", sub="2") -> H₂
+    Term,          # Variable with scripts: Term("n", sub="1", color=BLUE, sub_color=TEAL)
+    Op,            # Operators: Op("="), Op("+"), Op("→")
+    Frac,          # Fractions: Frac(numerator, denominator)
+    Sqrt,          # Square roots: Sqrt(content)
+    Paren,         # Scaling parens: Paren(content)
+    Formula,       # Combine any: Formula(Term(...), Op(...), Term(...))
+    Chem,          # Chemical: Chem("H2O", element_colors={"H": BLUE, "O": RED})
+    FormulaRenderer,  # Pre-built: renderer.gravity(), renderer.emc2()
+)
 
-Example usage:
-  field = FieldVisualizer()
-  dipole = field.electric_dipole()  # Beautiful field lines
+=== CHEMICAL FORMULAS (Smart Positioning!) ===
 
-  wave = WaveSimulator()
-  sine = wave.sine_wave(amplitude=1, wavelength=2)
+# Water with element colors
+water = Chem("H2O", size=70, element_colors={"H": BLUE, "O": RED})
 
-  mol = MoleculeBuilder(scale=1.5)
-  water = mol.water()  # H2O with correct bond angles
+# Glucose with multi-digit subscripts
+glucose = Chem("C6H12O6", size=60, element_colors={"C": GRAY, "H": BLUE, "O": RED})
 
-  # For text, use Text() not MathTex:
-  label = Text("F = ma", font_size=48, color=YELLOW)
+# Ions with charges (parsed automatically!)
+iron_ion = Chem("Fe3+", element_colors={"Fe": ORANGE})  # Fe³⁺
+sulfate = Chem("SO4-", element_colors={"S": YELLOW, "O": RED})  # SO₄⁻
+
+=== PHYSICS/MATH FORMULAS (Full Atomic Control!) ===
+
+# Snell's Law: n₁sinθ₁ = n₂sinθ₂
+snells_law = Formula(
+    Term("n", sub="1", color=BLUE, sub_color=TEAL, size=50),
+    Term("sin", color=WHITE, size=40),
+    Term("theta", greek=True, sub="1", color=YELLOW, sub_color=ORANGE, size=50),
+    Op("=", color=WHITE, size=50),
+    Term("n", sub="2", color=GREEN, sub_color=TEAL, size=50),
+    Term("sin", color=WHITE, size=40),
+    Term("theta", greek=True, sub="2", color=YELLOW, sub_color=ORANGE, size=50),
+    buff=0.15
+)
+self.play(snells_law.write_sequence(lag_ratio=0.2))  # Animated entrance!
+
+# Pre-built formulas
+renderer = FormulaRenderer()
+emc2 = renderer.emc2()            # E = mc²
+gravity = renderer.gravity()       # F = Gm₁m₂/r²
+quadratic = renderer.quadratic()   # Quadratic formula
+
+=== SUBJECT VISUALIZERS ===
+
+# Physics
+from manim_edu.physics import WaveSimulator, FieldVisualizer, MechanicsSimulator
+field = FieldVisualizer()
+dipole = field.electric_dipole()  # Beautiful field lines
+
+# Chemistry
+from manim_edu.chemistry import MoleculeBuilder
+mol = MoleculeBuilder(scale=1.5)
+water = mol.water()  # H2O with correct bond angles
+
+# Biology
+from manim_edu.biology import CellVisualizer
+cell = CellVisualizer()
+rbc = cell.red_blood_cell()
+
+# Mathematics
+from manim_edu.mathematics import GraphAnimator
+graph = GraphAnimator()
+
+=== ANIMATION PATTERNS (REVOLUTIONARY!) ===
+
+# Visual first, text reinforces
+formula = Chem("H2O", element_colors={"H": BLUE, "O": RED})
+self.play(FadeIn(formula))  # Show first
+self.play(formula.animate.scale(1.3).set_color(YELLOW))  # Highlight
+label = Text("Water!", font_size=36)
+self.play(Write(label))  # Label after
+
+# Progressive revelation
+step1 = Chem("C")
+self.play(Create(step1))
+step2 = Chem("C6")
+self.play(Transform(step1, step2))
+step3 = Chem("C6H12O6", element_colors={"C": GRAY, "H": BLUE, "O": RED})
+self.play(Transform(step1, step3))
 
 COMPLETE PYTHON FILE STRUCTURE:
 The file must start exactly like this:
