@@ -1103,7 +1103,7 @@ render_video() {
     cat > "$WORK_DIR/render.sh" << 'RENDER_EOF'
 #!/bin/bash
 cd "$1"
-export PATH="/opt/homebrew/bin:/Library/TeX/texbin:$PATH"
+export PATH="/opt/homebrew/bin:/Users/pran/Library/TinyTeX/bin/universal-darwin:/Library/TeX/texbin:$PATH"
 
 # Find Python with manim installed
 PYTHON=""
