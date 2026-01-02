@@ -806,14 +806,27 @@ CONFIG:
 - Subject color: $color
 - Subject: $SUBJECT
 
-MANIM-EDU LIBRARY (MANDATORY - use these for stunning visuals):
+MANIM-EDU LIBRARY (MANDATORY - use ONLY manim-edu for all scientific visuals):
 Location: /Users/pran/Projects/libraries/manim-edu
 
+CRITICAL RULES:
+1. NEVER use MathTex, Tex, or raw LaTeX - these are FORBIDDEN
+2. ALWAYS use manim-edu components for formulas and scientific visuals
+3. Use Text() for simple text labels
+4. Read the manim-edu README before generating code
+
 Available components by subject:
-- Physics: from manim_edu.physics import WaveSimulator, FieldVisualizer, MechanicsSimulator
-- Chemistry: from manim_edu.chemistry import MoleculeBuilder
+- Physics: from manim_edu.physics import WaveSimulator, FieldVisualizer, MechanicsSimulator, FormulaRenderer
+- Chemistry: from manim_edu.chemistry import MoleculeBuilder, FormulaRenderer
 - Biology: from manim_edu.biology import CellVisualizer
-- Math: from manim_edu.mathematics import GraphAnimator
+- Math: from manim_edu.mathematics import GraphAnimator, FormulaRenderer
+
+For formulas, use FormulaRenderer (NOT MathTex):
+  from manim_edu.formulas import FormulaRenderer
+  formula = FormulaRenderer()
+  gravity_eq = formula.gravity()      # F = Gm₁m₂/r²
+  energy_eq = formula.energy()        # E = mc²
+  wave_eq = formula.wave_equation()   # Custom formula rendering
 
 Example usage:
   field = FieldVisualizer()
@@ -824,6 +837,9 @@ Example usage:
 
   mol = MoleculeBuilder(scale=1.5)
   water = mol.water()  # H2O with correct bond angles
+
+  # For text, use Text() not MathTex:
+  label = Text("F = ma", font_size=48, color=YELLOW)
 
 COMPLETE PYTHON FILE STRUCTURE:
 The file must start exactly like this:
