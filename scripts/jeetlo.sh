@@ -753,6 +753,14 @@ create_video_script() {
     local color=$(echo "$subject_info" | jq -r '.color')
     local manim_imports=$(echo "$subject_info" | jq -r '.manim_edu_imports[]')
 
+    # Read manim-edu README for complete library documentation
+    local manim_edu_readme=""
+    if [ -f "$MANIM_EDU/README.md" ]; then
+        # Extract key sections: Quick Start through Mechanics
+        manim_edu_readme=$(sed -n '/^## Quick Start/,/^## Waves/p' "$MANIM_EDU/README.md" | head -400)
+        echo "Loaded manim-edu documentation ($(echo "$manim_edu_readme" | wc -l) lines)"
+    fi
+
     echo "Generating Manim reel.py..."
     echo "Background: $background"
     echo "Subject Color: $color"
@@ -809,6 +817,10 @@ CONFIG:
 
 MANIM-EDU LIBRARY (MANDATORY - use ONLY manim-edu for all scientific visuals):
 Location: /Users/pran/Projects/libraries/manim-edu
+
+=== COMPLETE MANIM-EDU DOCUMENTATION (READ THIS!) ===
+$manim_edu_readme
+=== END MANIM-EDU DOCUMENTATION ===
 
 ═══════════════════════════════════════════════════════════════════════════════
 🚨 GUARDRAILS - VIOLATION = PIPELINE FAILURE 🚨
