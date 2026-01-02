@@ -13,9 +13,12 @@
   "core_analogy": "Electronegativity is like a tug-of-war for electrons. Fluorine is the UNDEFEATED champion - no one can beat it!",
   "mind_blow": "When Fluorine meets Cesium, the electronegativity difference is so high (3.3) that Cesium basically DONATES its electron!",
   "exam_relevance": "JEE loves: Predict bond polarity using electronegativity. NEET asks: Why HF is a weak acid despite F being most electronegative.",
-  "manim_edu_components": ["MoleculeBuilder", "FormulaRenderer"],
+  "manim_edu_components": [
+    "MoleculeBuilder",
+    "FormulaRenderer"
+  ],
   "language": "hinglish",
   "target_duration": 60,
   "created_at": "2026-01-02T17:00:00.000Z",
-  "status": "pending"
+  "status": "failed"
 }
