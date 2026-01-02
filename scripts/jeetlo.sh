@@ -668,8 +668,9 @@ generate_audio() {
     echo "Combining segments..."
     # Remove old combined file first, then list segment files (exclude combined_audio.mp3)
     rm -f "$WORK_DIR/audio/combined_audio.mp3"
+    # Use full paths in concat.txt so ffmpeg can find files from any working directory
     ls "$WORK_DIR/audio/"*.mp3 | grep -v combined_audio | sort | while read f; do
-        echo "file '$(basename "$f")'"
+        echo "file '$f'"
     done > "$WORK_DIR/audio/concat.txt"
 
     ffmpeg -y -f concat -safe 0 -i "$WORK_DIR/audio/concat.txt" -c copy "$WORK_DIR/audio/combined_audio.mp3" 2>/dev/null
