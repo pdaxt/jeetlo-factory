@@ -1,0 +1,21 @@
+{
+  "reel_id": "bio-07-blood-types",
+  "subject": "biology",
+  "topic": "Blood Types - Why O is Universal Donor",
+  "hook": "Your blood can KILL someone... or SAVE their life. 4 letters decide!",
+  "key_points": [
+    "4 blood types: A, B, AB, O - based on ANTIGENS on RBCs",
+    "Type A has A antigens, Type B has B antigens",
+    "Type O has NO antigens - universal DONOR!",
+    "AB has NO antibodies - universal RECEIVER!",
+    "Mismatch = Agglutination = DEATH!"
+  ],
+  "core_analogy": "Antigens = ID badges on cells. Immune system checks IDs - wrong badge = ATTACK!",
+  "mind_blow": "Less than 7% Indians have O-negative - rarer than JEE AIR-1!",
+  "exam_relevance": "NEET 2024: Why blood transfusion mismatch causes agglutination?",
+  "manim_edu_components": ["CellVisualizer", "BiologyDiagram"],
+  "language": "hinglish",
+  "target_duration": 55,
+  "created_at": "2026-01-02T19:00:00.000Z",
+  "status": "pending"
+}
