@@ -13,9 +13,12 @@
   "core_analogy": "Gravity is like invisible strings connecting EVERYTHING in the universe - the heavier you are, the more strings pull you",
   "mind_blow": "You're gravitationally attracting your crush right now... but the force is 0.0000000001 Newtons!",
   "exam_relevance": "JEE asks: Calculate gravitational force between Earth and Moon. NEET asks: Why astronauts feel weightless.",
-  "manim_edu_components": ["FormulaRenderer", "MechanicsSimulator"],
+  "manim_edu_components": [
+    "FormulaRenderer",
+    "MechanicsSimulator"
+  ],
   "language": "hinglish",
   "target_duration": 60,
   "created_at": "2026-01-02T10:00:00.000Z",
-  "status": "pending"
+  "status": "failed"
 }
