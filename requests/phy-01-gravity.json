@@ -1,13 +1,21 @@
 {
   "reel_id": "phy-01-gravity",
   "subject": "physics",
-  "topic": "Gravity",
-  "hook": "What is Gravity?",
+  "topic": "Newton's Law of Universal Gravitation",
+  "hook": "You're FALLING right now... but WHY don't you feel it?",
   "key_points": [
-    "Explain Gravity"
+    "Every object attracts every other object - even YOU and your phone!",
+    "F = Gm₁m₂/r² - The formula that explains the universe",
+    "G is incredibly tiny: 6.67 × 10⁻¹¹ - that's why you don't stick to walls",
+    "Earth's mass is HUGE - that's why gravity feels strong",
+    "Moon's gravity = 1/6 Earth's - you could dunk like an NBA star!"
   ],
+  "core_analogy": "Gravity is like invisible strings connecting EVERYTHING in the universe - the heavier you are, the more strings pull you",
+  "mind_blow": "You're gravitationally attracting your crush right now... but the force is 0.0000000001 Newtons!",
+  "exam_relevance": "JEE asks: Calculate gravitational force between Earth and Moon. NEET asks: Why astronauts feel weightless.",
+  "manim_edu_components": ["FormulaRenderer", "MechanicsSimulator"],
   "language": "hinglish",
-  "target_duration": 45,
-  "created_at": "2026-01-01T18:56:37.316Z",
+  "target_duration": 60,
+  "created_at": "2026-01-02T10:00:00.000Z",
   "status": "pending"
 }
