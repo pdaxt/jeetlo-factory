@@ -821,6 +821,10 @@ Location: /Users/pran/Projects/libraries/manim-edu
 4. NEVER use GrowArrow() - use Create() instead for arrows
 5. NEVER put text outside safe zone (avoid edges - keep content in center 80%)
 6. NEVER overlap text on text - position elements with proper spacing
+7. NEVER create manual Arrow() loops for field visualizations - USE FieldVisualizer methods instead!
+   - For gravity: field.gravitational_field() NOT manual Arrow() in a loop
+   - For electric: field.electric_dipole() or field.point_charge()
+   - Manual Arrow() with normalized vectors WILL CRASH if direction=0
 
 🟢 REQUIRED (Must include or pipeline will FAIL):
 1. ALWAYS use manim-edu components for formulas and scientific visuals
@@ -890,10 +894,22 @@ quadratic = renderer.quadratic()   # Quadratic formula
 
 === SUBJECT VISUALIZERS ===
 
-# Physics
+# Physics - ALWAYS use these instead of manual arrows/shapes!
 from manim_edu.physics import WaveSimulator, FieldVisualizer, MechanicsSimulator
-field = FieldVisualizer()
-dipole = field.electric_dipole()  # Beautiful field lines
+
+field = FieldVisualizer(scale=1.0)
+# Electric fields
+field.electric_dipole()         # Field lines between +/- charges
+field.point_charge(positive=True)  # Radial field around single charge
+field.parallel_plates()         # Uniform field between plates
+# Magnetic fields
+field.magnetic_field_wire()     # Concentric circles around current wire
+# Gravitational fields (USE THIS for gravity reels!)
+field.gravitational_field()     # Inward arrows toward mass center - CRASH-FREE!
+
+# Mechanics - forces and vectors
+mech = MechanicsSimulator()
+# Use gravity_force() instead of manual Arrow() - it's crash-proof!
 
 # Chemistry
 from manim_edu.chemistry import MoleculeBuilder
