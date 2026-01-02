@@ -1,0 +1,21 @@
+{
+  "reel_id": "che-02-electronegativity",
+  "subject": "chemistry",
+  "topic": "Electronegativity and Bond Polarity",
+  "hook": "Fluorine is the GREEDIEST element... it STEALS electrons from EVERYONE!",
+  "key_points": [
+    "Electronegativity = How badly an atom WANTS electrons",
+    "Fluorine is #1 (4.0) - the ultimate electron thief",
+    "Francium is last (0.7) - gives away electrons like free candy",
+    "Higher electronegativity difference = more polar bond",
+    "Pauling scale: Named after Linus Pauling (2x Nobel winner!)"
+  ],
+  "core_analogy": "Electronegativity is like a tug-of-war for electrons. Fluorine is the UNDEFEATED champion - no one can beat it!",
+  "mind_blow": "When Fluorine meets Cesium, the electronegativity difference is so high (3.3) that Cesium basically DONATES its electron!",
+  "exam_relevance": "JEE loves: Predict bond polarity using electronegativity. NEET asks: Why HF is a weak acid despite F being most electronegative.",
+  "manim_edu_components": ["MoleculeBuilder", "FormulaRenderer"],
+  "language": "hinglish",
+  "target_duration": 60,
+  "created_at": "2026-01-02T17:00:00.000Z",
+  "status": "pending"
+}
