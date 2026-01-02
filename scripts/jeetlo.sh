@@ -908,30 +908,58 @@ rbc = cell.red_blood_cell()
 from manim_edu.mathematics import GraphAnimator
 graph = GraphAnimator()
 
-=== SMART LAYOUT SYSTEM (Prevents overlaps & off-screen content!) ===
+=== OVERLAP PREVENTION & SMART LAYOUT (Uses existing validator!) ===
 
-from manim_edu.primitives.layout import (
-    safe_text,           # Auto-scales text to fit: safe_text("Long text", font_size=36)
-    wrapped_text,        # Multi-line auto-wrap: wrapped_text("Long paragraph", max_width=6.5)
-    clamp_to_safe_zone,  # Forces mobject into safe area
-    LayoutManager,       # Tracks placed objects, prevents overlaps
-    VerticalStack,       # Easy vertical stacking with auto-spacing
-    SAFE_X_MIN, SAFE_X_MAX, SAFE_Y_MIN, SAFE_Y_MAX,  # -3.5 to 3.5 X, -6 to 6 Y
+# manim-edu has FrameValidator for overlap detection. For vertical (9:16) reels, use:
+from manim_edu.primitives import (
+    # EXISTING: Overlap detection & auto-fix
+    FrameValidator,        # Original validator
+    SmartLayout,           # Auto-validates text lists
+    ensure_clarity,        # Validate + auto-fix
+    validate_frame,        # Quick validation
+
+    # VERTICAL EXTENSIONS: Pre-configured for 9:16 reels
+    VerticalFrameValidator,  # Validator for vertical format
+    SmartText,               # Text with auto-scale + clamp
+    SmartVGroup,             # VGroup with auto-validation
+    validate_vertical,       # Quick validation for vertical
+    ensure_no_overlaps,      # Auto-fix overlaps
+
+    # Convenience functions
+    smart_title, smart_subtitle, smart_body, smart_label,
+
+    # Frame constants
+    SAFE_X_MIN, SAFE_X_MAX,  # -3.5 to 3.5
+    SAFE_Y_MIN, SAFE_Y_MAX,  # -6.0 to 6.0
 )
 
-# ALWAYS USE safe_text() instead of Text() for auto-scaling:
-title = safe_text("Main Concept Title", font_size=48, color=YELLOW)
-title.move_to(UP * 4)
+# ✅ SmartText auto-scales and clamps to safe zone
+title = SmartText("Very Long Title That Might Overflow", font_size=48, color=YELLOW)
+title.at_zone('title')
 
-# For multi-line text:
-explanation = wrapped_text("This is a long explanation that will automatically wrap", max_width=6.5)
-explanation.move_to(ORIGIN)
+# ✅ Chain positioning with .below()
+subtitle = SmartText("Subtitle text", font_size=36, color=GRAY).below(title)
 
-# Vertical stacking (no overlaps):
-stack = VerticalStack(start_y=5.0, spacing=0.6)
-stack.add(safe_text("First item", font_size=36))
-stack.add(safe_text("Second item", font_size=36))
-stack.add(safe_text("Third item", font_size=36))
+# ✅ SmartVGroup validates & fixes overlaps automatically
+group = SmartVGroup(
+    SmartText("Item 1"),
+    SmartText("Item 2"),
+    SmartText("Item 3")
+).arrange(DOWN, buff=0.5)
+
+# ✅ Existing SmartLayout for text lists (auto-validates)
+summary = SmartLayout(
+    "Title",
+    "Point 1",
+    "Point 2",
+    direction=DOWN,
+    aligned_edge=LEFT
+)
+
+# ✅ Manual validation with auto-fix
+result = validate_vertical(title, subtitle)  # Check for issues
+if not result.passed:
+    fixed_group, result = ensure_no_overlaps(title, subtitle)  # Auto-fix
 
 === ANIMATION PATTERNS (REVOLUTIONARY!) ===
 
@@ -1206,6 +1234,39 @@ with open('$reel_code', 'r') as f:
         issues+=("missing_cta")
     fi
 
+    # GUARDRAIL 4: Auto-fix run_time() syntax error (LLM often writes run_time(0.5) instead of run_time=0.5)
+    if grep -q "run_time([0-9]" "$reel_code" 2>/dev/null; then
+        print_warning "⚠️ run_time() syntax error detected - should be run_time=value"
+        echo "   Auto-fixing: replacing run_time(value) with run_time=value..."
+        sed -i '' 's/run_time(\([0-9.]*\))/run_time=\1/g' "$reel_code" 2>/dev/null || sed -i 's/run_time(\([0-9.]*\))/run_time=\1/g' "$reel_code"
+        print_success "Auto-fixed: run_time(x) → run_time=x"
+    else
+        print_success "No run_time() syntax errors"
+    fi
+
+    # GUARDRAIL 5: Auto-fix buff() syntax error (LLM may write buff(0.5) instead of buff=0.5)
+    if grep -q "buff([0-9]" "$reel_code" 2>/dev/null; then
+        print_warning "⚠️ buff() syntax error detected - should be buff=value"
+        echo "   Auto-fixing: replacing buff(value) with buff=value..."
+        sed -i '' 's/buff(\([0-9.]*\))/buff=\1/g' "$reel_code" 2>/dev/null || sed -i 's/buff(\([0-9.]*\))/buff=\1/g' "$reel_code"
+        print_success "Auto-fixed: buff(x) → buff=x"
+    fi
+
+    # GUARDRAIL 6: Check for plain Text() usage (should use SmartText for auto-bounds)
+    local plain_text_count=$(grep -c "Text(" "$reel_code" 2>/dev/null || echo 0)
+    local smart_text_count=$(grep -c "SmartText\|safe_text\|smart_title\|smart_subtitle\|smart_body" "$reel_code" 2>/dev/null || echo 0)
+    if [ "$plain_text_count" -gt 5 ] && [ "$smart_text_count" -eq 0 ]; then
+        print_warning "⚠️ Using plain Text() - consider SmartText for auto-bounds (not blocking)"
+        echo "   Tip: SmartText auto-scales and clamps to safe zone"
+    elif [ "$smart_text_count" -gt 0 ]; then
+        print_success "Using SmartText components (good!)"
+    fi
+
+    # GUARDRAIL 7: Check for proper imports (manim_edu should be imported)
+    if ! grep -q "from manim_edu\|import manim_edu" "$reel_code" 2>/dev/null; then
+        print_warning "⚠️ manim_edu not imported - some features may be missing"
+    fi
+
     # ═══════════════════════════════════════════════════════════════════════════
 
     # Check for dynamic animations
@@ -1262,6 +1323,800 @@ EOF
     fi
 
     add_chain_step "validate_manim_edu" "$WORK_DIR/manim_validation.json"
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# QA CHECKPOINT 1: AUDIO SCRIPT VIRAL ENGINEERING
+# ═══════════════════════════════════════════════════════════════════════════════
+
+qa_audio_script_viral() {
+    print_step "QA-1" "AUDIO SCRIPT - VIRAL ENGINEERING CHECK"
+
+    local audio_script="$WORK_DIR/audio_script.json"
+    if [ ! -f "$audio_script" ]; then
+        print_warning "Audio script not found, skipping viral check"
+        return 0
+    fi
+
+    local score=0
+    local issues=()
+
+    echo "Checking viral engineering elements..."
+
+    # VIRAL ELEMENT 1: Hook in first segment (open loop)
+    local hook=$(jq -r '.[0].text // ""' "$audio_script" 2>/dev/null)
+    if echo "$hook" | grep -qiE "WRONG|क्यों|कैसे|secret|shocking|\?$|\.\.\."; then
+        print_success "✅ Hook has open loop/question/intrigue"
+        score=$((score + 15))
+    else
+        print_warning "⚠️ Hook missing open loop (add question, 'क्यों?', '...', WRONG!)"
+        issues+=("weak_hook")
+    fi
+
+    # VIRAL ELEMENT 2: "99% wrong" or FOMO trigger
+    if jq -r '.[].text' "$audio_script" | grep -qiE "99%|most students|sochte.*wrong|galat"; then
+        print_success "✅ Has '99% wrong' or FOMO trigger"
+        score=$((score + 15))
+    else
+        print_warning "⚠️ Missing '99% wrong' or FOMO element"
+        issues+=("no_fomo")
+    fi
+
+    # VIRAL ELEMENT 3: Mind-blow moment
+    if jq -r '.[].text' "$audio_script" | grep -qiE "mind.*blow|shocking|incredible|crazy|amazing|unbelievable"; then
+        print_success "✅ Has mind-blow moment"
+        score=$((score + 10))
+    else
+        print_warning "⚠️ Missing mind-blow moment"
+        issues+=("no_mind_blow")
+    fi
+
+    # VIRAL ELEMENT 4: Data/numbers for credibility
+    if jq -r '.[].text' "$audio_script" | grep -qE "[0-9]+.*%|[0-9]+.*kJ|[0-9]+.*degree|[0-9]+.*times"; then
+        print_success "✅ Has data/numbers for credibility"
+        score=$((score + 10))
+    else
+        print_warning "⚠️ Missing specific data/numbers"
+        issues+=("no_data")
+    fi
+
+    # VIRAL ELEMENT 5: Exam anxiety trigger (JEE/NEET)
+    if jq -r '.[].text' "$audio_script" | grep -qiE "JEE|NEET|exam|directly|पूछा|important question"; then
+        print_success "✅ Has exam relevance (JEE/NEET)"
+        score=$((score + 15))
+    else
+        print_warning "⚠️ Missing JEE/NEET exam relevance"
+        issues+=("no_exam_relevance")
+    fi
+
+    # VIRAL ELEMENT 6: CTA with pricing
+    if jq -r '.[].text' "$audio_script" | grep -qiE "jeetlo|499|register|early bird"; then
+        print_success "✅ CTA mentions jeetlo.ai + pricing"
+        score=$((score + 15))
+    else
+        print_warning "⚠️ CTA missing jeetlo.ai or pricing"
+        issues+=("weak_cta")
+    fi
+
+    # VIRAL ELEMENT 7: Emotional hooks (CAPS, ..., !)
+    local caps_count=$(jq -r '.[].text' "$audio_script" | grep -oE '\b[A-Z]{3,}\b' | wc -l)
+    local ellipsis_count=$(jq -r '.[].text' "$audio_script" | grep -o '\.\.\.' | wc -l)
+    if [ "$caps_count" -ge 3 ] && [ "$ellipsis_count" -ge 2 ]; then
+        print_success "✅ Emotional hooks present (CAPS: $caps_count, pauses: $ellipsis_count)"
+        score=$((score + 10))
+    else
+        print_warning "⚠️ Need more CAPS emphasis and '...' pauses"
+        issues+=("weak_emotion")
+    fi
+
+    # VIRAL ELEMENT 8: Hinglish check (Hindi in Devanagari)
+    if jq -r '.[].text' "$audio_script" | grep -q '[अ-ह]'; then
+        print_success "✅ Hindi words in Devanagari (correct!)"
+        score=$((score + 10))
+    else
+        print_warning "⚠️ Hindi should be in Devanagari script"
+        issues+=("romanized_hindi")
+    fi
+
+    echo ""
+    echo "Viral Engineering Score: $score/100"
+
+    # Save QA result
+    cat > "$WORK_DIR/qa_viral.json" << EOF
+{
+  "score": $score,
+  "passed": $([ $score -ge 60 ] && echo "true" || echo "false"),
+  "issues": $(printf '%s\n' "${issues[@]}" | jq -R . | jq -s . 2>/dev/null || echo "[]")
+}
+EOF
+
+    if [ $score -ge 60 ]; then
+        print_success "Viral engineering: PASS ($score/100)"
+    else
+        print_warning "Viral engineering: NEEDS IMPROVEMENT ($score/100)"
+    fi
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# QA CHECKPOINT 2: VIDEO CODE - MANIM-EDU USAGE VERIFICATION
+# ═══════════════════════════════════════════════════════════════════════════════
+
+qa_video_code() {
+    print_step "QA-2" "VIDEO CODE - MANIM-EDU USAGE CHECK"
+
+    local reel_code="$WORK_DIR/reel.py"
+    if [ ! -f "$reel_code" ]; then
+        print_warning "reel.py not found, skipping code QA"
+        return 0
+    fi
+
+    local score=0
+    local issues=()
+
+    echo "Verifying manim-edu library utilization..."
+
+    # CHECK 1: Uses jeetlo_style.py imports
+    if grep -q "from jeetlo_style import\|from.*jeetlo_style" "$reel_code"; then
+        print_success "✅ Uses jeetlo_style.py (brand consistency)"
+        score=$((score + 20))
+    else
+        print_warning "⚠️ Not using jeetlo_style.py - may have inconsistent branding"
+        issues+=("no_jeetlo_style")
+    fi
+
+    # CHECK 2: Uses JeetLoReelMixin
+    if grep -q "JeetLoReelMixin" "$reel_code"; then
+        print_success "✅ Uses JeetLoReelMixin (correct base class)"
+        score=$((score + 20))
+    else
+        print_warning "⚠️ Not using JeetLoReelMixin - missing standard features"
+        issues+=("no_mixin")
+    fi
+
+    # CHECK 3: Uses standard CTA (add_cta_slide_*)
+    if grep -qE "add_cta_slide_(physics|chem|biology|math)" "$reel_code"; then
+        print_success "✅ Uses standard CTA slide (brand compliant)"
+        score=$((score + 20))
+    else
+        print_error "❌ NOT using standard CTA - BLOCKING!"
+        issues+=("custom_cta")
+        echo "   REQUIRED: self.add_cta_slide_chem(duration) or similar"
+    fi
+
+    # CHECK 4: Uses manim_edu components
+    local manim_edu_imports=$(grep -cE "from manim_edu|import manim_edu" "$reel_code" || echo 0)
+    if [ "$manim_edu_imports" -ge 1 ]; then
+        print_success "✅ Uses manim_edu components ($manim_edu_imports imports)"
+        score=$((score + 15))
+    else
+        print_warning "⚠️ Not importing from manim_edu"
+        issues+=("no_manim_edu")
+    fi
+
+    # CHECK 5: Uses watermark
+    if grep -q "add_watermark\|create_brand_watermark" "$reel_code"; then
+        print_success "✅ Uses standard watermark"
+        score=$((score + 10))
+    else
+        print_warning "⚠️ Watermark may be missing"
+        issues+=("no_watermark")
+    fi
+
+    # CHECK 6: Uses subject background
+    if grep -q "set_subject_background\|CHEMISTRY_BG\|PHYSICS_BG\|BIOLOGY_BG\|MATH_BG" "$reel_code"; then
+        print_success "✅ Uses subject-specific background color"
+        score=$((score + 10))
+    else
+        print_warning "⚠️ May not use subject background color"
+        issues+=("no_subject_bg")
+    fi
+
+    # CHECK 7: No reinvention (custom CTA, custom watermark)
+    local reinvention=0
+    if grep -qE "JeetLo.*!.*jeetlo\.ai.*499" "$reel_code" && ! grep -q "_create_standard_cta\|add_cta_slide" "$reel_code"; then
+        print_error "❌ Custom CTA code detected - use add_cta_slide_*() instead!"
+        reinvention=1
+        issues+=("reinvented_cta")
+    fi
+    if grep -qE "watermark.*=.*VGroup\|Text.*JeetLo.*to_corner" "$reel_code" && ! grep -q "create_brand_watermark\|add_watermark" "$reel_code"; then
+        print_warning "⚠️ Possible custom watermark - use create_brand_watermark() instead"
+        reinvention=1
+        issues+=("reinvented_watermark")
+    fi
+    if [ $reinvention -eq 0 ]; then
+        print_success "✅ No code reinvention detected"
+        score=$((score + 5))
+    fi
+
+    echo ""
+    echo "Code Quality Score: $score/100"
+
+    # Save QA result
+    cat > "$WORK_DIR/qa_code.json" << EOF
+{
+  "score": $score,
+  "passed": $([ $score -ge 70 ] && echo "true" || echo "false"),
+  "issues": $(printf '%s\n' "${issues[@]}" | jq -R . | jq -s . 2>/dev/null || echo "[]")
+}
+EOF
+
+    # BLOCKING: Must use standard CTA
+    if grep -qE "add_cta_slide_(physics|chem|biology|math)" "$reel_code"; then
+        print_success "Code QA: PASS"
+    else
+        print_error "Code QA: FAIL - Must use standard CTA (add_cta_slide_*)"
+        echo "   Fix: Replace custom CTA with self.add_cta_slide_chem(duration)"
+        return 1
+    fi
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# QA CHECKPOINT 3: SYNC VERIFICATION
+# ═══════════════════════════════════════════════════════════════════════════════
+
+qa_sync_verification() {
+    print_step "QA-3" "AUDIO-VIDEO SYNC VERIFICATION"
+
+    local video="$WORK_DIR/final.mp4"
+    local audio="$WORK_DIR/audio/combined_audio.mp3"
+    local timings="$WORK_DIR/audio/timings.json"
+
+    if [ ! -f "$video" ]; then
+        print_warning "Video not found, skipping sync check"
+        return 0
+    fi
+
+    echo "Checking audio-video synchronization..."
+
+    # Get durations
+    local video_duration=$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$video" 2>/dev/null | cut -d. -f1)
+    local audio_duration=$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$audio" 2>/dev/null | cut -d. -f1)
+
+    echo "Video duration: ${video_duration}s"
+    echo "Audio duration: ${audio_duration}s"
+
+    local diff=$((video_duration - audio_duration))
+    if [ $diff -lt 0 ]; then diff=$((-diff)); fi
+
+    if [ $diff -le 2 ]; then
+        print_success "✅ Duration sync: ${diff}s difference (acceptable)"
+    else
+        print_error "❌ Duration mismatch: ${diff}s difference (max 2s allowed)"
+        echo "   Video: ${video_duration}s, Audio: ${audio_duration}s"
+        return 1
+    fi
+
+    # Extract keyframes at segment boundaries for manual verification
+    if [ -f "$timings" ]; then
+        echo ""
+        echo "Extracting keyframes at segment boundaries..."
+        mkdir -p "$WORK_DIR/qa_frames"
+
+        local segment_times=$(jq -r '.[].startTime' "$timings" 2>/dev/null | head -5)
+        local i=1
+        for ts in $segment_times; do
+            local ts_int=$(echo "$ts" | cut -d. -f1)
+            ffmpeg -y -ss "$ts_int" -i "$video" -vframes 1 -q:v 2 "$WORK_DIR/qa_frames/segment_${i}_at_${ts_int}s.jpg" 2>/dev/null
+            echo "  Frame at ${ts_int}s -> qa_frames/segment_${i}_at_${ts_int}s.jpg"
+            i=$((i + 1))
+        done
+        print_success "Keyframes extracted for manual sync verification"
+    fi
+
+    # Save QA result
+    cat > "$WORK_DIR/qa_sync.json" << EOF
+{
+  "video_duration": $video_duration,
+  "audio_duration": $audio_duration,
+  "difference": $diff,
+  "passed": $([ $diff -le 2 ] && echo "true" || echo "false")
+}
+EOF
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# QA CHECKPOINT 4: FRAME-BY-FRAME VISUAL QA
+# ═══════════════════════════════════════════════════════════════════════════════
+
+qa_frame_by_frame() {
+    print_step "QA-4" "FRAME-BY-FRAME VISUAL QA"
+
+    local video="$WORK_DIR/final.mp4"
+    if [ ! -f "$video" ]; then
+        print_warning "Video not found, skipping frame QA"
+        return 0
+    fi
+
+    echo "Extracting frames for visual inspection (0.5 fps)..."
+    mkdir -p "$WORK_DIR/qa_frames"
+
+    # Extract at 0.5 fps (1 frame every 2 seconds)
+    ffmpeg -y -i "$video" -vf "fps=0.5" "$WORK_DIR/qa_frames/frame_%02d.png" 2>/dev/null
+
+    local frame_count=$(ls "$WORK_DIR/qa_frames"/frame_*.png 2>/dev/null | wc -l)
+    echo "Extracted $frame_count frames"
+
+    local issues=()
+
+    # CHECK 1: First frame (Hook) - should have engaging visual
+    if [ -f "$WORK_DIR/qa_frames/frame_01.png" ]; then
+        print_success "✅ Frame 1 (Hook) extracted"
+    fi
+
+    # CHECK 2: Last few frames - should show CTA
+    local last_frame=$(ls "$WORK_DIR/qa_frames"/frame_*.png 2>/dev/null | tail -1)
+    if [ -n "$last_frame" ]; then
+        echo "Last frame: $last_frame (should show CTA)"
+        print_success "✅ CTA frame extracted"
+    fi
+
+    # CHECK 3: Content within bounds (use Python for actual pixel analysis if needed)
+    echo ""
+    echo "Manual QA checklist:"
+    echo "  [ ] Hook frame is visually engaging"
+    echo "  [ ] No text cut off at edges"
+    echo "  [ ] No overlapping text"
+    echo "  [ ] Colors are vibrant"
+    echo "  [ ] CTA slide has flame + JeetLo + pricing"
+    echo "  [ ] Watermark visible in bottom-right"
+
+    # Save QA result
+    cat > "$WORK_DIR/qa_frames.json" << EOF
+{
+  "frame_count": $frame_count,
+  "frames_dir": "$WORK_DIR/qa_frames",
+  "manual_review_required": true
+}
+EOF
+
+    print_success "Frames ready for visual inspection at: $WORK_DIR/qa_frames/"
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# QA CHECKPOINT 5: CTA COMPLIANCE
+# ═══════════════════════════════════════════════════════════════════════════════
+
+qa_cta_compliance() {
+    print_step "QA-5" "CTA COMPLIANCE CHECK"
+
+    local reel_code="$WORK_DIR/reel.py"
+    local audio_script="$WORK_DIR/audio_script.json"
+    local issues=()
+
+    echo "Verifying CTA compliance..."
+
+    # VIDEO CTA: Must use standard add_cta_slide_*
+    echo ""
+    echo "VIDEO CTA (on-screen):"
+    if grep -qE "add_cta_slide_(physics|chem|biology|math)" "$reel_code" 2>/dev/null; then
+        local cta_method=$(grep -oE "add_cta_slide_(physics|chem|biology|math)" "$reel_code" | head -1)
+        print_success "✅ Using standard CTA: $cta_method"
+        echo "   Includes: Flame + JeetLo + Follow + jeetlo.ai + ₹499/mo"
+    else
+        print_error "❌ NOT using standard CTA!"
+        echo "   REQUIRED: self.add_cta_slide_chem(duration)"
+        issues+=("no_standard_cta")
+    fi
+
+    # AUDIO CTA: Must mention jeetlo.ai and pricing
+    echo ""
+    echo "AUDIO CTA (spoken):"
+    if jq -r '.[].text' "$audio_script" 2>/dev/null | grep -qi "jeetlo"; then
+        print_success "✅ Audio mentions 'jeetlo'"
+    else
+        print_warning "⚠️ Audio should mention 'jeetlo.ai'"
+        issues+=("audio_no_jeetlo")
+    fi
+
+    if jq -r '.[].text' "$audio_script" 2>/dev/null | grep -qE "499|four ninety nine"; then
+        print_success "✅ Audio mentions pricing (499)"
+    else
+        print_warning "⚠️ Audio should mention early bird pricing"
+        issues+=("audio_no_pricing")
+    fi
+
+    if jq -r '.[].text' "$audio_script" 2>/dev/null | grep -qi "register\|early bird"; then
+        print_success "✅ Audio has registration CTA"
+    else
+        print_warning "⚠️ Audio should have registration call-to-action"
+        issues+=("audio_no_register_cta")
+    fi
+
+    # Save QA result
+    cat > "$WORK_DIR/qa_cta.json" << EOF
+{
+  "video_cta_standard": $(grep -qE "add_cta_slide_" "$reel_code" 2>/dev/null && echo "true" || echo "false"),
+  "audio_mentions_jeetlo": $(jq -r '.[].text' "$audio_script" 2>/dev/null | grep -qi "jeetlo" && echo "true" || echo "false"),
+  "audio_mentions_pricing": $(jq -r '.[].text' "$audio_script" 2>/dev/null | grep -qE "499" && echo "true" || echo "false"),
+  "issues": $(printf '%s\n' "${issues[@]}" | jq -R . | jq -s . 2>/dev/null || echo "[]")
+}
+EOF
+
+    if [ ${#issues[@]} -eq 0 ]; then
+        print_success "CTA Compliance: PASS"
+    else
+        print_warning "CTA Compliance: ${#issues[@]} issues"
+    fi
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 🚨 MANDATORY STATELESS POLICING AGENTS 🚨
+#
+# ARCHITECTURE:
+# - Each agent is COMPLETELY INDEPENDENT (no shared state)
+# - Each agent is STATELESS (fresh instance per run)
+# - Each agent has its own UNIQUE ID
+# - Agents can run in ANY ORDER or in PARALLEL
+# - One agent CANNOT access another agent's data
+#
+# They do NOT trust the production pipeline - they verify everything
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# POLICING AGENT 1: FRAME OVERLAP VALIDATOR (STATELESS)
+# Uses manim-edu/qa/agents.py FrameOverlapAgent
+# Creates fresh agent instance with unique ID
+# BLOCKS if overlapping text detected (threshold: 95%)
+police_frame_overlap() {
+    print_step "🚨 POLICE-1" "FRAME OVERLAP VALIDATOR (STATELESS)"
+
+    local frames_dir="$WORK_DIR/frames"
+    local threshold=95
+
+    if [ ! -d "$frames_dir" ]; then
+        print_warning "Frames not extracted yet, extracting now..."
+        mkdir -p "$frames_dir"
+        ffmpeg -y -i "$WORK_DIR/final.mp4" -vf "fps=0.5" "$frames_dir/frame_%03d.png" 2>/dev/null
+    fi
+
+    echo "Creating fresh POLICE-1 agent instance..."
+
+    # Run STATELESS agent - fresh instance with unique ID
+    local result=$(python3 -c "
+import sys
+sys.path.insert(0, '/Users/pran/Projects/libraries/manim-edu')
+from manim_edu.qa import FrameOverlapAgent
+
+# Create FRESH agent instance (unique ID, no shared state)
+agent = FrameOverlapAgent()
+print(f'Agent ID: {agent.agent_id}')
+
+# Run with complete isolation
+result = agent.run(frames_dir='$frames_dir', threshold=$threshold)
+
+# Immutable result
+print('PASSED' if result.passed else 'FAILED')
+print(f'Bounty: {result.bounty_earned} points')
+print(f'Issues: {result.issues_count}')
+print(f'Run ID: {result.run_id}')
+exit(0 if result.passed else 1)
+" 2>&1)
+
+    local exit_code=$?
+    echo "$result"
+
+    # Save immutable result
+    python3 -c "
+import sys, json
+sys.path.insert(0, '/Users/pran/Projects/libraries/manim-edu')
+from manim_edu.qa import FrameOverlapAgent
+
+agent = FrameOverlapAgent()
+result = agent.run(frames_dir='$frames_dir', threshold=$threshold)
+print(json.dumps(result.to_dict(), indent=2))
+" > "$WORK_DIR/police_frame_overlap.json" 2>/dev/null
+
+    if [ $exit_code -eq 0 ]; then
+        print_success "🚨 POLICE-1 PASSED: No overlapping text detected"
+        return 0
+    else
+        print_error "🚨 POLICE-1 BLOCKED: Overlapping text detected!"
+        echo "   Fix the overlaps and re-render before proceeding."
+        return 1
+    fi
+}
+
+# POLICING AGENT 2: MANIM-EDU UTILIZATION (STATELESS)
+# Uses manim-edu/qa/agents.py UtilizationAgent
+# Creates fresh agent instance with unique ID
+# BLOCKS if utilization < 95%
+police_utilization() {
+    print_step "🚨 POLICE-2" "MANIM-EDU UTILIZATION CHECK (STATELESS)"
+
+    local code_path="$WORK_DIR/reel.py"
+    local threshold=95
+
+    if [ ! -f "$code_path" ]; then
+        print_error "reel.py not found"
+        return 1
+    fi
+
+    echo "Creating fresh POLICE-2 agent instance..."
+
+    # Run STATELESS agent - fresh instance with unique ID
+    local result=$(python3 -c "
+import sys
+sys.path.insert(0, '/Users/pran/Projects/libraries/manim-edu')
+from manim_edu.qa import UtilizationAgent
+
+# Create FRESH agent instance (unique ID, no shared state)
+agent = UtilizationAgent()
+print(f'Agent ID: {agent.agent_id}')
+
+# Run with complete isolation
+result = agent.run(code_path='$code_path', threshold=$threshold)
+
+# Immutable result
+print('PASSED' if result.passed else 'FAILED')
+print(f'Bounty: {result.bounty_earned} points')
+print(f'Issues: {result.issues_count}')
+print(f'Run ID: {result.run_id}')
+
+# Get details from immutable result
+details = dict(result.details)
+print(f'Utilization: {details.get(\"utilization\", \"N/A\")}%')
+exit(0 if result.passed else 1)
+" 2>&1)
+
+    local exit_code=$?
+    echo "$result"
+
+    # Save immutable result
+    python3 -c "
+import sys, json
+sys.path.insert(0, '/Users/pran/Projects/libraries/manim-edu')
+from manim_edu.qa import UtilizationAgent
+
+agent = UtilizationAgent()
+result = agent.run(code_path='$code_path', threshold=$threshold)
+print(json.dumps(result.to_dict(), indent=2))
+" > "$WORK_DIR/police_utilization.json" 2>/dev/null
+
+    if [ $exit_code -eq 0 ]; then
+        print_success "🚨 POLICE-2 PASSED: manim-edu utilization >= $threshold%"
+        return 0
+    else
+        print_error "🚨 POLICE-2 BLOCKED: manim-edu utilization < $threshold%!"
+        echo "   Use manim-edu components instead of custom code."
+        return 1
+    fi
+}
+
+# POLICING AGENT 3: CONTENT VERIFICATION (STATELESS)
+# Uses manim-edu/qa/agents.py ContentAgent
+# Creates fresh agent instance with unique ID
+# BLOCKS if facts cannot be verified or are incorrect
+police_content() {
+    print_step "🚨 POLICE-3" "CONTENT VERIFICATION (STATELESS)"
+
+    local script_path="$WORK_DIR/audio_script.json"
+
+    if [ ! -f "$script_path" ]; then
+        # Try timings.json
+        script_path="$WORK_DIR/audio/timings.json"
+    fi
+
+    if [ ! -f "$script_path" ]; then
+        print_warning "Script not found, skipping content verification"
+        return 0
+    fi
+
+    echo "Creating fresh POLICE-3 agent instance..."
+
+    # Run STATELESS agent - fresh instance with unique ID
+    local result=$(python3 -c "
+import sys
+sys.path.insert(0, '/Users/pran/Projects/libraries/manim-edu')
+from manim_edu.qa import ContentAgent
+
+# Create FRESH agent instance (unique ID, no shared state)
+agent = ContentAgent()
+print(f'Agent ID: {agent.agent_id}')
+
+# Run with complete isolation
+result = agent.run(script_path='$script_path', subject='$SUBJECT')
+
+# Immutable result
+print('PASSED' if result.passed else 'FAILED')
+print(f'Bounty: {result.bounty_earned} points')
+print(f'Issues: {result.issues_count}')
+print(f'Run ID: {result.run_id}')
+
+# Get details from immutable result
+details = dict(result.details)
+print(f'Claims: {details.get(\"total_claims\", 0)}')
+print(f'  Verified: {details.get(\"verified\", 0)}')
+print(f'  Incorrect: {details.get(\"incorrect\", 0)}')
+exit(0 if result.passed else 1)
+" 2>&1)
+
+    local exit_code=$?
+    echo "$result"
+
+    # Save immutable result
+    python3 -c "
+import sys, json
+sys.path.insert(0, '/Users/pran/Projects/libraries/manim-edu')
+from manim_edu.qa import ContentAgent
+
+agent = ContentAgent()
+result = agent.run(script_path='$script_path', subject='$SUBJECT')
+print(json.dumps(result.to_dict(), indent=2))
+" > "$WORK_DIR/police_content.json" 2>/dev/null
+
+    if [ $exit_code -eq 0 ]; then
+        print_success "🚨 POLICE-3 PASSED: Content verified"
+        return 0
+    else
+        print_error "🚨 POLICE-3 BLOCKED: Content verification failed!"
+        echo "   Fix incorrect facts before proceeding."
+        return 1
+    fi
+}
+
+# POLICING AGENT 4: CALCULATION VERIFICATION (STATELESS)
+# Uses manim-edu/qa/agents.py CalculationAgent
+# Creates fresh agent instance with unique ID
+# BLOCKS if calculations are incorrect
+police_calculations() {
+    print_step "🚨 POLICE-4" "CALCULATION VERIFICATION (STATELESS)"
+
+    local script_path="$WORK_DIR/audio_script.json"
+
+    if [ ! -f "$script_path" ]; then
+        script_path="$WORK_DIR/audio/timings.json"
+    fi
+
+    if [ ! -f "$script_path" ]; then
+        print_warning "Script not found, skipping calculation verification"
+        return 0
+    fi
+
+    echo "Creating fresh POLICE-4 agent instance..."
+
+    # Run STATELESS agent - fresh instance with unique ID
+    local result=$(python3 -c "
+import sys
+sys.path.insert(0, '/Users/pran/Projects/libraries/manim-edu')
+from manim_edu.qa import CalculationAgent
+
+# Create FRESH agent instance (unique ID, no shared state)
+agent = CalculationAgent()
+print(f'Agent ID: {agent.agent_id}')
+
+# Run with complete isolation
+result = agent.run(script_path='$script_path', subject='$SUBJECT')
+
+# Immutable result
+print('PASSED' if result.passed else 'FAILED')
+print(f'Bounty: {result.bounty_earned} points')
+print(f'Issues: {result.issues_count}')
+print(f'Run ID: {result.run_id}')
+
+# Get details from immutable result
+details = dict(result.details)
+print(f'Calculations: {details.get(\"total_calculations\", 0)}')
+print(f'  Correct: {details.get(\"correct\", 0)}')
+print(f'  Incorrect: {details.get(\"incorrect\", 0)}')
+exit(0 if result.passed else 1)
+" 2>&1)
+
+    local exit_code=$?
+    echo "$result"
+
+    # Save immutable result
+    python3 -c "
+import sys, json
+sys.path.insert(0, '/Users/pran/Projects/libraries/manim-edu')
+from manim_edu.qa import CalculationAgent
+
+agent = CalculationAgent()
+result = agent.run(script_path='$script_path', subject='$SUBJECT')
+print(json.dumps(result.to_dict(), indent=2))
+" > "$WORK_DIR/police_calculations.json" 2>/dev/null
+
+    if [ $exit_code -eq 0 ]; then
+        print_success "🚨 POLICE-4 PASSED: All calculations verified"
+        return 0
+    else
+        print_error "🚨 POLICE-4 BLOCKED: Calculation errors found!"
+        echo "   Fix the calculations before proceeding."
+        return 1
+    fi
+}
+
+# MASTER POLICING RUNNER (MANDATORY - ALL MUST PASS)
+run_all_police() {
+    print_header "🚨 RUNNING MANDATORY POLICING AGENTS 🚨"
+    echo "These are INDEPENDENT verification agents."
+    echo "They do NOT trust the production pipeline."
+    echo "ALL must PASS for content to proceed."
+    echo ""
+
+    local all_passed=true
+
+    # POLICE-2: Utilization (run first - fastest)
+    police_utilization || all_passed=false
+    echo ""
+
+    # POLICE-3: Content Verification
+    police_content || all_passed=false
+    echo ""
+
+    # POLICE-4: Calculation Verification
+    police_calculations || all_passed=false
+    echo ""
+
+    # POLICE-1: Frame Overlap (run last - requires rendered video)
+    if [ -f "$WORK_DIR/final.mp4" ]; then
+        police_frame_overlap || all_passed=false
+    else
+        print_warning "Final video not found - skipping frame overlap check"
+    fi
+    echo ""
+
+    # Summary
+    if [ "$all_passed" = true ]; then
+        print_success "═══════════════════════════════════════════════════════════"
+        print_success "🚨 ALL POLICING AGENTS PASSED - CONTENT APPROVED 🚨"
+        print_success "═══════════════════════════════════════════════════════════"
+        return 0
+    else
+        print_error "═══════════════════════════════════════════════════════════"
+        print_error "🚨 POLICING AGENTS BLOCKED CONTENT 🚨"
+        print_error "Fix all issues above before proceeding."
+        print_error "═══════════════════════════════════════════════════════════"
+        return 1
+    fi
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MASTER QA RUNNER
+# ═══════════════════════════════════════════════════════════════════════════════
+
+run_all_qa() {
+    print_step "QA" "RUNNING ALL QA CHECKPOINTS"
+    echo ""
+
+    local qa_passed=true
+
+    # QA-1: Viral Engineering
+    qa_audio_script_viral || qa_passed=false
+    echo ""
+
+    # QA-2: Code Quality
+    qa_video_code || qa_passed=false
+    echo ""
+
+    # QA-5: CTA Compliance (run before render for early feedback)
+    qa_cta_compliance || qa_passed=false
+    echo ""
+
+    if [ "$qa_passed" = true ]; then
+        print_success "═══════════════════════════════════════"
+        print_success "ALL PRE-RENDER QA CHECKS PASSED"
+        print_success "═══════════════════════════════════════"
+    else
+        print_warning "═══════════════════════════════════════"
+        print_warning "SOME QA CHECKS HAVE ISSUES - Review above"
+        print_warning "═══════════════════════════════════════"
+    fi
+
+    return 0
+}
+
+run_post_render_qa() {
+    print_step "QA" "POST-RENDER QA CHECKPOINTS"
+    echo ""
+
+    # QA-3: Sync Verification
+    qa_sync_verification
+    echo ""
+
+    # QA-4: Frame-by-Frame
+    qa_frame_by_frame
+    echo ""
+
+    print_success "Post-render QA complete. Review qa_frames/ for visual inspection."
 }
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -1679,6 +2534,17 @@ main() {
     frame_qa
     combine_av
     generate_thumbnail
+
+    # 🚨 MANDATORY POLICING AGENTS - MUST PASS BEFORE FINAL QA 🚨
+    # These are INDEPENDENT verification agents that can BLOCK content
+    if ! run_all_police; then
+        print_error "═══════════════════════════════════════════════════════════"
+        print_error "🚨 PIPELINE BLOCKED BY POLICING AGENTS 🚨"
+        print_error "Fix all issues above and re-run with --resume"
+        print_error "═══════════════════════════════════════════════════════════"
+        exit 1
+    fi
+
     final_qa
     push_to_github
 

@@ -1,0 +1,24 @@
+{
+  "reel_id": "bio-06-blood-types",
+  "subject": "biology",
+  "topic": "Blood Types and Universal Donor",
+  "hook": "Your blood can KILL someone... or SAVE their life. It all depends on 4 letters!",
+  "key_points": [
+    "4 blood types: A, B, AB, O - based on ANTIGENS on RBCs",
+    "Type A has A antigens, Type B has B antigens, AB has BOTH",
+    "Type O has NO antigens - that's why it's the universal DONOR!",
+    "But O can only RECEIVE O blood - it has both anti-A and anti-B antibodies",
+    "AB is universal RECEIVER - no antibodies means it accepts everything!"
+  ],
+  "core_analogy": "Antigens are like ID badges on cells. Your immune system checks IDs - wrong badge = ATTACK!",
+  "mind_blow": "Less than 7% of Indians have O-negative blood - the REAL universal donor. That's rarer than finding a JEE AIR-1!",
+  "exam_relevance": "NEET 2024: Why does blood transfusion mismatch cause agglutination? JEE: Antigen-antibody specificity.",
+  "manim_edu_components": [
+    "CellVisualizer",
+    "BiologyDiagram"
+  ],
+  "language": "hinglish",
+  "target_duration": 55,
+  "created_at": "2026-01-02T18:40:00.000Z",
+  "status": "failed"
+}

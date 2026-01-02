@@ -1,0 +1,22 @@
+{
+  "reel_id": "phy-02-moon-falling",
+  "subject": "physics",
+  "topic": "Why Doesn't the Moon Fall Down?",
+  "hook": "Moon Earth की तरफ FALL कर रहा है... हर SECOND! लेकिन गिरता क्यों नहीं?",
+  "key_points": [
+    "Moon IS falling - at 1.4mm per second towards Earth!",
+    "But Earth's surface curves AWAY as Moon falls",
+    "It's like throwing a ball SO HARD it keeps missing the ground",
+    "Orbital velocity = falling + moving sideways perfectly balanced",
+    "Newton imagined a cannon on a mountain - same concept!"
+  ],
+  "core_analogy": "Imagine throwing a ball. Throw harder = falls farther. Throw INFINITELY hard = it keeps falling but never lands because Earth curves away!",
+  "mind_blow": "ISS astronauts are NOT weightless - they're falling at 28,000 km/h but missing Earth every time!",
+  "exam_relevance": "JEE: Orbital velocity v = sqrt(GM/r). NEET: Weightlessness in satellites.",
+  "manim_edu_components": ["MechanicsSimulator", "FieldVisualizer"],
+  "language": "hinglish",
+  "target_duration": 55,
+  "max_duration": 85,
+  "created_at": "2026-01-02T22:30:00.000Z",
+  "status": "pending"
+}
