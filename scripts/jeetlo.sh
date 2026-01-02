@@ -809,11 +809,34 @@ CONFIG:
 MANIM-EDU LIBRARY (MANDATORY - use ONLY manim-edu for all scientific visuals):
 Location: /Users/pran/Projects/libraries/manim-edu
 
-CRITICAL RULES:
-1. NEVER use MathTex, Tex, or raw LaTeX - these are FORBIDDEN
-2. ALWAYS use manim-edu components for formulas and scientific visuals
-3. Use Text() for simple text labels
-4. Create REVOLUTIONARY visualizations that make students say "Why didn't my teacher explain it like THIS?!"
+═══════════════════════════════════════════════════════════════════════════════
+🚨 GUARDRAILS - VIOLATION = PIPELINE FAILURE 🚨
+═══════════════════════════════════════════════════════════════════════════════
+
+🔴 FORBIDDEN (Will cause pipeline to FAIL):
+1. NEVER put Hindi/Devanagari text ON SCREEN - Audio is Hinglish, VIDEO is ENGLISH ONLY
+2. NEVER use MathTex, Tex, or raw LaTeX
+3. NEVER write custom CTA code - ALWAYS use self.add_cta_slide_*() from JeetLoReelMixin
+4. NEVER use GrowArrow() - use Create() instead for arrows
+5. NEVER put text outside safe zone (avoid edges - keep content in center 80%)
+6. NEVER overlap text on text - position elements with proper spacing
+
+🟢 REQUIRED (Must include or pipeline will FAIL):
+1. ALWAYS use manim-edu components for formulas and scientific visuals
+2. ALWAYS use English text on screen (Hindi is ONLY in audio, never on screen)
+3. ALWAYS use self.add_cta_slide_{subject}(duration) for CTA segment
+4. ALWAYS clear objects at end of each segment with FadeOut or self.clear()
+5. ALWAYS position text with .move_to(), .next_to(), .to_edge() with proper buff values
+
+═══════════════════════════════════════════════════════════════════════════════
+SAFE ZONE POSITIONING (9:16 Vertical Frame):
+- FRAME_WIDTH = 8 units, FRAME_HEIGHT = 14.22 units
+- Keep main content within X: [-3.5, 3.5] and Y: [-6, 6]
+- Title/Header: UP * 5 to UP * 6
+- Main content: UP * 2 to DOWN * 2
+- Bottom info: DOWN * 4 to DOWN * 6
+- Watermark is always at bottom-right, don't overlap it
+═══════════════════════════════════════════════════════════════════════════════
 
 === ATOMIC FORMULA SYSTEM (NEW - USE THIS!) ===
 
@@ -885,6 +908,31 @@ rbc = cell.red_blood_cell()
 from manim_edu.mathematics import GraphAnimator
 graph = GraphAnimator()
 
+=== SMART LAYOUT SYSTEM (Prevents overlaps & off-screen content!) ===
+
+from manim_edu.primitives.layout import (
+    safe_text,           # Auto-scales text to fit: safe_text("Long text", font_size=36)
+    wrapped_text,        # Multi-line auto-wrap: wrapped_text("Long paragraph", max_width=6.5)
+    clamp_to_safe_zone,  # Forces mobject into safe area
+    LayoutManager,       # Tracks placed objects, prevents overlaps
+    VerticalStack,       # Easy vertical stacking with auto-spacing
+    SAFE_X_MIN, SAFE_X_MAX, SAFE_Y_MIN, SAFE_Y_MAX,  # -3.5 to 3.5 X, -6 to 6 Y
+)
+
+# ALWAYS USE safe_text() instead of Text() for auto-scaling:
+title = safe_text("Main Concept Title", font_size=48, color=YELLOW)
+title.move_to(UP * 4)
+
+# For multi-line text:
+explanation = wrapped_text("This is a long explanation that will automatically wrap", max_width=6.5)
+explanation.move_to(ORIGIN)
+
+# Vertical stacking (no overlaps):
+stack = VerticalStack(start_y=5.0, spacing=0.6)
+stack.add(safe_text("First item", font_size=36))
+stack.add(safe_text("Second item", font_size=36))
+stack.add(safe_text("Third item", font_size=36))
+
 === ANIMATION PATTERNS (REVOLUTIONARY!) ===
 
 # IMPORTANT: For Arrows, use Create() not GrowArrow() - GrowArrow has compatibility issues
@@ -944,19 +992,17 @@ class ${subject_cap}Reel(JeetLoReelMixin, Scene):
     # ... implement ALL segment methods from timings
 
     def segment_07_cta(self, timing):
-        # CTA slide with JeetLo branding
+        # MANDATORY: Use the pre-built CTA slide from JeetLoReelMixin
+        # This includes: flame icon, JeetLo text, jeetlo.ai URL, pricing, Follow CTA
         duration = timing['duration']
-        logo = create_brand_watermark(opacity=1.0, scale=2.0)
-        logo.center()
-        cta_text = Text("Follow for more!", font_size=48, color=WHITE)
-        cta_text.next_to(logo, DOWN, buff=0.5)
-        url = Text("jeetlo.ai", font_size=36, color=YELLOW)
-        url.next_to(cta_text, DOWN, buff=0.3)
-
-        self.play(FadeIn(logo), run_time=0.8)
-        self.play(Write(cta_text), run_time=0.6)
-        self.play(Write(url), run_time=0.4)
-        self.wait(duration - 1.8)
+        # Call subject-specific CTA based on self.subject
+        cta_methods = {
+            'physics': self.add_cta_slide_physics,
+            'chemistry': self.add_cta_slide_chem,
+            'biology': self.add_cta_slide_biology,
+            'mathematics': self.add_cta_slide_math
+        }
+        cta_methods[self.subject](duration)
 
 REQUIREMENTS:
 1. Create a segment method for EACH entry in timings (segment_01_hook, segment_02_setup, etc.)
@@ -1110,6 +1156,57 @@ validate_manim_edu() {
         print_warning "Only $segment_count segment methods (expected 5+)"
         issues+=("insufficient_segments")
     fi
+
+    # ═══════════════════════════════════════════════════════════════════════════
+    # 🚨 GUARDRAIL CHECKS - These can BLOCK the pipeline
+    # ═══════════════════════════════════════════════════════════════════════════
+
+    # GUARDRAIL 1: Check for Hindi/Devanagari text ON SCREEN (BLOCKING)
+    # Uses Python for reliable Unicode detection
+    local hindi_lines=$(python3 -c "
+import re
+import sys
+with open('$reel_code', 'r') as f:
+    for i, line in enumerate(f, 1):
+        # Check for Devanagari characters in Text() calls
+        if 'Text(' in line and re.search(r'[\u0900-\u097F]', line):
+            print(f'{i}: {line.strip()[:80]}')
+" 2>/dev/null)
+
+    if [ -n "$hindi_lines" ]; then
+        print_error "🚨 GUARDRAIL VIOLATION: Hindi/Devanagari text found ON SCREEN!"
+        print_error "   Audio can be Hinglish, but VIDEO must be ENGLISH ONLY"
+        echo "   Offending lines:"
+        echo "$hindi_lines" | head -5
+        issues+=("BLOCKING_hindi_on_screen")
+    else
+        print_success "No Hindi text on screen (English only - correct!)"
+        score=$((score + 10))
+    fi
+
+    # GUARDRAIL 2: Check for GrowArrow (deprecated - causes errors)
+    if grep -q "GrowArrow" "$reel_code" 2>/dev/null; then
+        print_warning "⚠️ GrowArrow() detected - should use Create() for arrows"
+        echo "   Auto-fixing: replacing GrowArrow with Create..."
+        sed -i '' 's/GrowArrow/Create/g' "$reel_code" 2>/dev/null || sed -i 's/GrowArrow/Create/g' "$reel_code"
+        print_success "Auto-fixed: GrowArrow → Create"
+    else
+        print_success "No GrowArrow usage (using Create - correct!)"
+    fi
+
+    # GUARDRAIL 3: Check for proper CTA (must use add_cta_slide_*)
+    if grep -q "add_cta_slide_physics\|add_cta_slide_chem\|add_cta_slide_biology\|add_cta_slide_math" "$reel_code" 2>/dev/null; then
+        print_success "Using standard CTA slide (correct!)"
+        score=$((score + 10))
+    elif grep -q "segment_07_cta\|segment.*cta" "$reel_code" 2>/dev/null; then
+        print_warning "CTA segment exists but may not use standard add_cta_slide_*()"
+        issues+=("custom_cta_code")
+    else
+        print_warning "No CTA segment found"
+        issues+=("missing_cta")
+    fi
+
+    # ═══════════════════════════════════════════════════════════════════════════
 
     # Check for dynamic animations
     local dynamic_anims=0
@@ -1492,9 +1589,11 @@ Proof chain complete with $(jq '.steps | length' "$reel_dir/.proof_chain.json") 
 
 Generated by jeetlo.sh" 2>/dev/null || true
 
-    git push origin main 2>/dev/null || print_warning "Failed to push to GitHub"
-
-    print_success "Pushed to GitHub"
+    if git push origin main 2>/dev/null; then
+        print_success "Pushed to GitHub"
+    else
+        print_warning "Failed to push to GitHub (may need auth)"
+    fi
 }
 
 # ═══════════════════════════════════════════════════════════════════════════════
