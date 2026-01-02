@@ -825,6 +825,10 @@ Location: /Users/pran/Projects/libraries/manim-edu
    - For gravity: field.gravitational_field() NOT manual Arrow() in a loop
    - For electric: field.electric_dipole() or field.point_charge()
    - Manual Arrow() with normalized vectors WILL CRASH if direction=0
+8. NEVER call .normalized() on numpy arrays - numpy doesn't have this method!
+   - WRONG: (end - start).normalized()
+   - RIGHT: normalize(end - start)  # Manim's normalize() function
+   - OR: (end - start) / np.linalg.norm(end - start)  # numpy way
 
 🟢 REQUIRED (Must include or pipeline will FAIL):
 1. ALWAYS use manim-edu components for formulas and scientific visuals
