@@ -105,7 +105,8 @@ VIDEO_RULES='{
   "VP5": "CTA always at end",
   "VP6": "Progressive reveal animations",
   "VP7": "Visual-first design",
-  "VP8": "Sync animations WITH audio"
+  "VP8": "Sync animations WITH audio",
+  "VP9_TIMING": "EACH segment MUST use duration from timing dict. Calculate: wait_time = (duration - sum(run_times)) / num_waits. Video duration MUST equal audio duration."
 }'
 
 # HINGLISH RULES
@@ -1083,6 +1084,30 @@ REQUIREMENTS:
 6. Match the visual scenes described in the creative brief
 7. CTA segment must include jeetlo.ai and "Follow for more!"
 
+🚨 CRITICAL TIMING RULE (VIDEO MUST MATCH AUDIO DURATION!):
+Each segment method MUST use this pattern:
+def segment_XX(self, timing):
+    duration = timing['duration']
+
+    # 1. Calculate total animation time (sum all run_time values)
+    total_anim_time = 0.5 + 0.3 + 0.4  # example
+
+    # 2. Count wait() calls
+    num_waits = 3  # example
+
+    # 3. Calculate wait_time to fill remaining duration
+    wait_time = max(0.1, (duration - total_anim_time) / num_waits)
+
+    # 4. Use consistent wait_time throughout
+    self.play(FadeIn(obj1), run_time=0.5)
+    self.wait(wait_time)
+    self.play(Write(obj2), run_time=0.3)
+    self.wait(wait_time)
+    self.play(Create(obj3), run_time=0.4)
+    self.wait(wait_time)
+
+This ensures: total_anim_time + (num_waits * wait_time) = duration
+
 Output the complete Python file now:
 PROMPT_EOF
 
@@ -1307,6 +1332,98 @@ with open('$reel_code', 'r') as f:
     # GUARDRAIL 7: Check for proper imports (manim_edu should be imported)
     if ! grep -q "from manim_edu\|import manim_edu" "$reel_code" 2>/dev/null; then
         print_warning "⚠️ manim_edu not imported - some features may be missing"
+    fi
+
+    # ═══════════════════════════════════════════════════════════════════════════
+
+    # GUARDRAIL 8: PRE-RENDER TIMING VALIDATION (CRITICAL - catches duration mismatch BEFORE render)
+    echo ""
+    echo "🕐 Validating segment timing calculations..."
+
+    local timing_issues=$(python3 << TIMING_CHECK_EOF
+import json
+import re
+import sys
+
+# Load audio timings
+try:
+    with open('$WORK_DIR/audio/timings.json', 'r') as f:
+        timings = json.load(f)
+except:
+    print("ERROR: Cannot load timings.json")
+    sys.exit(0)
+
+# Load reel.py
+try:
+    with open('$WORK_DIR/reel.py', 'r') as f:
+        reel_code = f.read()
+except:
+    print("ERROR: Cannot load reel.py")
+    sys.exit(0)
+
+issues = []
+total_audio = sum(t.get('duration', 0) for t in timings if t.get('id') != 'combined_audio')
+
+# For each segment, check if timing logic looks correct
+for timing in timings:
+    seg_id = timing.get('id', '')
+    if seg_id == 'combined_audio':
+        continue
+
+    seg_duration = timing.get('duration', 0)
+    method_name = f"def segment_{seg_id}"
+
+    # Find the segment method in code
+    if method_name not in reel_code:
+        issues.append(f"MISSING: segment_{seg_id} method not found in reel.py")
+        continue
+
+    # Extract the segment method code
+    start = reel_code.find(method_name)
+    next_def = reel_code.find("\n    def ", start + 1)
+    if next_def == -1:
+        next_def = len(reel_code)
+    segment_code = reel_code[start:next_def]
+
+    # Count run_time values
+    run_times = re.findall(r'run_time\s*=\s*([\d.]+)', segment_code)
+    total_run_time = sum(float(rt) for rt in run_times)
+
+    # Count self.wait() calls
+    wait_calls = len(re.findall(r'self\.wait\s*\(', segment_code))
+
+    # Check for proper timing calculation pattern
+    has_duration_var = 'duration = timing' in segment_code or "duration = timing['duration']" in segment_code
+    has_wait_calc = 'wait_time' in segment_code or 'wait =' in segment_code
+
+    if not has_duration_var:
+        issues.append(f"TIMING: {seg_id} - not using duration from timing dict")
+
+    if wait_calls > 0 and not has_wait_calc:
+        issues.append(f"TIMING: {seg_id} - has {wait_calls} wait() calls but no wait_time calculation")
+
+    # Rough estimate check: if run_times are too high relative to segment duration
+    if total_run_time > seg_duration * 0.9:
+        issues.append(f"TIMING: {seg_id} - animation time ({total_run_time:.1f}s) nearly exceeds segment duration ({seg_duration:.1f}s)")
+
+# Print issues
+for issue in issues:
+    print(issue)
+
+if not issues:
+    print("OK: All segment timings validated")
+TIMING_CHECK_EOF
+)
+
+    if echo "$timing_issues" | grep -q "^ERROR:"; then
+        print_warning "Could not validate timing (file access issue)"
+    elif echo "$timing_issues" | grep -q "^MISSING:\|^TIMING:"; then
+        print_warning "⚠️ Timing issues detected (may cause duration mismatch):"
+        echo "$timing_issues" | grep "^MISSING:\|^TIMING:" | head -5 | sed 's/^/   /'
+        issues+=("timing_calculation_issues")
+    else
+        print_success "Segment timing calculations validated"
+        score=$((score + 10))
     fi
 
     # ═══════════════════════════════════════════════════════════════════════════
@@ -2199,8 +2316,15 @@ if [ -z "$PYTHON" ]; then
     exit 1
 fi
 
+# Find the Scene class name in reel.py
+SCENE_NAME=$(grep -E "^class.*\(.*Scene" reel.py | head -1 | sed 's/class \([A-Za-z]*\).*/\1/')
+if [ -z "$SCENE_NAME" ]; then
+    SCENE_NAME="PhysicsReel"  # fallback
+fi
+
 echo "Using Python: $PYTHON"
-$PYTHON -m manim render -qh reel.py 2>&1
+echo "Scene: $SCENE_NAME"
+$PYTHON -m manim render -qh --fps 30 -r 1080,1920 reel.py "$SCENE_NAME" 2>&1
 RENDER_EOF
     chmod +x "$WORK_DIR/render.sh"
 

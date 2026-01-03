@@ -1,0 +1,93 @@
+{
+  "reel_id": "che-02-electronegativity",
+  "subject": "chemistry",
+  "created_at": "2026-01-02T20:22:10Z",
+  "genesis_hash": "877440f222726ed5f82e4813b94c459344932ee1ee4afca9fcfe6b1a86809b3b",
+  "steps": [
+    {
+      "step": "setup",
+      "input_hash": "genesis",
+      "output_hash": "e4fb06e78da36859bb957b9755441fbdf1166f046f34ad4d806d6fa123f618cd",
+      "timestamp": "2026-01-03T17:23:27Z"
+    },
+    {
+      "step": "creative_brief",
+      "input_hash": "e4fb06e78da36859bb957b9755441fbdf1166f046f34ad4d806d6fa123f618cd",
+      "output_hash": "1d2d4879109f491cc78a53705d2b1de719d1c60c081c4a33c3c9a16bae9280a4",
+      "timestamp": "2026-01-03T17:24:16Z"
+    },
+    {
+      "step": "audio_script",
+      "input_hash": "1d2d4879109f491cc78a53705d2b1de719d1c60c081c4a33c3c9a16bae9280a4",
+      "output_hash": "3f48e1a38b08150e11cac26215c556dba5feefafe1b540d830f8529cc306e434",
+      "timestamp": "2026-01-03T17:24:42Z"
+    },
+    {
+      "step": "generate_audio",
+      "input_hash": "3f48e1a38b08150e11cac26215c556dba5feefafe1b540d830f8529cc306e434",
+      "output_hash": "e07261b4de871c27c0bbbf33706955972b5b5a705806850e1965fc52d2427c68",
+      "timestamp": "2026-01-03T17:25:07Z"
+    },
+    {
+      "step": "setup",
+      "input_hash": "e07261b4de871c27c0bbbf33706955972b5b5a705806850e1965fc52d2427c68",
+      "output_hash": "e4fb06e78da36859bb957b9755441fbdf1166f046f34ad4d806d6fa123f618cd",
+      "timestamp": "2026-01-03T17:32:01Z"
+    },
+    {
+      "step": "validate_manim_edu",
+      "input_hash": "e4fb06e78da36859bb957b9755441fbdf1166f046f34ad4d806d6fa123f618cd",
+      "output_hash": "a43ff9e55bb0319b44c2f2fc0b771cedc1adee3ab4e4e284be74d5b0eebab9aa",
+      "timestamp": "2026-01-03T17:32:01Z"
+    },
+    {
+      "step": "setup",
+      "input_hash": "a43ff9e55bb0319b44c2f2fc0b771cedc1adee3ab4e4e284be74d5b0eebab9aa",
+      "output_hash": "e4fb06e78da36859bb957b9755441fbdf1166f046f34ad4d806d6fa123f618cd",
+      "timestamp": "2026-01-03T17:36:52Z"
+    },
+    {
+      "step": "validate_manim_edu",
+      "input_hash": "e4fb06e78da36859bb957b9755441fbdf1166f046f34ad4d806d6fa123f618cd",
+      "output_hash": "a43ff9e55bb0319b44c2f2fc0b771cedc1adee3ab4e4e284be74d5b0eebab9aa",
+      "timestamp": "2026-01-03T17:36:53Z"
+    },
+    {
+      "step": "render_video",
+      "input_hash": "a43ff9e55bb0319b44c2f2fc0b771cedc1adee3ab4e4e284be74d5b0eebab9aa",
+      "output_hash": "b9460cca98f3bb37be0ef9e8271b32686e0db618090d4646286358020ed47115",
+      "timestamp": "2026-01-03T17:37:22Z"
+    },
+    {
+      "step": "validate_sync",
+      "input_hash": "b9460cca98f3bb37be0ef9e8271b32686e0db618090d4646286358020ed47115",
+      "output_hash": "a4bd390e6bc47bffd528cebae9dcf958359fc1a0bf76baaef7ae990e3e7c3b03",
+      "timestamp": "2026-01-03T17:37:22Z"
+    },
+    {
+      "step": "frame_qa",
+      "input_hash": "a4bd390e6bc47bffd528cebae9dcf958359fc1a0bf76baaef7ae990e3e7c3b03",
+      "output_hash": "5145ed7e7fa3cbd029360ef10eb062ea1842fd0028cd96508837d22c854043b4",
+      "timestamp": "2026-01-03T17:37:23Z"
+    },
+    {
+      "step": "combine_av",
+      "input_hash": "5145ed7e7fa3cbd029360ef10eb062ea1842fd0028cd96508837d22c854043b4",
+      "output_hash": "82b0ae874d7c0fcc21c8b8f98ccc45f89873d77f3c79e83a01e884542cc51a9f",
+      "timestamp": "2026-01-03T17:37:31Z"
+    },
+    {
+      "step": "thumbnail",
+      "input_hash": "82b0ae874d7c0fcc21c8b8f98ccc45f89873d77f3c79e83a01e884542cc51a9f",
+      "output_hash": "9a6e4df2425d4d9d38c0eba4366857743c192ffbde911ee612506fbaff2784de",
+      "timestamp": "2026-01-03T17:37:32Z"
+    },
+    {
+      "step": "final_qa",
+      "input_hash": "9a6e4df2425d4d9d38c0eba4366857743c192ffbde911ee612506fbaff2784de",
+      "output_hash": "cabf7e077ab3499c50837744c177373f378d6063f3cea898545e84fe6cd22fbd",
+      "timestamp": "2026-01-03T17:37:32Z"
+    }
+  ],
+  "status": "ready_to_post"
+}

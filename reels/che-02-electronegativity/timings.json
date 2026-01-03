@@ -1,0 +1,65 @@
+[
+  {
+    "id": "01_hook",
+    "text": "Fluorine... periodic table का सबसे GREEDY element! ये इतना लालची है कि हर atom से electrons छीन लेता है... लेकिन क्या आप जानते हैं ये exactly कैसे करता है?",
+    "duration": 11.352000,
+    "startTime": 0,
+    "endTime": 11.352000
+  },
+  {
+    "id": "02_setup",
+    "text": "सोचिए atoms के बीच एक tug of war हो रही है... जो ज़्यादा STRONG है, वो electron की रस्सी अपनी तरफ खींच लेगा। इसी strength को हम कहते हैं electronegativity!",
+    "duration": 9.912000,
+    "startTime": 11.352000,
+    "endTime": 21.264000
+  },
+  {
+    "id": "03_content_part1",
+    "text": "पहले देखते हैं H-H bond... दोनों hydrogen EQUAL strength के हैं। Electronegativity दोनों की two point one... तो electrons बिल्कुल MIDDLE में रहते हैं। ये है non-polar bond... fair sharing!",
+    "duration": 12.504000,
+    "startTime": 21.264000,
+    "endTime": 33.768000
+  },
+  {
+    "id": "03_content_part2",
+    "text": "अब H-F bond देखिए... Hydrogen की power two point one, लेकिन Fluorine की FOUR point zero! Fluorine इतना strong है कि electrons को अपनी तरफ YANK कर लेता है। Hydrogen पर partial positive charge, Fluorine पर partial negative। ये है polar covalent bond... UNFAIR sharing!",
+    "duration": 15.960000,
+    "startTime": 33.768000,
+    "endTime": 49.728000
+  },
+  {
+    "id": "03_content_part3",
+    "text": "और Na-F में तो Fluorine ने पूरा electron ही CHURA लिया! Sodium plus one, Fluorine minus one... complete transfer! ये है ionic bond... sharing नहीं, STEALING!",
+    "duration": 9.504000,
+    "startTime": 49.728000,
+    "endTime": 59.232000
+  },
+  {
+    "id": "04_reveal",
+    "text": "MAGIC number याद रखिए... one point seven! Electronegativity difference one point seven से कम है तो covalent... sharing हो रही है। One point seven से ज़्यादा? Ionic... robbery हो गई!",
+    "duration": 11.160000,
+    "startTime": 59.232000,
+    "endTime": 70.392000
+  },
+  {
+    "id": "05_key_point",
+    "text": "Simple rule... जितना BIGGER difference, उतना ज़्यादा polar! Zero difference means equal sharing, बड़ा difference means electrons एक तरफ SHIFTED हैं।",
+    "duration": 11.112000,
+    "startTime": 70.392000,
+    "endTime": 81.504000
+  },
+  {
+    "id": "06_exam_tip",
+    "text": "J. E. E. TRAP question... H-F ज़्यादा polar है या H-Cl? Calculate कीजिए! H-F difference one point nine, H-Cl difference zero point nine... H-F WINS! ये आता है exam में!",
+    "duration": 12.504000,
+    "startTime": 81.504000,
+    "endTime": 94.008000
+  },
+  {
+    "id": "07_cta",
+    "text": "Chemistry को ऐसे ही आसान बनाना है? JeetLo! Follow कीजिए!",
+    "duration": 4.248000,
+    "startTime": 94.008000,
+    "endTime": 98.256000
+  }
+]

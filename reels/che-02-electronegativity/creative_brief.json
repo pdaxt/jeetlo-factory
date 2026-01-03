@@ -1,0 +1,23 @@
+{
+  "core_analogy": "Electronegativity = Tug-of-War strength. Fluorine is the undefeated champion wrestler who ALWAYS wins the electron rope. When two atoms share electrons, the stronger wrestler pulls the electron blanket towards themselves, leaving the other atom cold and partially positive.",
+  "subconscious_hook": "Identity challenge + FOMO. 'You think you know which atom is greedy? Most students get this WRONG in exams.' Triggers competitive instinct - viewers want to prove they're smarter than 'most students'.",
+  "visual_scenes": {
+    "01_hook": "Split screen: Left side shows Fluorine as a menacing wrestler with championship belts labeled 'Most Electronegative'. Right side shows other atoms (Na, H, O) looking nervous. Fluorine flexes and electrons visibly fly towards it from surrounding atoms. Text: 'The GREEDIEST element...'",
+    "02_setup": "Zoom out to show periodic table with electronegativity values as 'power levels' like a video game. Fluorine glows brightest (4.0). Show a tug-of-war rope appearing between two atoms. Question mark appears: 'But what happens when atoms share electrons?'",
+    "03_content_part1": "Scene 1: H-H bond (equal tug-of-war). Two identical wrestlers pull equally - rope stays in middle. Electron cloud shown as perfectly centered between atoms. Label: 'Non-polar bond - equal sharing'. Duration: 8s",
+    "03_content_part2": "Scene 2: H-F bond (unfair match). Tiny H wrestler vs massive F wrestler. F yanks the rope hard - electron cloud shifts dramatically towards F. Show \u03b4+ on H, \u03b4- on F with arrow pointing towards F. Animate the 'dipole moment' as an arrow showing electron pull direction. Label: 'Polar bond - unequal sharing'. Duration: 10s",
+    "03_content_part3": "Scene 3: Na-F bond (complete robbery). F wrestler is SO strong, it rips the electron completely away from Na. Na flies backward, now showing +1 charge. F holds electron triumphantly with -1 charge. Label: 'Ionic bond - electron transfer'. Duration: 8s",
+    "04_reveal": "Mind-blow visual: Show electronegativity difference scale as a 'relationship status'. 0-0.4 = 'Best friends sharing equally' (non-polar). 0.5-1.7 = 'One friend always borrows your stuff' (polar). >1.7 = 'They STOLE your stuff' (ionic). This scale animates with examples sliding into each category.",
+    "05_key_point": "Close-up on the MAGIC NUMBER: 1.7. Show it as a glowing threshold. Below = sharing (covalent). Above = stealing (ionic). Visual: A meter/gauge that shows where different bonds fall. HF (1.9) just barely ionic, HCl (0.9) clearly polar covalent.",
+    "06_exam_tip": "JEE/NEET trap question appears: 'Which is more polar: HF or HCl?' Show students choosing wrong. Reveal: Compare electronegativity differences. F(4.0)-H(2.1)=1.9 vs Cl(3.0)-H(2.1)=0.9. HF wins! But trick: HF is actually considered ionic by some definitions. Examiner's favorite confusion point.",
+    "07_cta": "Fluorine wrestler winks at camera. Text: 'Want to CRUSH chemistry? Follow for more exam-winning tricks!' JeetLo logo with green glow. Quick flash of upcoming topics."
+  },
+  "virality_factor": "The tug-of-war wrestling analogy is HIGHLY shareable because: 1) It's visually memorable and funny (tiny H vs massive F), 2) The '1.7 rule' is a screenshot-worthy hack that students will save, 3) The 'relationship status' comparison (sharing vs stealing) is relatable and meme-able. Students will share saying 'This is how I finally understood polarity!'",
+  "mind_blow_moment": "The realization that ALL bonds exist on a SPECTRUM from pure sharing to pure stealing - and the electronegativity difference is just measuring 'how unfair is this friendship?' The 1.7 threshold isn't magic, it's where sharing becomes so unequal it's basically theft.",
+  "duration_target": "78s",
+  "simplification_strategy": "Every concept gets a human relationship analogy: Electronegativity = how greedy/strong you are. Bond polarity = how unfair the sharing is. Dipole moment = direction of unfairness. Ionic vs covalent = sharing vs stealing. Numbers (4.0, 2.1, 1.7) are introduced as 'power levels' in a game, not abstract values. The weakest student only needs to remember: 'Bigger difference = more unfair = more polar'.",
+  "logic_flow": "Hook (Fluorine is greedy) \u2192 Setup (What happens when atoms share?) \u2192 Content Part 1 (Equal sharing = non-polar) \u2192 Content Part 2 (Unequal sharing = polar) \u2192 Content Part 3 (Complete robbery = ionic) \u2192 Reveal (The spectrum with 1.7 threshold) \u2192 Key Point (The magic number to remember) \u2192 Exam Tip (How JEE tricks you) \u2192 CTA (Follow for more)",
+  "manim_edu_components": [
+    "MoleculeBuilder"
+  ]
+}
