@@ -1,15 +1,17 @@
 """
-JeetLo Physics Reel: Why Doesn't the Moon Fall? - Orbital Mechanics
-====================================================================
-VIRAL CONCEPT: Moon IS falling - every second! But it keeps missing Earth
-because of its horizontal velocity. Orbit = Falling + Missing!
+JeetLo Physics Reel: Gravity - The Universe's Obsessive Stalker
+================================================================
+VIRAL CONCEPT: Everything pulls on everything! Gravity is pathetically weak
+but relentless - that's why it shapes galaxies despite being beaten by a magnet.
 
 Animation Focus:
-- Newton's Cannon thought experiment
-- Projectile trajectories at different speeds
-- Split screen: person falling vs Moon "falling but missing"
-- Orbital velocity formula visualization
-- JEE exam tip on satellite mass independence
+- Person falling with cosmic forces pulling from everywhere
+- Newton's apple + Moon connection
+- Gravity formula with G constant revelation
+- Inverse square law as flashlight analogy
+- Everything pulls everything reveal
+- Weak but relentless key point
+- JEE trap: mass and radius doubled
 """
 
 import sys
@@ -44,7 +46,7 @@ def load_timings():
 
 
 class PhysicsReel(JeetLoReelMixin, Scene):
-    """Physics reel explaining why Moon doesn't fall - it IS falling but missing!"""
+    """Physics reel explaining gravity as the universe's obsessive stalker."""
     subject = "physics"
 
     def construct(self):
@@ -69,647 +71,758 @@ class PhysicsReel(JeetLoReelMixin, Scene):
         self.segment_07_cta(self.timings['07_cta'])
 
     def segment_01_hook(self, timing):
-        """Hook: Moon is FALLING right now - shocking reveal (9.6s)"""
+        """Hook: You're FALLING right now! Creates cognitive dissonance (6.36s)"""
         duration = timing['duration']
 
         # Calculate timing
-        fixed_time = 0.5 + 0.5 + 0.6 + 0.5 + 0.5 + 0.4 + 0.4 + 0.3  # 3.7s
+        fixed_time = 0.4 + 0.3 + 0.4 + 0.3 + 0.3 + 0.3  # 2.0s
         num_waits = 3
         wait_time = max(0.1, (duration - fixed_time) / num_waits)
 
-        # Earth at center
-        earth = Circle(radius=1.2, color='#0066FF', fill_opacity=0.8, stroke_width=3)
-        earth.set_fill(color=['#0066FF', '#004499'])
-        earth.move_to(DOWN * 1)
+        # Person sitting on chair (simplified stick figure)
+        person_group = VGroup()
 
-        earth_label = Text("EARTH", font_size=28, color=WHITE, weight=BOLD)
+        # Chair
+        chair_seat = Line(LEFT * 0.4, RIGHT * 0.4, color=WHITE, stroke_width=3)
+        chair_back = Line(LEFT * 0.4 + UP * 0.5, LEFT * 0.4, color=WHITE, stroke_width=3)
+        chair_legs = VGroup(
+            Line(LEFT * 0.3, LEFT * 0.3 + DOWN * 0.4, color=WHITE, stroke_width=2),
+            Line(RIGHT * 0.3, RIGHT * 0.3 + DOWN * 0.4, color=WHITE, stroke_width=2),
+        )
+        chair = VGroup(chair_seat, chair_back, chair_legs)
+
+        # Stick figure
+        head = Circle(radius=0.2, color=YELLOW, fill_opacity=0.8, stroke_width=2)
+        head.move_to(UP * 0.9)
+        body = Line(UP * 0.7, UP * 0.1, color=WHITE, stroke_width=3)
+        legs = VGroup(
+            Line(UP * 0.1, RIGHT * 0.3 + DOWN * 0.1, color=WHITE, stroke_width=2),
+            Line(UP * 0.1, LEFT * 0.3 + DOWN * 0.1, color=WHITE, stroke_width=2),
+        )
+        arms = VGroup(
+            Line(UP * 0.5, RIGHT * 0.4 + UP * 0.3, color=WHITE, stroke_width=2),
+            Line(UP * 0.5, LEFT * 0.4 + UP * 0.3, color=WHITE, stroke_width=2),
+        )
+        person = VGroup(head, body, legs, arms)
+
+        person_group.add(chair, person)
+        person_group.move_to(UP * 2)
+        person_group.scale(0.8)
+
+        # Earth below (big, showing you're on it)
+        earth = Circle(radius=2.5, color=BLUE, fill_opacity=0.3, stroke_width=3)
+        earth.move_to(DOWN * 4.5)
+        earth_label = Text("EARTH", font_size=24, color=BLUE, weight=BOLD)
         earth_label.move_to(earth.get_center())
 
-        # Moon above
-        moon = Circle(radius=0.4, color='#CCCCCC', fill_opacity=0.9, stroke_width=2)
-        moon.move_to(UP * 4)
-
-        moon_label = Text("MOON", font_size=20, color='#333333', weight=BOLD)
-        moon_label.move_to(moon.get_center())
-
-        # Gravity arrow from Moon to Earth
-        gravity_arrow = Arrow(
-            moon.get_bottom() + DOWN * 0.1,
-            earth.get_top() + UP * 0.3,
-            color='#FF6B35',
-            stroke_width=6,
-            buff=0
+        # Gravity arrow from Earth to person (BIG)
+        earth_arrow = Arrow(
+            DOWN * 2, person_group.get_center() + DOWN * 0.5,
+            color=RED, stroke_width=6, buff=0.1
         )
 
-        # FALLING text
-        falling_text = Text("FALLING... RIGHT NOW!", font_size=48, color='#FF4444', weight=BOLD)
-        falling_text.move_to(UP * 6)
+        # Moon and Sun pulling too (smaller arrows)
+        moon = Circle(radius=0.4, color=GRAY, fill_opacity=0.6, stroke_width=2)
+        moon.move_to(RIGHT * 3.5 + UP * 3)
+        moon_label = Text("Moon", font_size=16, color=GRAY)
+        moon_label.next_to(moon, UP, buff=0.1)
 
-        # WRONG text for misconception
-        wrong_text = Text("WRONG!", font_size=72, color='#FF4444', weight=BOLD)
-        wrong_text.move_to(UP * 5)
+        sun = Circle(radius=0.6, color=ORANGE, fill_opacity=0.8, stroke_width=2)
+        sun.move_to(LEFT * 3.5 + UP * 4)
+        sun_label = Text("Sun", font_size=16, color=ORANGE)
+        sun_label.next_to(sun, UP, buff=0.1)
 
-        # Animation sequence
-        self.play(FadeIn(earth), FadeIn(earth_label), run_time=0.5)
-        self.play(FadeIn(moon, scale=1.3), FadeIn(moon_label), run_time=0.5)
+        moon_arrow = Arrow(
+            moon.get_center(), person_group.get_center() + RIGHT * 0.3,
+            color=GRAY, stroke_width=2, buff=0.2
+        )
+        sun_arrow = Arrow(
+            sun.get_center(), person_group.get_center() + LEFT * 0.3,
+            color=ORANGE, stroke_width=3, buff=0.2
+        )
+
+        # "You're FALLING" text
+        falling_text = Text("You're FALLING right now!", font_size=40, color=RED, weight=BOLD)
+        falling_text.move_to(DOWN * 1)
+
+        # Animation
+        self.play(FadeIn(person_group, scale=0.8), run_time=0.4)
         self.wait(wait_time)
 
-        # Show "stable" misconception then WRONG
-        stable_text = Text("STABLE?", font_size=40, color=YELLOW, weight=BOLD)
-        stable_text.next_to(moon, RIGHT, buff=0.5)
-        self.play(Write(stable_text), run_time=0.6)
-        self.wait(wait_time * 0.5)
-
-        self.play(
-            FadeIn(wrong_text, scale=1.5),
-            FadeOut(stable_text),
-            run_time=0.5
-        )
-
-        # Show gravity arrow and falling text
-        self.play(
-            Create(gravity_arrow),
-            moon.animate.shift(DOWN * 0.3),  # Wobble effect
-            run_time=0.5
-        )
-        self.play(
-            FadeIn(falling_text, shift=DOWN),
-            moon.animate.shift(UP * 0.3),  # Wobble back
-            run_time=0.4
-        )
+        self.play(FadeIn(earth, earth_label), run_time=0.3)
+        self.play(FadeIn(moon, moon_label, sun, sun_label), run_time=0.4)
         self.wait(wait_time)
 
-        # JEE Critical text
-        jee_text = Text("J.E.E. CRITICAL!", font_size=36, color='#FFD700', weight=BOLD)
-        jee_text.move_to(DOWN * 4.5)
-        self.play(FadeIn(jee_text, scale=1.2), run_time=0.4)
-        self.wait(wait_time * 0.5)
+        self.play(Create(earth_arrow), run_time=0.3)
+        self.play(Create(moon_arrow), Create(sun_arrow), run_time=0.3)
+        self.play(Write(falling_text), run_time=0.3)
+        self.wait(wait_time)
 
         # Clear
         self.play(FadeOut(Group(*[m for m in self.mobjects if m != self.watermark])), run_time=0.3)
 
     def segment_02_setup(self, timing):
-        """Newton's question: If apple falls, why not Moon? (9.648s)"""
+        """Setup: Newton's genius - apple and Moon are same force (11.064s)"""
         duration = timing['duration']
 
         # Calculate timing
-        fixed_time = 0.4 + 0.3 + 0.4 + 0.5 + 0.5 + 0.4 + 0.5 + 0.3  # 3.3s
+        fixed_time = 0.4 + 0.4 + 0.5 + 0.4 + 0.4 + 0.5 + 0.4 + 0.3  # 3.3s
         num_waits = 4
         wait_time = max(0.1, (duration - fixed_time) / num_waits)
 
-        # Newton silhouette (simple)
-        newton_body = Ellipse(width=1.2, height=2.5, color=WHITE, fill_opacity=0.3, stroke_width=2)
-        newton_body.move_to(LEFT * 2 + DOWN * 1)
+        # Split screen divider
+        divider = DashedLine(UP * 6, DOWN * 6, color=WHITE, stroke_width=1, dash_length=0.2)
 
-        newton_head = Circle(radius=0.4, color=WHITE, fill_opacity=0.4, stroke_width=2)
-        newton_head.next_to(newton_body, UP, buff=0.1)
+        # Left side: Apple falling
+        left_title = Text("Apple Falling", font_size=28, color=GREEN, weight=BOLD)
+        left_title.move_to(LEFT * 2 + UP * 5)
 
-        newton = VGroup(newton_body, newton_head)
-
-        # Apple tree (simplified)
-        trunk = Rectangle(width=0.4, height=2, color='#8B4513', fill_opacity=0.8)
-        trunk.move_to(LEFT * 0.5 + DOWN * 2)
-
-        leaves = Circle(radius=1.2, color='#228B22', fill_opacity=0.6)
-        leaves.next_to(trunk, UP, buff=-0.3)
-
+        # Tree
+        trunk = Rectangle(width=0.3, height=1.5, color='#8B4513', fill_opacity=0.8, stroke_width=0)
+        trunk.move_to(LEFT * 2 + UP * 1)
+        leaves = Circle(radius=1, color=GREEN, fill_opacity=0.6, stroke_width=0)
+        leaves.move_to(LEFT * 2 + UP * 2.5)
         tree = VGroup(trunk, leaves)
 
-        # Apple
-        apple = Circle(radius=0.2, color='#FF0000', fill_opacity=0.9)
-        apple.move_to(LEFT * 0.3 + UP * 0.5)
+        apple = Circle(radius=0.15, color=RED, fill_opacity=1, stroke_width=0)
+        apple.move_to(LEFT * 2.3 + UP * 1.8)
 
-        # Moon (small, in sky)
-        moon = Circle(radius=0.5, color='#CCCCCC', fill_opacity=0.8)
-        moon.move_to(RIGHT * 2 + UP * 4)
+        apple_path = DashedLine(
+            apple.get_center(), LEFT * 2.3 + DOWN * 0.5,
+            color=RED, stroke_width=2, dash_length=0.1
+        )
+        ground_left = Line(LEFT * 3.5 + DOWN * 0.7, LEFT * 0.5 + DOWN * 0.7, color=WHITE, stroke_width=2)
 
-        # Thought bubble
-        bubble = RoundedRectangle(width=4.5, height=1.8, corner_radius=0.3,
-                                   color=WHITE, fill_opacity=0.1, stroke_width=2)
-        bubble.move_to(RIGHT * 1 + UP * 1)
+        # Right side: Moon orbiting Earth
+        right_title = Text("Moon Orbiting", font_size=28, color=TEAL, weight=BOLD)
+        right_title.move_to(RIGHT * 2 + UP * 5)
 
-        question_text = Text("Apple falls...\nWhy not Moon?", font_size=28, color=YELLOW)
-        question_text.move_to(bubble.get_center())
+        earth_small = Circle(radius=0.5, color=BLUE, fill_opacity=0.6, stroke_width=2)
+        earth_small.move_to(RIGHT * 2 + UP * 1)
+        earth_label = Text("Earth", font_size=16, color=BLUE)
+        earth_label.next_to(earth_small, DOWN, buff=0.2)
 
-        # Question mark
-        question_mark = Text("?", font_size=80, color='#FF6B35', weight=BOLD)
-        question_mark.move_to(RIGHT * 3 + UP * 4)
+        orbit = Circle(radius=1.8, color=GRAY, stroke_width=1, stroke_opacity=0.5)
+        orbit.move_to(earth_small.get_center())
+
+        moon_small = Circle(radius=0.2, color=GRAY, fill_opacity=0.8, stroke_width=1)
+        moon_small.move_to(RIGHT * 2 + UP * 2.8)
+
+        orbit_arrow = Arrow(
+            RIGHT * 3.8 + UP * 1, RIGHT * 3.5 + UP * 1.5,
+            color=TEAL, stroke_width=2, buff=0
+        )
+
+        # Connection line with question
+        connection = DashedLine(
+            LEFT * 0.3 + UP * 1, RIGHT * 0.3 + UP * 1,
+            color=YELLOW, stroke_width=3, dash_length=0.15
+        )
+        same_force = Text("SAME FORCE?", font_size=36, color=YELLOW, weight=BOLD)
+        same_force.move_to(DOWN * 2)
+
+        # Newton silhouette
+        newton = VGroup()
+        newton_head = Circle(radius=0.25, color=WHITE, fill_opacity=0.3, stroke_width=2)
+        newton_body = Rectangle(width=0.5, height=0.8, color=WHITE, fill_opacity=0.2, stroke_width=2)
+        newton_body.next_to(newton_head, DOWN, buff=0)
+        newton.add(newton_head, newton_body)
+        newton.move_to(DOWN * 4.5)
+        think_bubble = Text("?", font_size=48, color=WHITE, weight=BOLD)
+        think_bubble.next_to(newton, UP + RIGHT, buff=0.2)
 
         # Animation
-        self.play(FadeIn(tree), FadeIn(newton), run_time=0.4)
-        self.play(FadeIn(apple), run_time=0.3)
+        self.play(Create(divider), run_time=0.4)
 
-        # Apple falls
-        self.play(apple.animate.move_to(LEFT * 0.3 + DOWN * 2.5), run_time=0.4)
+        # Left side
+        self.play(Write(left_title), FadeIn(tree, ground_left), run_time=0.4)
+        self.play(FadeIn(apple), run_time=0.5)
+        self.play(
+            apple.animate.move_to(LEFT * 2.3 + DOWN * 0.5),
+            Create(apple_path),
+            run_time=0.4
+        )
         self.wait(wait_time)
 
-        # Newton looks up
-        self.play(FadeIn(moon), run_time=0.5)
+        # Right side
+        self.play(Write(right_title), FadeIn(earth_small, earth_label, orbit), run_time=0.4)
+        self.play(FadeIn(moon_small), Create(orbit_arrow), run_time=0.5)
         self.wait(wait_time)
 
-        # Thought bubble with question
-        self.play(FadeIn(bubble), Write(question_text), run_time=0.5)
+        # Connection
+        self.play(Create(connection), run_time=0.4)
+        self.play(Write(same_force), run_time=0.3)
         self.wait(wait_time)
 
-        # Question mark appears dramatically
-        self.play(FadeIn(question_mark, scale=2), run_time=0.4)
+        # Newton
+        self.play(FadeIn(newton, think_bubble), run_time=0.4)
         self.wait(wait_time)
-
-        # Gravity text
-        gravity_label = Text("Same Gravity!", font_size=32, color='#0066FF', weight=BOLD)
-        gravity_label.move_to(DOWN * 4)
-        self.play(Write(gravity_label), run_time=0.5)
-        self.wait(wait_time * 0.5)
 
         # Clear
         self.play(FadeOut(Group(*[m for m in self.mobjects if m != self.watermark])), run_time=0.3)
 
     def segment_03_content_part1(self, timing):
-        """Newton's cannon experiment - slow to fast (14.016s)"""
+        """Content Part 1: The gravity formula - G is TINY! (14.4s)"""
         duration = timing['duration']
 
         # Calculate timing
-        fixed_time = 0.5 + 0.4 + 0.8 + 0.3 + 0.8 + 0.3 + 1.0 + 0.3  # 4.4s
-        num_waits = 4
+        fixed_time = 0.4 + 0.5 + 0.3 + 0.3 + 0.3 + 0.4 + 0.5 + 0.4 + 0.3  # 3.4s
+        num_waits = 5
         wait_time = max(0.1, (duration - fixed_time) / num_waits)
 
-        # Mountain
-        mountain = Polygon(
-            np.array([-3, -3, 0]),
-            np.array([0, 2, 0]),
-            np.array([3, -3, 0]),
-            color='#654321', fill_opacity=0.7, stroke_width=2
-        )
-
-        # Cannon on top
-        cannon_body = Rectangle(width=0.8, height=0.4, color='#333333', fill_opacity=0.9)
-        cannon_body.move_to(np.array([-0.3, 2.2, 0]))
-        cannon_body.rotate(-20 * DEGREES)
-
-        cannon = VGroup(cannon_body)
-
-        # Earth curve (bottom arc suggesting Earth's curvature)
-        earth_arc = Arc(radius=8, start_angle=210 * DEGREES, angle=120 * DEGREES,
-                        color='#0066FF', stroke_width=4)
-        earth_arc.move_to(DOWN * 8)
-
         # Title
-        title = Text("Newton's Cannon", font_size=36, color=WHITE, weight=BOLD)
+        title = Text("Gravity Formula", font_size=36, color=YELLOW, weight=BOLD)
         title.move_to(UP * 5.5)
 
-        # Show scene
-        self.play(FadeIn(mountain), FadeIn(cannon), FadeIn(earth_arc), run_time=0.5)
+        # Create gravitational field using manim-edu
+        field_viz = FieldVisualizer(scale=0.5)
+        grav_field = field_viz.gravitational_field()
+        grav_field.move_to(UP * 2.5)
+        grav_field.scale(0.8)
+
+        # Formula: F = G(M1 × M2) / r²
+        f_text = Text("F", font_size=56, color=RED, weight=BOLD)
+        equals = Text("=", font_size=48, color=WHITE, weight=BOLD)
+        g_text = Text("G", font_size=56, color=GREEN, weight=BOLD)
+
+        # Masses
+        m1_text = Text("M", font_size=48, color=ORANGE, weight=BOLD)
+        m1_sub = Text("1", font_size=28, color=ORANGE)
+        m1_sub.next_to(m1_text, DOWN + RIGHT, buff=-0.1).shift(UP * 0.15)
+        m1_group = VGroup(m1_text, m1_sub)
+
+        times_sym = Text("x", font_size=40, color=WHITE)
+
+        m2_text = Text("M", font_size=48, color=TEAL, weight=BOLD)
+        m2_sub = Text("2", font_size=28, color=TEAL)
+        m2_sub.next_to(m2_text, DOWN + RIGHT, buff=-0.1).shift(UP * 0.15)
+        m2_group = VGroup(m2_text, m2_sub)
+
+        # Fraction line and r²
+        frac_line = Line(LEFT * 1.5, RIGHT * 1.5, color=WHITE, stroke_width=3)
+
+        r_text = Text("r", font_size=48, color=PURPLE, weight=BOLD)
+        r_sq = Text("2", font_size=28, color=PURPLE)
+        r_sq.next_to(r_text, UP + RIGHT, buff=-0.1).shift(DOWN * 0.15)
+        r_group = VGroup(r_text, r_sq)
+
+        # Arrange formula
+        f_text.move_to(LEFT * 2.5 + DOWN * 1)
+        equals.next_to(f_text, RIGHT, buff=0.3)
+
+        numerator = VGroup(g_text, m1_group, times_sym, m2_group)
+        g_text.move_to(ORIGIN)
+        m1_group.next_to(g_text, RIGHT, buff=0.15)
+        times_sym.next_to(m1_group, RIGHT, buff=0.1)
+        m2_group.next_to(times_sym, RIGHT, buff=0.1)
+        numerator.move_to(RIGHT * 0.5 + DOWN * 0.5)
+
+        frac_line.next_to(numerator, DOWN, buff=0.15)
+        r_group.next_to(frac_line, DOWN, buff=0.15)
+
+        formula = VGroup(f_text, equals, numerator, frac_line, r_group)
+        formula.move_to(DOWN * 1.5)
+
+        # G value callout
+        g_value = Text("G = 6.67 x 10", font_size=28, color=GREEN)
+        g_exp = Text("-11", font_size=18, color=GREEN)
+        g_exp.next_to(g_value, UP + RIGHT, buff=-0.05).shift(DOWN * 0.1)
+        g_val_group = VGroup(g_value, g_exp)
+        g_val_group.move_to(DOWN * 4)
+
+        g_comment = Text("Universe's WEAKEST force!", font_size=24, color=YELLOW, weight=BOLD)
+        g_comment.next_to(g_val_group, DOWN, buff=0.3)
+
+        # Animation
         self.play(Write(title), run_time=0.4)
+        self.play(FadeIn(grav_field, scale=0.8), run_time=0.5)
         self.wait(wait_time)
 
-        # Shot 1: Slow - falls quickly
-        speed1_label = Text("SLOW", font_size=28, color='#FF4444')
-        speed1_label.move_to(LEFT * 2 + UP * 3)
-
-        ball1_path = Arc(radius=1.5, start_angle=70 * DEGREES, angle=-60 * DEGREES,
-                         color='#FF6B35', stroke_width=4)
-        ball1_path.move_to(np.array([0.5, 1, 0]))
-
-        ball1 = Circle(radius=0.15, color='#FF6B35', fill_opacity=1)
-        ball1.move_to(ball1_path.get_start())
-
-        self.play(FadeIn(speed1_label), run_time=0.3)
-        self.play(
-            MoveAlongPath(ball1, ball1_path),
-            Create(ball1_path),
-            run_time=0.8
-        )
+        # Build formula piece by piece
+        self.play(Write(f_text), Write(equals), run_time=0.3)
         self.wait(wait_time)
 
-        # Shot 2: Faster - goes further
-        speed2_label = Text("FASTER", font_size=28, color=YELLOW)
-        speed2_label.move_to(LEFT * 2 + UP * 2)
-
-        ball2_path = Arc(radius=3, start_angle=70 * DEGREES, angle=-90 * DEGREES,
-                         color=YELLOW, stroke_width=4)
-        ball2_path.move_to(np.array([1.5, -0.5, 0]))
-
-        ball2 = Circle(radius=0.15, color=YELLOW, fill_opacity=1)
-        ball2.move_to(ball2_path.get_start())
-
-        self.play(
-            FadeIn(speed2_label),
-            FadeOut(speed1_label),
-            run_time=0.3
-        )
-        self.play(
-            MoveAlongPath(ball2, ball2_path),
-            Create(ball2_path),
-            run_time=0.8
-        )
+        self.play(Write(g_text), run_time=0.3)
+        self.play(Write(m1_group), Write(times_sym), Write(m2_group), run_time=0.3)
         self.wait(wait_time)
 
-        # Shot 3: Even faster - halfway around
-        speed3_label = Text("EVEN FASTER!", font_size=28, color='#00FF00', weight=BOLD)
-        speed3_label.move_to(LEFT * 2 + UP * 1)
+        self.play(Create(frac_line), Write(r_group), run_time=0.4)
+        self.wait(wait_time)
 
-        ball3_path = Arc(radius=5, start_angle=100 * DEGREES, angle=-140 * DEGREES,
-                         color='#00FF00', stroke_width=4)
-        ball3_path.move_to(np.array([0, -3, 0]))
-
-        ball3 = Circle(radius=0.15, color='#00FF00', fill_opacity=1)
-        ball3.move_to(ball3_path.get_start())
-
-        self.play(
-            FadeIn(speed3_label),
-            FadeOut(speed2_label),
-            run_time=0.3
-        )
-        self.play(
-            MoveAlongPath(ball3, ball3_path),
-            Create(ball3_path),
-            run_time=1.0
-        )
+        # G value reveal
+        self.play(Write(g_val_group), run_time=0.5)
+        self.play(Write(g_comment), run_time=0.4)
         self.wait(wait_time)
 
         # Clear
         self.play(FadeOut(Group(*[m for m in self.mobjects if m != self.watermark])), run_time=0.3)
 
     def segment_03_content_part2(self, timing):
-        """Perfect speed = orbit! Ball becomes Moon (15.0s)"""
+        """Content Part 2: Inverse square law - like flashlight spreading (15.864s)"""
         duration = timing['duration']
 
         # Calculate timing
-        fixed_time = 0.5 + 0.4 + 0.4 + 0.4 + 3.0 + 0.5 + 0.5 + 0.3  # 6.0s
-        num_waits = 3
+        fixed_time = 0.4 + 0.5 + 0.3 + 0.3 + 0.3 + 0.3 + 0.4 + 0.4 + 0.3 + 0.3  # 3.5s
+        num_waits = 6
         wait_time = max(0.1, (duration - fixed_time) / num_waits)
 
-        # Earth at center
-        earth = Circle(radius=1.5, color='#0066FF', fill_opacity=0.8, stroke_width=3)
-        earth.move_to(ORIGIN)
+        # Title
+        title = Text("Inverse Square Law", font_size=40, color=YELLOW, weight=BOLD)
+        title.move_to(UP * 5.5)
 
-        earth_label = Text("EARTH", font_size=24, color=WHITE, weight=BOLD)
-        earth_label.move_to(ORIGIN)
-
-        # Orbit path (circle around Earth)
-        orbit_path = Circle(radius=3.5, color='#FFD700', stroke_width=3, stroke_opacity=0.5)
-
-        # Cannonball/Moon
-        ball = Circle(radius=0.3, color='#FF6B35', fill_opacity=1)
-        ball.move_to(UP * 3.5)
-
-        # Velocity arrow (tangential)
-        v_arrow = Arrow(
-            ball.get_center(),
-            ball.get_center() + RIGHT * 1.2,
-            color='#00FF00',
-            stroke_width=5,
-            buff=0
+        # Flashlight visual
+        flashlight = VGroup()
+        fl_body = Rectangle(width=0.4, height=0.8, color=YELLOW, fill_opacity=0.8, stroke_width=2)
+        fl_body.move_to(LEFT * 3 + UP * 2)
+        fl_head = Polygon(
+            fl_body.get_right() + UP * 0.3,
+            fl_body.get_right() + DOWN * 0.3,
+            fl_body.get_right() + RIGHT * 0.3,
+            color=YELLOW, fill_opacity=0.9, stroke_width=0
         )
-        v_label = Text("v", font_size=24, color='#00FF00', weight=BOLD)
-        v_label.next_to(v_arrow, UP, buff=0.1)
+        flashlight.add(fl_body, fl_head)
 
-        # Gravity arrow (toward Earth)
-        g_arrow = Arrow(
-            ball.get_center(),
-            ball.get_center() + DOWN * 1.0,
-            color='#FF4444',
-            stroke_width=5,
-            buff=0
+        # Light spreading cone
+        light_cone = Polygon(
+            fl_head.get_right(),
+            fl_head.get_right() + RIGHT * 3 + UP * 1.5,
+            fl_head.get_right() + RIGHT * 3 + DOWN * 1.5,
+            color=YELLOW, fill_opacity=0.15, stroke_width=0
         )
-        g_label = Text("g", font_size=24, color='#FF4444', weight=BOLD)
-        g_label.next_to(g_arrow, LEFT, buff=0.1)
 
-        # Perfect Speed label
-        perfect_label = Text("PERFECT SPEED!", font_size=36, color='#FFD700', weight=BOLD)
-        perfect_label.move_to(UP * 6)
+        # Distance markers
+        d1_line = Line(LEFT * 2.5 + UP * 2, LEFT * 1.5 + UP * 2, color=WHITE, stroke_width=2)
+        d1_label = Text("1x", font_size=24, color=WHITE)
+        d1_label.next_to(d1_line, DOWN, buff=0.1)
 
-        # "This is ORBIT!" text
-        orbit_text = Text("This is ORBIT!", font_size=42, color='#00FF00', weight=BOLD)
-        orbit_text.move_to(DOWN * 5)
+        d2_line = Line(LEFT * 2.5 + UP * 2, LEFT * 0.5 + UP * 2, color=TEAL, stroke_width=2)
+        d2_label = Text("2x", font_size=24, color=TEAL)
+        d2_label.next_to(d2_line, DOWN, buff=0.1)
+
+        d3_line = Line(LEFT * 2.5 + UP * 2, RIGHT * 0.5 + UP * 2, color=PURPLE, stroke_width=2)
+        d3_label = Text("3x", font_size=24, color=PURPLE)
+        d3_label.next_to(d3_line, DOWN, buff=0.1)
+
+        # Force arrows (thickness = strength)
+        force1 = Arrow(LEFT * 1.5 + DOWN * 0.5, LEFT * 0.5 + DOWN * 0.5,
+                       color=RED, stroke_width=8, buff=0)
+        f1_label = Text("F", font_size=28, color=RED, weight=BOLD)
+        f1_label.next_to(force1, DOWN, buff=0.1)
+
+        force2 = Arrow(LEFT * 1.5 + DOWN * 1.5, LEFT * 0.9 + DOWN * 1.5,
+                       color=TEAL, stroke_width=3, buff=0)
+        f2_label = Text("F/4", font_size=24, color=TEAL, weight=BOLD)
+        f2_label.next_to(force2, DOWN, buff=0.1)
+
+        force3 = Arrow(LEFT * 1.5 + DOWN * 2.5, LEFT * 1.1 + DOWN * 2.5,
+                       color=PURPLE, stroke_width=2, buff=0)
+        f3_label = Text("F/9", font_size=20, color=PURPLE, weight=BOLD)
+        f3_label.next_to(force3, DOWN, buff=0.1)
+
+        # Key insight boxes
+        box1 = VGroup()
+        bg1 = RoundedRectangle(width=3, height=1, corner_radius=0.1,
+                               color=TEAL, fill_opacity=0.2, stroke_width=2)
+        txt1 = Text("2x distance", font_size=22, color=TEAL)
+        txt1b = Text("= 1/4 force", font_size=22, color=WHITE, weight=BOLD)
+        box1_content = VGroup(txt1, txt1b).arrange(DOWN, buff=0.1)
+        box1.add(bg1, box1_content)
+        box1.move_to(RIGHT * 2 + UP * 2)
+
+        box2 = VGroup()
+        bg2 = RoundedRectangle(width=3, height=1, corner_radius=0.1,
+                               color=PURPLE, fill_opacity=0.2, stroke_width=2)
+        txt2 = Text("3x distance", font_size=22, color=PURPLE)
+        txt2b = Text("= 1/9 force", font_size=22, color=WHITE, weight=BOLD)
+        box2_content = VGroup(txt2, txt2b).arrange(DOWN, buff=0.1)
+        box2.add(bg2, box2_content)
+        box2.move_to(RIGHT * 2 + DOWN * 0.5)
+
+        # Explanation
+        explain = Text("Like flashlight spreading!", font_size=28, color=YELLOW, weight=BOLD)
+        explain.move_to(DOWN * 4.5)
+
+        r_squared = Text("r SQUARED in denominator!", font_size=26, color=RED, weight=BOLD)
+        r_squared.move_to(DOWN * 5.5)
 
         # Animation
-        self.play(FadeIn(earth), FadeIn(earth_label), run_time=0.5)
-        self.play(FadeIn(ball), Create(orbit_path), run_time=0.4)
+        self.play(Write(title), run_time=0.4)
+        self.play(FadeIn(flashlight), Create(light_cone), run_time=0.5)
         self.wait(wait_time)
 
-        # Show velocity and gravity vectors
-        self.play(Create(v_arrow), FadeIn(v_label), run_time=0.4)
-        self.play(Create(g_arrow), FadeIn(g_label), run_time=0.4)
+        # Distance markers
+        self.play(Create(d1_line), Write(d1_label), run_time=0.3)
+        self.play(Create(force1), Write(f1_label), run_time=0.3)
         self.wait(wait_time)
 
-        # Animate ball going around orbit
-        self.play(
-            FadeIn(perfect_label),
-            MoveAlongPath(ball, orbit_path),
-            Rotate(v_arrow, angle=2*PI, about_point=ORIGIN),
-            Rotate(g_arrow, angle=2*PI, about_point=ORIGIN),
-            Rotate(v_label, angle=2*PI, about_point=ORIGIN),
-            Rotate(g_label, angle=2*PI, about_point=ORIGIN),
-            run_time=3.0,
-            rate_func=linear
-        )
+        self.play(Create(d2_line), Write(d2_label), run_time=0.3)
+        self.play(Create(force2), Write(f2_label), run_time=0.3)
+        self.play(FadeIn(box1), run_time=0.4)
+        self.wait(wait_time)
 
-        # Transform ball to Moon
-        moon = Circle(radius=0.4, color='#CCCCCC', fill_opacity=0.9, stroke_width=2)
-        moon.move_to(ball.get_center())
-        moon_label = Text("MOON", font_size=18, color='#333333', weight=BOLD)
-        moon_label.move_to(moon.get_center())
+        self.play(Create(d3_line), Write(d3_label), run_time=0.3)
+        self.play(Create(force3), Write(f3_label), run_time=0.3)
+        self.play(FadeIn(box2), run_time=0.4)
+        self.wait(wait_time)
 
-        self.play(
-            Transform(ball, moon),
-            FadeIn(moon_label),
-            run_time=0.5
-        )
-
-        self.play(FadeIn(orbit_text, scale=1.3), run_time=0.5)
+        self.play(Write(explain), run_time=0.3)
+        self.play(Write(r_squared), run_time=0.3)
         self.wait(wait_time)
 
         # Clear
         self.play(FadeOut(Group(*[m for m in self.mobjects if m != self.watermark])), run_time=0.3)
 
     def segment_04_reveal(self, timing):
-        """Split screen: person falling vs Moon falling but missing (12.96s)"""
+        """Reveal: EVERYTHING pulls EVERYTHING - mind blow moment (13.848s)"""
         duration = timing['duration']
 
         # Calculate timing
-        fixed_time = 0.4 + 0.4 + 0.4 + 1.0 + 1.5 + 0.5 + 0.5 + 0.3  # 5.0s
-        num_waits = 3
+        fixed_time = 0.4 + 0.4 + 0.3 + 0.3 + 0.3 + 0.3 + 0.4 + 0.5 + 0.4 + 0.3  # 3.6s
+        num_waits = 5
         wait_time = max(0.1, (duration - fixed_time) / num_waits)
 
-        # Dividing line
-        divider = Line(UP * 7, DOWN * 7, color=WHITE, stroke_width=2)
+        # Title
+        title = Text("Mind Blowing Fact!", font_size=40, color=RED, weight=BOLD)
+        title.move_to(UP * 5.5)
 
-        # LEFT SIDE: Person falling straight
-        left_title = Text("Normal Fall", font_size=28, color='#FF4444', weight=BOLD)
-        left_title.move_to(LEFT * 2 + UP * 5.5)
+        # Phone/hand visual (you holding phone)
+        phone = RoundedRectangle(width=1, height=1.8, corner_radius=0.1,
+                                 color=GRAY, fill_opacity=0.8, stroke_width=2)
+        phone.move_to(ORIGIN)
+        screen = RoundedRectangle(width=0.85, height=1.5, corner_radius=0.05,
+                                  color=BLUE, fill_opacity=0.3, stroke_width=0)
+        screen.move_to(phone.get_center() + UP * 0.1)
+        phone_group = VGroup(phone, screen)
+        phone_group.scale(0.8)
 
-        person = VGroup()
-        body = Ellipse(width=0.5, height=1.2, color='#FF6B35', fill_opacity=0.8)
-        head = Circle(radius=0.25, color='#FFCC99', fill_opacity=0.9)
-        head.next_to(body, UP, buff=0.05)
-        person.add(body, head)
-        person.move_to(LEFT * 2 + UP * 3)
+        # Earth (BIG arrow from below)
+        earth = Circle(radius=0.8, color=BLUE, fill_opacity=0.5, stroke_width=2)
+        earth.move_to(DOWN * 4.5)
+        earth_label = Text("Earth", font_size=18, color=BLUE)
+        earth_label.next_to(earth, DOWN, buff=0.1)
+        earth_arrow = Arrow(
+            DOWN * 3.5, phone.get_center() + DOWN * 0.5,
+            color=BLUE, stroke_width=8, buff=0.1
+        )
 
-        ground_left = Line(LEFT * 3.5 + DOWN * 2, LEFT * 0.5 + DOWN * 2,
-                           color='#654321', stroke_width=4)
+        # Moon (small arrow from right)
+        moon = Circle(radius=0.3, color=GRAY, fill_opacity=0.7, stroke_width=1)
+        moon.move_to(RIGHT * 3.5 + UP * 4)
+        moon_label = Text("Moon", font_size=14, color=GRAY)
+        moon_label.next_to(moon, RIGHT, buff=0.1)
+        moon_arrow = Arrow(
+            RIGHT * 3 + UP * 3.5, phone.get_center() + RIGHT * 0.3 + UP * 0.3,
+            color=GRAY, stroke_width=2, buff=0.1
+        )
 
-        # RIGHT SIDE: Moon falling but missing Earth
-        right_title = Text("Orbital Fall", font_size=28, color='#00FF00', weight=BOLD)
-        right_title.move_to(RIGHT * 2 + UP * 5.5)
+        # Sun (medium arrow from left)
+        sun = Circle(radius=0.5, color=ORANGE, fill_opacity=0.8, stroke_width=2)
+        sun.move_to(LEFT * 3.5 + UP * 4.5)
+        sun_label = Text("Sun", font_size=14, color=ORANGE)
+        sun_label.next_to(sun, LEFT, buff=0.1)
+        sun_arrow = Arrow(
+            LEFT * 3 + UP * 4, phone.get_center() + LEFT * 0.3 + UP * 0.3,
+            color=ORANGE, stroke_width=4, buff=0.1
+        )
 
-        earth_small = Circle(radius=0.8, color='#0066FF', fill_opacity=0.8)
-        earth_small.move_to(RIGHT * 2 + DOWN * 1)
+        # Person next to you (tiny arrow)
+        person_icon = VGroup()
+        p_head = Circle(radius=0.15, color=YELLOW, fill_opacity=0.7, stroke_width=1)
+        p_body = Line(ORIGIN, DOWN * 0.3, color=YELLOW, stroke_width=2)
+        p_body.next_to(p_head, DOWN, buff=0)
+        person_icon.add(p_head, p_body)
+        person_icon.move_to(LEFT * 3 + DOWN * 1)
+        person_label = Text("Person", font_size=12, color=YELLOW)
+        person_label.next_to(person_icon, LEFT, buff=0.1)
+        person_arrow = Arrow(
+            LEFT * 2.8 + DOWN * 1, phone.get_center() + LEFT * 0.5,
+            color=YELLOW, stroke_width=1, buff=0.1
+        )
 
-        moon_small = Circle(radius=0.25, color='#CCCCCC', fill_opacity=0.9)
-        moon_small.move_to(RIGHT * 2 + UP * 2.5)
+        # More micro arrows from random directions
+        micro_arrows = VGroup()
+        for angle in [PI/6, PI/3, 2*PI/3, 5*PI/6, -PI/6, -PI/3]:
+            pos = np.array([np.cos(angle) * 2.5, np.sin(angle) * 2, 0])
+            micro_arrow = Arrow(
+                pos, phone.get_center() + np.array([np.cos(angle) * 0.3, np.sin(angle) * 0.2, 0]),
+                color=WHITE, stroke_width=0.5, stroke_opacity=0.5, buff=0.1
+            )
+            micro_arrows.add(micro_arrow)
 
-        # Curved path showing Moon "missing" Earth
-        orbit_arc = Arc(radius=2.5, start_angle=90 * DEGREES, angle=-180 * DEGREES,
-                        color='#FFD700', stroke_width=3, stroke_opacity=0.5)
-        orbit_arc.move_to(RIGHT * 2 + DOWN * 1)
+        # Revelation text
+        reveal_text = Text("EVERYTHING pulls EVERYTHING!", font_size=34, color=YELLOW, weight=BOLD)
+        reveal_text.move_to(DOWN * 2.5)
 
-        # "Both FALLING!" text
-        both_text = Text("Both FALLING!", font_size=40, color=YELLOW, weight=BOLD)
-        both_text.move_to(DOWN * 4)
-
-        # Mind-blow reveal
-        reveal_text = Text("Orbit = Falling + MISSING!", font_size=36, color='#00FF00', weight=BOLD)
-        reveal_text.move_to(DOWN * 5.5)
+        always_text = Text("Always. Forever.", font_size=28, color=WHITE)
+        always_text.next_to(reveal_text, DOWN, buff=0.3)
 
         # Animation
-        self.play(Create(divider), run_time=0.4)
-        self.play(
-            Write(left_title), Write(right_title),
-            run_time=0.4
-        )
-
-        # Left side setup
-        self.play(
-            FadeIn(person), FadeIn(ground_left),
-            FadeIn(earth_small), FadeIn(moon_small),
-            run_time=0.4
-        )
+        self.play(Write(title), run_time=0.4)
+        self.play(FadeIn(phone_group), run_time=0.4)
         self.wait(wait_time)
 
-        # Person falls straight down
-        self.play(
-            person.animate.move_to(LEFT * 2 + DOWN * 1.5),
-            run_time=1.0
-        )
-
-        # Moon "falls" but curves around (orbit)
-        self.play(
-            Create(orbit_arc),
-            MoveAlongPath(moon_small, orbit_arc),
-            run_time=1.5
-        )
+        # Earth
+        self.play(FadeIn(earth, earth_label), run_time=0.3)
+        self.play(Create(earth_arrow), run_time=0.3)
         self.wait(wait_time)
 
-        # Reveal text
-        self.play(FadeIn(both_text, scale=1.2), run_time=0.5)
-        self.play(FadeIn(reveal_text, shift=UP), run_time=0.5)
+        # Moon and Sun
+        self.play(FadeIn(moon, moon_label, sun, sun_label), run_time=0.3)
+        self.play(Create(moon_arrow), Create(sun_arrow), run_time=0.3)
+        self.wait(wait_time)
+
+        # Person
+        self.play(FadeIn(person_icon, person_label), Create(person_arrow), run_time=0.4)
+
+        # Micro arrows
+        self.play(LaggedStart(*[Create(a) for a in micro_arrows], lag_ratio=0.05), run_time=0.5)
+        self.wait(wait_time)
+
+        # Revelation
+        self.play(Write(reveal_text), run_time=0.4)
+        self.play(Write(always_text), run_time=0.3)
         self.wait(wait_time)
 
         # Clear
         self.play(FadeOut(Group(*[m for m in self.mobjects if m != self.watermark])), run_time=0.3)
 
     def segment_05_key_point(self, timing):
-        """Formula: v = sqrt(GM/r) with Goldilocks explanation (13.848s)"""
+        """Key Point: Gravity is weak but RELENTLESS (14.304s)"""
         duration = timing['duration']
 
         # Calculate timing
-        fixed_time = 0.6 + 0.5 + 0.5 + 0.5 + 0.4 + 0.4 + 0.3  # 3.2s
-        num_waits = 4
+        fixed_time = 0.4 + 0.4 + 0.3 + 0.5 + 0.3 + 0.4 + 0.4 + 0.5 + 0.3  # 3.5s
+        num_waits = 6
         wait_time = max(0.1, (duration - fixed_time) / num_waits)
 
-        # Formula using Text (no LaTeX)
-        formula_parts = VGroup()
+        # Title
+        title = Text("Gravity's Secret Power", font_size=38, color=YELLOW, weight=BOLD)
+        title.move_to(UP * 5.5)
 
-        v_text = Text("v", font_size=60, color='#00FF00', weight=BOLD)
-        equals = Text("=", font_size=50, color=WHITE)
-        sqrt_symbol = Text("root", font_size=40, color=WHITE)
+        # Arm wrestling visual - EM vs Gravity
+        # EM Force (HUGE)
+        em_body = RoundedRectangle(width=1.2, height=2, corner_radius=0.1,
+                                   color=BLUE, fill_opacity=0.8, stroke_width=2)
+        em_body.move_to(LEFT * 2.5 + UP * 1.5)
+        em_arm = Line(em_body.get_right() + UP * 0.5, em_body.get_right() + RIGHT * 1 + UP * 0.5,
+                     color=BLUE, stroke_width=8)
+        em_label = Text("EM Force", font_size=20, color=BLUE, weight=BOLD)
+        em_label.next_to(em_body, DOWN, buff=0.2)
+        em_size = Text("HUGE!", font_size=16, color=WHITE)
+        em_size.move_to(em_body.get_center())
+        em_wrestler = VGroup(em_body, em_arm, em_label, em_size)
 
-        # Fraction representation
-        gm_text = Text("GM", font_size=40, color='#FFD700', weight=BOLD)
-        fraction_line = Line(LEFT * 0.6, RIGHT * 0.6, color=WHITE, stroke_width=3)
-        r_text = Text("r", font_size=40, color='#FF6B35', weight=BOLD)
+        # Gravity (tiny)
+        grav_body = RoundedRectangle(width=0.4, height=0.6, corner_radius=0.05,
+                                     color=ORANGE, fill_opacity=0.8, stroke_width=1)
+        grav_body.move_to(RIGHT * 2.5 + UP * 1.8)
+        grav_arm = Line(grav_body.get_left() + UP * 0.1, grav_body.get_left() + LEFT * 0.5 + UP * 0.1,
+                       color=ORANGE, stroke_width=2)
+        grav_label = Text("Gravity", font_size=16, color=ORANGE, weight=BOLD)
+        grav_label.next_to(grav_body, DOWN, buff=0.1)
+        grav_size = Text("tiny", font_size=12, color=WHITE)
+        grav_size.move_to(grav_body.get_center())
+        grav_wrestler = VGroup(grav_body, grav_arm, grav_label, grav_size)
 
-        # Arrange formula
-        v_text.move_to(LEFT * 2)
-        equals.next_to(v_text, RIGHT, buff=0.3)
-        sqrt_symbol.next_to(equals, RIGHT, buff=0.3)
+        vs_text = Text("VS", font_size=36, color=RED, weight=BOLD)
+        vs_text.move_to(UP * 1.5)
 
-        fraction = VGroup(gm_text, fraction_line, r_text)
-        gm_text.move_to(UP * 0.3)
-        fraction_line.next_to(gm_text, DOWN, buff=0.1)
-        r_text.next_to(fraction_line, DOWN, buff=0.1)
-        fraction.next_to(sqrt_symbol, RIGHT, buff=0.1)
+        # Magnet example
+        mag_body = Rectangle(width=1.2, height=0.4, color=RED, fill_opacity=0.8, stroke_width=2)
+        mag_body.set_color([RED, BLUE])
+        mag_n = Text("N", font_size=16, color=WHITE, weight=BOLD)
+        mag_n.move_to(mag_body.get_left() + RIGHT * 0.25)
+        mag_s = Text("S", font_size=16, color=WHITE, weight=BOLD)
+        mag_s.move_to(mag_body.get_right() + LEFT * 0.25)
+        magnet = VGroup(mag_body, mag_n, mag_s)
+        magnet.move_to(LEFT * 2 + DOWN * 1.5)
+        magnet.scale(0.8)
 
-        formula = VGroup(v_text, equals, sqrt_symbol, fraction)
-        formula.move_to(UP * 3)
+        # Paperclip
+        clip = Rectangle(width=0.15, height=0.3, color=GRAY, fill_opacity=0.8, stroke_width=1)
+        clip.move_to(magnet.get_center() + DOWN * 0.5)
 
-        # Legend
-        g_legend = Text("G = Gravity constant", font_size=24, color='#FFD700')
-        m_legend = Text("M = Earth's mass", font_size=24, color='#FFD700')
-        r_legend = Text("r = Distance from center", font_size=24, color='#FF6B35')
+        # Earth
+        earth_mini = Circle(radius=0.6, color=BLUE, fill_opacity=0.3, stroke_width=2)
+        earth_mini.move_to(LEFT * 2 + DOWN * 3.5)
+        earth_lbl = Text("Earth's\nGravity", font_size=14, color=BLUE, line_spacing=0.8)
+        earth_lbl.next_to(earth_mini, DOWN, buff=0.1)
 
-        legend = VGroup(g_legend, m_legend, r_legend)
-        legend.arrange(DOWN, aligned_edge=LEFT, buff=0.3)
-        legend.move_to(UP * 0.5)
+        beat_text = Text("Magnet WINS!", font_size=20, color=RED, weight=BOLD)
+        beat_text.move_to(LEFT * 2 + DOWN * 0.5)
 
-        # Speedometer visual concept
-        speedometer_bg = Arc(radius=1.5, start_angle=150 * DEGREES, angle=-120 * DEGREES,
-                             color=WHITE, stroke_width=8)
-        speedometer_bg.move_to(DOWN * 3)
-
-        # Speed zones
-        slow_zone = Arc(radius=1.5, start_angle=150 * DEGREES, angle=-40 * DEGREES,
-                        color='#FF4444', stroke_width=8)
-        slow_zone.move_to(DOWN * 3)
-
-        perfect_zone = Arc(radius=1.5, start_angle=110 * DEGREES, angle=-40 * DEGREES,
-                           color='#00FF00', stroke_width=8)
-        perfect_zone.move_to(DOWN * 3)
-
-        fast_zone = Arc(radius=1.5, start_angle=70 * DEGREES, angle=-40 * DEGREES,
-                        color='#0066FF', stroke_width=8)
-        fast_zone.move_to(DOWN * 3)
-
-        # Labels
-        crash_label = Text("CRASH", font_size=20, color='#FF4444', weight=BOLD)
-        crash_label.move_to(DOWN * 3 + LEFT * 1.8 + UP * 0.3)
-
-        orbit_label = Text("ORBIT", font_size=20, color='#00FF00', weight=BOLD)
-        orbit_label.move_to(DOWN * 1.8)
-
-        escape_label = Text("ESCAPE", font_size=20, color='#0066FF', weight=BOLD)
-        escape_label.move_to(DOWN * 3 + RIGHT * 1.8 + UP * 0.3)
-
-        # Goldilocks text
-        goldilocks = Text("Goldilocks Speed!", font_size=32, color='#FFD700', weight=BOLD)
-        goldilocks.move_to(DOWN * 5.5)
+        # Galaxy
+        galaxy = VGroup()
+        galaxy_core = Circle(radius=0.3, color=YELLOW, fill_opacity=0.6, stroke_width=0)
+        galaxy_arm1 = Arc(radius=1, start_angle=0, angle=PI, color=WHITE, stroke_width=2, stroke_opacity=0.5)
+        galaxy_arm2 = Arc(radius=1, start_angle=PI, angle=PI, color=WHITE, stroke_width=2, stroke_opacity=0.5)
+        galaxy.add(galaxy_core, galaxy_arm1, galaxy_arm2)
+        galaxy.move_to(RIGHT * 2 + DOWN * 2)
+        galaxy_label = Text("Galaxies form\nby GRAVITY!", font_size=18, color=YELLOW, weight=BOLD, line_spacing=0.8)
+        galaxy_label.next_to(galaxy, DOWN, buff=0.2)
 
         # Key insight
-        insight = Text("Satellite mass does NOT matter!", font_size=26, color='#FF6B35')
-        insight.move_to(DOWN * 6.5)
+        insight_box = RoundedRectangle(width=6.5, height=1.5, corner_radius=0.15,
+                                       color=ORANGE, fill_opacity=0.2, stroke_width=2)
+        insight_box.move_to(DOWN * 5)
+        insight_text = Text("Weak but RELENTLESS = Shapes Universe!",
+                           font_size=24, color=ORANGE, weight=BOLD)
+        insight_text.move_to(insight_box.get_center())
+
+        sub_insight = Text("Never repels - Always attracts - Never gives up",
+                          font_size=18, color=WHITE)
+        sub_insight.next_to(insight_box, UP, buff=0.2)
 
         # Animation
-        self.play(Write(formula), run_time=0.6)
+        self.play(Write(title), run_time=0.4)
+        self.play(FadeIn(em_wrestler), FadeIn(grav_wrestler), Write(vs_text), run_time=0.4)
         self.wait(wait_time)
 
-        self.play(FadeIn(legend, shift=LEFT), run_time=0.5)
+        # Magnet example
+        self.play(FadeIn(magnet, clip, earth_mini, earth_lbl), run_time=0.3)
+        self.play(clip.animate.shift(UP * 0.3), run_time=0.5)
+        self.play(Write(beat_text), run_time=0.3)
         self.wait(wait_time)
 
-        # Speedometer
-        self.play(
-            Create(slow_zone),
-            Create(perfect_zone),
-            Create(fast_zone),
-            run_time=0.5
-        )
-        self.play(
-            FadeIn(crash_label),
-            FadeIn(orbit_label),
-            FadeIn(escape_label),
-            run_time=0.5
-        )
+        # Galaxy
+        self.play(FadeIn(galaxy, scale=0.5), run_time=0.4)
+        self.play(Write(galaxy_label), run_time=0.4)
         self.wait(wait_time)
 
-        self.play(FadeIn(goldilocks, scale=1.2), run_time=0.4)
+        # Insight
+        self.play(FadeIn(insight_box), Write(sub_insight), run_time=0.5)
+        self.play(Write(insight_text), run_time=0.3)
         self.wait(wait_time)
-
-        self.play(FadeIn(insight), run_time=0.4)
-        self.wait(wait_time * 0.5)
 
         # Clear
         self.play(FadeOut(Group(*[m for m in self.mobjects if m != self.watermark])), run_time=0.3)
 
     def segment_06_exam_tip(self, timing):
-        """JEE exam tip: Orbital velocity depends on r, NOT satellite mass (9.648s)"""
+        """Exam Tip: JEE trap - Earth mass and radius doubled (20.4s)"""
         duration = timing['duration']
 
         # Calculate timing
-        fixed_time = 0.4 + 0.4 + 0.4 + 0.5 + 0.5 + 0.5 + 0.4 + 0.3  # 3.4s
-        num_waits = 3
+        fixed_time = 0.4 + 0.4 + 0.3 + 0.5 + 0.4 + 0.4 + 0.5 + 0.5 + 0.5 + 0.5 + 0.3  # 4.7s
+        num_waits = 7
         wait_time = max(0.1, (duration - fixed_time) / num_waits)
 
-        # JEE question box
-        question_box = RoundedRectangle(
-            width=7, height=2.5, corner_radius=0.2,
-            color='#FFD700', fill_opacity=0.1, stroke_width=3
-        )
-        question_box.move_to(UP * 3)
+        # Alert header
+        alert = Text("JEE TRAP Alert!", font_size=44, color=RED, weight=BOLD)
+        alert.move_to(UP * 5.5)
 
-        jee_badge = Text("J.E.E. QUESTION", font_size=24, color='#FFD700', weight=BOLD)
-        jee_badge.move_to(UP * 4.8)
+        # Warning icon
+        warning = Text("!", font_size=36, color=RED, weight=BOLD)
+        warning_bg = Circle(radius=0.4, color=RED, fill_opacity=0.2, stroke_width=3, stroke_color=RED)
+        warning_group = VGroup(warning_bg, warning)
+        warning_group.next_to(alert, LEFT, buff=0.3)
 
-        question = Text(
-            "Orbital velocity depends on:",
-            font_size=28, color=WHITE
-        )
-        question.move_to(UP * 3)
+        # Problem statement
+        problem = Text("If Earth's mass DOUBLES and radius DOUBLES...",
+                      font_size=26, color=WHITE)
+        problem.move_to(UP * 4)
 
-        # Options
-        option_a = Text("A) Satellite mass", font_size=26, color='#FF4444')
-        option_b = Text("B) Orbital radius r", font_size=26, color='#00FF00')
+        question = Text("What happens to g?", font_size=32, color=YELLOW, weight=BOLD)
+        question.next_to(problem, DOWN, buff=0.3)
 
-        options = VGroup(option_a, option_b)
-        options.arrange(DOWN, aligned_edge=LEFT, buff=0.4)
-        options.move_to(UP * 0.5)
+        # Formula box
+        formula_bg = RoundedRectangle(width=5, height=1.5, corner_radius=0.15,
+                                      color=BLUE, fill_opacity=0.2, stroke_width=2)
+        formula_bg.move_to(UP * 1.5)
 
-        # Cross on wrong answer
-        wrong_cross = VGroup(
-            Line(LEFT * 0.3 + UP * 0.3, RIGHT * 0.3 + DOWN * 0.3, color='#FF4444', stroke_width=5),
-            Line(LEFT * 0.3 + DOWN * 0.3, RIGHT * 0.3 + UP * 0.3, color='#FF4444', stroke_width=5)
-        )
-        wrong_cross.move_to(option_a.get_left() + LEFT * 0.5)
+        # g = GM/R²
+        g_text = Text("g", font_size=48, color=YELLOW, weight=BOLD)
+        equals = Text("=", font_size=40, color=WHITE)
+        gm_text = Text("GM", font_size=40, color=GREEN, weight=BOLD)
+        frac_line = Line(LEFT * 0.8, RIGHT * 0.8, color=WHITE, stroke_width=3)
+        r_text = Text("R", font_size=40, color=RED, weight=BOLD)
+        r_sq = Text("2", font_size=24, color=RED)
+        r_sq.next_to(r_text, UP + RIGHT, buff=-0.1).shift(DOWN * 0.1)
+        r_group = VGroup(r_text, r_sq)
 
-        # Checkmark on correct answer
-        checkmark = Text("CHECK", font_size=24, color='#00FF00', weight=BOLD)
-        checkmark.move_to(option_b.get_left() + LEFT * 0.6)
+        g_text.move_to(formula_bg.get_center() + LEFT * 1.5)
+        equals.next_to(g_text, RIGHT, buff=0.2)
+        gm_text.move_to(formula_bg.get_center() + RIGHT * 0.8 + UP * 0.3)
+        frac_line.next_to(gm_text, DOWN, buff=0.1)
+        r_group.next_to(frac_line, DOWN, buff=0.1)
 
-        # Common mistake warning
-        warning_box = RoundedRectangle(
-            width=6, height=1.5, corner_radius=0.15,
-            color='#FF4444', fill_opacity=0.2, stroke_width=2
-        )
-        warning_box.move_to(DOWN * 3)
+        formula = VGroup(g_text, equals, gm_text, frac_line, r_group)
 
-        warning_text = Text("Common Mistake!", font_size=28, color='#FF4444', weight=BOLD)
-        warning_text.move_to(DOWN * 2.5)
+        # Analysis arrows
+        mass_arrow = Arrow(LEFT * 2.5 + DOWN * 0.8, LEFT * 0.5 + DOWN * 0.8,
+                          color=GREEN, stroke_width=3, buff=0)
+        mass_text = Text("M x 2", font_size=28, color=GREEN, weight=BOLD)
+        mass_text.next_to(mass_arrow, UP, buff=0.1)
+        mass_result = Text("Numerator x 2", font_size=22, color=GREEN)
+        mass_result.next_to(mass_arrow, DOWN, buff=0.1)
+        mass_analysis = VGroup(mass_arrow, mass_text, mass_result)
 
-        tip_text = Text("Satellite mass cancels out!", font_size=24, color=WHITE)
-        tip_text.move_to(DOWN * 3.5)
+        r_arrow = Arrow(RIGHT * 0.5 + DOWN * 0.8, RIGHT * 2.5 + DOWN * 0.8,
+                       color=RED, stroke_width=3, buff=0)
+        r_text2 = Text("R x 2", font_size=28, color=RED, weight=BOLD)
+        r_text2.next_to(r_arrow, UP, buff=0.1)
+        r_sq_text = Text("R squared x 4!", font_size=24, color=RED, weight=BOLD)
+        r_sq_text.next_to(r_arrow, DOWN, buff=0.1)
+        r_analysis = VGroup(r_arrow, r_text2, r_sq_text)
 
-        # Remember text
-        remember = Text("v depends on r only!", font_size=30, color='#00FF00', weight=BOLD)
-        remember.move_to(DOWN * 5.5)
+        # Calculation
+        calc_bg = RoundedRectangle(width=5.5, height=1.2, corner_radius=0.1,
+                                   color=YELLOW, fill_opacity=0.15, stroke_width=2)
+        calc_bg.move_to(DOWN * 2.5)
+
+        calc_text = Text("g' = (2M)/(2R)squared = 2M/4Rsquared = M/2Rsquared",
+                        font_size=20, color=WHITE)
+        calc_text.move_to(calc_bg.get_center())
+
+        # Answer
+        answer_bg = RoundedRectangle(width=4, height=1.2, corner_radius=0.15,
+                                     color=GREEN, fill_opacity=0.3, stroke_width=3)
+        answer_bg.move_to(DOWN * 4.5)
+
+        answer = Text("g becomes HALF!", font_size=32, color=GREEN, weight=BOLD)
+        answer.move_to(answer_bg.get_center())
+
+        # Key reminder
+        reminder = Text("R SQUARED in denominator!", font_size=26, color=RED, weight=BOLD)
+        reminder.move_to(DOWN * 6)
+
+        circle_r = Circle(radius=0.7, color=RED, stroke_width=4, fill_opacity=0)
+        circle_r.move_to(r_group.get_center())
 
         # Animation
-        self.play(FadeIn(question_box), Write(jee_badge), run_time=0.4)
-        self.play(Write(question), run_time=0.4)
+        self.play(Write(alert), FadeIn(warning_group), run_time=0.4)
+        self.play(Write(problem), run_time=0.4)
+        self.play(Write(question), run_time=0.3)
         self.wait(wait_time)
 
-        self.play(FadeIn(options), run_time=0.4)
+        # Formula
+        self.play(FadeIn(formula_bg), run_time=0.5)
+        self.play(Write(formula), run_time=0.4)
         self.wait(wait_time)
 
-        # Show wrong and right
-        self.play(Create(wrong_cross), run_time=0.5)
-        self.play(FadeIn(checkmark, scale=1.5), run_time=0.5)
+        # Analysis
+        self.play(FadeIn(mass_analysis), run_time=0.4)
         self.wait(wait_time)
 
-        # Warning
-        self.play(
-            FadeIn(warning_box),
-            Write(warning_text),
-            run_time=0.5
-        )
-        self.play(FadeIn(tip_text), run_time=0.4)
+        self.play(FadeIn(r_analysis), run_time=0.5)
+        self.wait(wait_time)
 
-        self.play(FadeIn(remember, shift=UP), run_time=0.4)
-        self.wait(wait_time * 0.5)
+        # Calculation
+        self.play(FadeIn(calc_bg), Write(calc_text), run_time=0.5)
+        self.wait(wait_time)
+
+        # Answer
+        self.play(FadeIn(answer_bg), Write(answer), run_time=0.5)
+        self.wait(wait_time)
+
+        # Highlight R²
+        self.play(Create(circle_r), Write(reminder), run_time=0.3)
+        self.wait(wait_time)
 
         # Clear
         self.play(FadeOut(Group(*[m for m in self.mobjects if m != self.watermark])), run_time=0.3)
 
     def segment_07_cta(self, timing):
-        """CTA: JeetLo Physics! - Use pre-built CTA slide (3.552s)"""
+        """CTA: JeetLo Physics! - Use pre-built CTA slide (10.248s)"""
         duration = timing['duration']
 
         # Remove watermark for CTA slide

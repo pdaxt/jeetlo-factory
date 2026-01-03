@@ -88,6 +88,13 @@
       "topic": "Why Doesn't the Moon Fall Down?",
       "status": "ready_to_post",
       "updated": 1767400132.972782
+    },
+    {
+      "id": "phy-01-gravity",
+      "subject": "physics",
+      "topic": "Newton's Law of Universal Gravitation",
+      "status": "ready_to_post",
+      "updated": 1767406160.694452
     }
   ]
 }

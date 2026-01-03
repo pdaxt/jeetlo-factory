@@ -1,65 +1,58 @@
 [
   {
     "id": "01_hook",
-    "text": "आप अभी खड़े हैं... लेकिन actually आप FALL कर रहे हैं! Earth एक clingy ex की तरह आपको CONSTANTLY खींच रही है!",
-    "duration": 7.560000,
+    "text": "अभी इस moment... आप FALL कर रहे हो! रुको, बैठे हो ना? फिर भी... FALLING! कैसे?",
+    "duration": 6.360000,
     "startTime": 0,
-    "endTime": 7.560000
+    "endTime": 6.360000
   },
   {
     "id": "02_setup",
-    "text": "Newton ने apple गिरते देखा... और Moon को orbit करते देखा. दोनों में SAME force? Really? आइए समझते हैं...",
-    "duration": 7.896000,
-    "startTime": 7.560000,
-    "endTime": 15.456000
+    "text": "Newton ने देखा apple गिरा... फिर Moon को देखा जो Earth के around घूम रहा है। उनका GENIUS question था... क्या SAME force है? Apple को खींचने वाली और Moon को रोकने वाली?",
+    "duration": 11.064000,
+    "startTime": 6.360000,
+    "endTime": 17.424000
   },
   {
     "id": "03_content_part1",
-    "text": "Universal Law of Gravitation कहता है... F equals G m one m two divided by r squared. G है universe का relationship counselor... m one और m two दोनों masses हैं... और r है distance!",
-    "duration": 12.912000,
-    "startTime": 15.456000,
-    "endTime": 28.368000
+    "text": "देखो gravity का formula! F equals G into M one M two divided by r squared. यहाँ G है six point six seven into ten to the power minus eleven... इतना TINY number! Gravity actually universe की WEAKEST force है भाई!",
+    "duration": 14.400000,
+    "startTime": 17.424000,
+    "endTime": 31.824000
   },
   {
     "id": "03_content_part2",
-    "text": "अब interesting part! जब आप Earth को pull करते हैं... Earth भी आपको SAME force से pull करती है! लेकिन... ice rink पर सोचिए... जब छोटा person बड़े person को push करता है... छोटा person ज़्यादा move होता है! Same force... different acceleration!",
-    "duration": 15.960000,
-    "startTime": 28.368000,
-    "endTime": 44.328000
-  },
-  {
-    "id": "03_content_part3",
-    "text": "और distance SQUARED का magic देखिए... distance double करो... force एक-FOURTH हो जाती है! इसीलिए Sun इतना massive होने के बाद भी... आप उसकी gravity ज़्यादा feel नहीं करते!",
-    "duration": 11.448000,
-    "startTime": 44.328000,
-    "endTime": 55.776000
+    "text": "अब समझो inverse square law! Distance DOUBLE करो... force ONE FOURTH हो जाती है! Triple करो... force ONE NINTH! क्यों? जैसे flashlight की light दूर जाके SPREAD होती है... वैसे ही gravity WEAK होती है distance के square से!",
+    "duration": 15.864000,
+    "startTime": 31.824000,
+    "endTime": 47.688000
   },
   {
     "id": "04_reveal",
-    "text": "Mind-blow moment... आप अभी EVERY star से connected हैं! एक हज़ार light years दूर का star भी आपको pull कर रहा है! आप gravitationally ENTIRE universe से जुड़े हैं!",
-    "duration": 10.248000,
-    "startTime": 55.776000,
-    "endTime": 66.024000
+    "text": "Mind blowing fact! अभी इस second... Earth आपको खींच रही है... Moon खींच रहा है... Sun खींच रहा है... EVEN the person sitting next to you is PULLING you! Gravitationally! EVERYTHING pulls EVERYTHING... हमेशा!",
+    "duration": 13.848000,
+    "startTime": 47.688000,
+    "endTime": 61.536000
   },
   {
     "id": "05_key_point",
-    "text": "तीन golden rules याद रखिए! One... हर mass हर mass को attract करती है. Two... force BOTH masses पर depend करती है. Three... distance SQUARED force को kill करती है!",
-    "duration": 11.016000,
-    "startTime": 66.024000,
-    "endTime": 77.040000
+    "text": "Gravity इतनी weak है कि एक छोटा सा magnet Earth की PURI gravity को beat कर देता है! फिर भी galaxies GRAVITY से बनती हैं! क्यों? Because gravity NEVER gives up... NEVER repels... सिर्फ ATTRACTS! Weak but RELENTLESS!",
+    "duration": 14.304000,
+    "startTime": 61.536000,
+    "endTime": 75.840000
   },
   {
     "id": "06_exam_tip",
-    "text": "J. E. E. में पूछते हैं... अगर Earth की radius double हो जाए लेकिन mass same रहे... आपका weight? g dash equals G M divided by two R whole squared... equals g by four! आप one-fourth weight हो जाएंगे!",
-    "duration": 14.256000,
-    "startTime": 77.040000,
-    "endTime": 91.296000
+    "text": "J. E. E. TRAP alert! अगर Earth की mass DOUBLE हो और radius भी DOUBLE हो... g का क्या होगा? Formula है g equals G M by R squared. Mass double means numerator times two... R squared means denominator times FOUR! Answer? g becomes HALF! याद रखो... R SQUARED in denominator!",
+    "duration": 20.400000,
+    "startTime": 75.840000,
+    "endTime": 96.240000
   },
   {
     "id": "07_cta",
-    "text": "Gravity समझ आ गई? Comment में 'G' लिखिए! और ऐसे ही physics mind-blows के लिए... JeetLo! Follow कीजिए!",
-    "duration": 7.104000,
-    "startTime": 91.296000,
-    "endTime": 98.400000
+    "text": "अब FEEL हो रहा है ना gravity? ये invisible force जो आपको Earth से चिपकाए रखी है! More physics जो आपका brain rewire करे... JeetLo! Follow कीजिए!",
+    "duration": 10.248000,
+    "startTime": 96.240000,
+    "endTime": 106.488000
   }
 ]

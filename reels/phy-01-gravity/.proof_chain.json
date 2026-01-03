@@ -1,80 +1,80 @@
 {
   "reel_id": "phy-01-gravity",
   "subject": "physics",
-  "created_at": "2026-01-02T23:59:59Z",
-  "genesis_hash": "3f85318215202116d62654290b9ee8895365d5f18d64735280ce8398a8ef0bef",
+  "created_at": "2026-01-03T01:53:49Z",
+  "genesis_hash": "082f25d873f17bf41dcf66f99ded3d520b0540a4c8bdb17813e7a52718254db8",
   "steps": [
     {
       "step": "setup",
       "input_hash": "genesis",
       "output_hash": "e4fb06e78da36859bb957b9755441fbdf1166f046f34ad4d806d6fa123f618cd",
-      "timestamp": "2026-01-03T00:00:02Z"
+      "timestamp": "2026-01-03T01:53:52Z"
     },
     {
       "step": "creative_brief",
       "input_hash": "e4fb06e78da36859bb957b9755441fbdf1166f046f34ad4d806d6fa123f618cd",
-      "output_hash": "fe6c672a06f7d9f9b1506b0c0dffa42a4cbe3b9ad1bb8ed20fc3704b3d104ccf",
-      "timestamp": "2026-01-03T00:00:40Z"
+      "output_hash": "4b0a4d7e17c93e786b370d4580e939589ca0cec081a41be8e56f5013d66e7db7",
+      "timestamp": "2026-01-03T01:54:36Z"
     },
     {
       "step": "audio_script",
-      "input_hash": "fe6c672a06f7d9f9b1506b0c0dffa42a4cbe3b9ad1bb8ed20fc3704b3d104ccf",
-      "output_hash": "c248f22907dbc09c4dbdcfc586e8ff8772ff5d5f87ffd12b8ee0bc8b2d024e62",
-      "timestamp": "2026-01-03T00:01:06Z"
+      "input_hash": "4b0a4d7e17c93e786b370d4580e939589ca0cec081a41be8e56f5013d66e7db7",
+      "output_hash": "59416736ff9bb97e2e653a6b2d1e9604e6d47bb7048a38f00f9c826be53a2908",
+      "timestamp": "2026-01-03T01:55:05Z"
     },
     {
       "step": "generate_audio",
-      "input_hash": "c248f22907dbc09c4dbdcfc586e8ff8772ff5d5f87ffd12b8ee0bc8b2d024e62",
-      "output_hash": "72ff8649932678bb54d3e941b34c49f9e61fac3d3c0a49c96b3ef225404df765",
-      "timestamp": "2026-01-03T00:01:32Z"
+      "input_hash": "59416736ff9bb97e2e653a6b2d1e9604e6d47bb7048a38f00f9c826be53a2908",
+      "output_hash": "46787d6e1b39f76191a80f45996abe533cbf8993574a2c30de51f68f4c5493b1",
+      "timestamp": "2026-01-03T01:55:31Z"
     },
     {
       "step": "video_script",
-      "input_hash": "72ff8649932678bb54d3e941b34c49f9e61fac3d3c0a49c96b3ef225404df765",
-      "output_hash": "b5dd8b4d9c2c3c0bd0c4742bccdbb158664d2ff44ad8958dde2ee9b4800876d3",
-      "timestamp": "2026-01-03T00:07:07Z"
+      "input_hash": "46787d6e1b39f76191a80f45996abe533cbf8993574a2c30de51f68f4c5493b1",
+      "output_hash": "b478cf0a3afa9f08b5f988537d7974c7b4829a9df2bfa916620fe83762fcbee6",
+      "timestamp": "2026-01-03T02:05:59Z"
     },
     {
       "step": "validate_manim_edu",
-      "input_hash": "b5dd8b4d9c2c3c0bd0c4742bccdbb158664d2ff44ad8958dde2ee9b4800876d3",
-      "output_hash": "2916d54c7d6a54e66a6fe5027facfd8714ec83d7f1cdd5c07a88c73e9df46c49",
-      "timestamp": "2026-01-03T00:07:07Z"
+      "input_hash": "b478cf0a3afa9f08b5f988537d7974c7b4829a9df2bfa916620fe83762fcbee6",
+      "output_hash": "513ff3b5331adc3d7dd123ead87108b0ef0eae3d7c2cf41ba2d01f3721068990",
+      "timestamp": "2026-01-03T02:05:59Z"
     },
     {
       "step": "render_video",
-      "input_hash": "2916d54c7d6a54e66a6fe5027facfd8714ec83d7f1cdd5c07a88c73e9df46c49",
-      "output_hash": "0a2c168bd6519c7cd8eb261d1e105ec05ae61be90de1487d3ddebd75cad34001",
-      "timestamp": "2026-01-03T00:08:35Z"
+      "input_hash": "513ff3b5331adc3d7dd123ead87108b0ef0eae3d7c2cf41ba2d01f3721068990",
+      "output_hash": "c02028d14fb68bb46eed51c5e2dc5cae4e38cb59257b9335798c7796982f5c11",
+      "timestamp": "2026-01-03T02:07:57Z"
     },
     {
       "step": "validate_sync",
-      "input_hash": "0a2c168bd6519c7cd8eb261d1e105ec05ae61be90de1487d3ddebd75cad34001",
-      "output_hash": "30c52eed469b568b31fbbc8b7f45e5cdcbb5c405f56572e5594576b238688d64",
-      "timestamp": "2026-01-03T00:08:35Z"
+      "input_hash": "c02028d14fb68bb46eed51c5e2dc5cae4e38cb59257b9335798c7796982f5c11",
+      "output_hash": "f60948eccc4b42597f3c080327f7d9094691d26bd61bda61e8d5e4c2f68b9049",
+      "timestamp": "2026-01-03T02:07:57Z"
     },
     {
       "step": "frame_qa",
-      "input_hash": "30c52eed469b568b31fbbc8b7f45e5cdcbb5c405f56572e5594576b238688d64",
-      "output_hash": "54d099f038ad3071efc258150d5ae412b99d3221e5d7b55689d32782717aaa67",
-      "timestamp": "2026-01-03T00:08:36Z"
+      "input_hash": "f60948eccc4b42597f3c080327f7d9094691d26bd61bda61e8d5e4c2f68b9049",
+      "output_hash": "b0fd1411302f1e73c5f6e1540846cee19494383a71a7eb610ce6fb923561cfd4",
+      "timestamp": "2026-01-03T02:08:05Z"
     },
     {
       "step": "combine_av",
-      "input_hash": "54d099f038ad3071efc258150d5ae412b99d3221e5d7b55689d32782717aaa67",
-      "output_hash": "d5a94bc580d4e1687b26b46ede031e1c3aa39f74efc5377485d9b116f00f65b3",
-      "timestamp": "2026-01-03T00:09:04Z"
+      "input_hash": "b0fd1411302f1e73c5f6e1540846cee19494383a71a7eb610ce6fb923561cfd4",
+      "output_hash": "27dcfb1724fe95a0769725f3cbe52712c539b39d94d50bf9904e4ba86d996ab2",
+      "timestamp": "2026-01-03T02:09:19Z"
     },
     {
       "step": "thumbnail",
-      "input_hash": "d5a94bc580d4e1687b26b46ede031e1c3aa39f74efc5377485d9b116f00f65b3",
-      "output_hash": "cdf10bcdee3abd9d40073aaa701f3f32b2d62d1f230b1c1ee50b801a3624b707",
-      "timestamp": "2026-01-03T00:09:04Z"
+      "input_hash": "27dcfb1724fe95a0769725f3cbe52712c539b39d94d50bf9904e4ba86d996ab2",
+      "output_hash": "6079ad997c4f668371aae4258fea4c97db1b6c6a680711f2041073afee24a97a",
+      "timestamp": "2026-01-03T02:09:20Z"
     },
     {
       "step": "final_qa",
-      "input_hash": "cdf10bcdee3abd9d40073aaa701f3f32b2d62d1f230b1c1ee50b801a3624b707",
-      "output_hash": "5b0f7685054851363c4a63fa7c138458be677d4f7af8ef48cbf0a41a8b1bdf22",
-      "timestamp": "2026-01-03T00:09:05Z"
+      "input_hash": "6079ad997c4f668371aae4258fea4c97db1b6c6a680711f2041073afee24a97a",
+      "output_hash": "aad6a5d9db7c42432a571f6792f6e8c34d1eeb32dc173cab23adcb2f79fbe43c",
+      "timestamp": "2026-01-03T02:09:20Z"
     }
   ],
   "status": "ready_to_post"
