@@ -1,98 +1,80 @@
 {
   "reel_id": "phy-01-gravity",
   "subject": "physics",
-  "created_at": "2026-01-02T20:22:16Z",
-  "genesis_hash": "5c7702ee9a7fb83a8ea480e0f46a7ef3e4b56240f0d2f2b89596df4a593984da",
+  "created_at": "2026-01-02T23:59:59Z",
+  "genesis_hash": "3f85318215202116d62654290b9ee8895365d5f18d64735280ce8398a8ef0bef",
   "steps": [
     {
       "step": "setup",
       "input_hash": "genesis",
       "output_hash": "e4fb06e78da36859bb957b9755441fbdf1166f046f34ad4d806d6fa123f618cd",
-      "timestamp": "2026-01-02T21:35:03Z"
-    },
-    {
-      "step": "setup",
-      "input_hash": "e4fb06e78da36859bb957b9755441fbdf1166f046f34ad4d806d6fa123f618cd",
-      "output_hash": "e4fb06e78da36859bb957b9755441fbdf1166f046f34ad4d806d6fa123f618cd",
-      "timestamp": "2026-01-02T21:35:11Z"
+      "timestamp": "2026-01-03T00:00:02Z"
     },
     {
       "step": "creative_brief",
       "input_hash": "e4fb06e78da36859bb957b9755441fbdf1166f046f34ad4d806d6fa123f618cd",
-      "output_hash": "dc90908dac8490c3dac8e21be2910582418803aea9335682012ddb4bd01c68df",
-      "timestamp": "2026-01-02T21:35:48Z"
-    },
-    {
-      "step": "creative_brief",
-      "input_hash": "dc90908dac8490c3dac8e21be2910582418803aea9335682012ddb4bd01c68df",
-      "output_hash": "dc90908dac8490c3dac8e21be2910582418803aea9335682012ddb4bd01c68df",
-      "timestamp": "2026-01-02T21:35:49Z"
+      "output_hash": "fe6c672a06f7d9f9b1506b0c0dffa42a4cbe3b9ad1bb8ed20fc3704b3d104ccf",
+      "timestamp": "2026-01-03T00:00:40Z"
     },
     {
       "step": "audio_script",
-      "input_hash": "dc90908dac8490c3dac8e21be2910582418803aea9335682012ddb4bd01c68df",
-      "output_hash": "051ad2c8a38b8c1dbec3980415abcc105e688558730c5f9b9e80fa11783d9337",
-      "timestamp": "2026-01-02T21:36:12Z"
-    },
-    {
-      "step": "audio_script",
-      "input_hash": "051ad2c8a38b8c1dbec3980415abcc105e688558730c5f9b9e80fa11783d9337",
-      "output_hash": "034f47cb7085c21b84d57cbf3444bc625821b9aa3fe11966aace5d90a2481826",
-      "timestamp": "2026-01-02T21:36:13Z"
+      "input_hash": "fe6c672a06f7d9f9b1506b0c0dffa42a4cbe3b9ad1bb8ed20fc3704b3d104ccf",
+      "output_hash": "c248f22907dbc09c4dbdcfc586e8ff8772ff5d5f87ffd12b8ee0bc8b2d024e62",
+      "timestamp": "2026-01-03T00:01:06Z"
     },
     {
       "step": "generate_audio",
-      "input_hash": "034f47cb7085c21b84d57cbf3444bc625821b9aa3fe11966aace5d90a2481826",
-      "output_hash": "fc97acb68c18598058864db567ff93bafc3601f7cd0bbc85079201d24e1f1fcc",
-      "timestamp": "2026-01-02T21:36:37Z"
+      "input_hash": "c248f22907dbc09c4dbdcfc586e8ff8772ff5d5f87ffd12b8ee0bc8b2d024e62",
+      "output_hash": "72ff8649932678bb54d3e941b34c49f9e61fac3d3c0a49c96b3ef225404df765",
+      "timestamp": "2026-01-03T00:01:32Z"
     },
     {
       "step": "video_script",
-      "input_hash": "fc97acb68c18598058864db567ff93bafc3601f7cd0bbc85079201d24e1f1fcc",
-      "output_hash": "fdea307876848c6ec60e272efb240d915455db0b319a5f4bb59551dac7011824",
-      "timestamp": "2026-01-02T21:42:15Z"
+      "input_hash": "72ff8649932678bb54d3e941b34c49f9e61fac3d3c0a49c96b3ef225404df765",
+      "output_hash": "b5dd8b4d9c2c3c0bd0c4742bccdbb158664d2ff44ad8958dde2ee9b4800876d3",
+      "timestamp": "2026-01-03T00:07:07Z"
     },
     {
       "step": "validate_manim_edu",
-      "input_hash": "fdea307876848c6ec60e272efb240d915455db0b319a5f4bb59551dac7011824",
-      "output_hash": "badd00678b701eae7090a3ef0ee7b75e12ba923e6f08f1ee3d012c9601d385ee",
-      "timestamp": "2026-01-02T21:42:15Z"
+      "input_hash": "b5dd8b4d9c2c3c0bd0c4742bccdbb158664d2ff44ad8958dde2ee9b4800876d3",
+      "output_hash": "2916d54c7d6a54e66a6fe5027facfd8714ec83d7f1cdd5c07a88c73e9df46c49",
+      "timestamp": "2026-01-03T00:07:07Z"
     },
     {
       "step": "render_video",
-      "input_hash": "badd00678b701eae7090a3ef0ee7b75e12ba923e6f08f1ee3d012c9601d385ee",
-      "output_hash": "73ef7e3e409c384be5d7c406ae15459dd8a1bd966ca522bc4e67f307525b7bbd",
-      "timestamp": "2026-01-02T21:43:24Z"
+      "input_hash": "2916d54c7d6a54e66a6fe5027facfd8714ec83d7f1cdd5c07a88c73e9df46c49",
+      "output_hash": "0a2c168bd6519c7cd8eb261d1e105ec05ae61be90de1487d3ddebd75cad34001",
+      "timestamp": "2026-01-03T00:08:35Z"
     },
     {
       "step": "validate_sync",
-      "input_hash": "73ef7e3e409c384be5d7c406ae15459dd8a1bd966ca522bc4e67f307525b7bbd",
-      "output_hash": "03b155a7df42e4658274605d36579a917018f019599ad0e9bfaa23fc2d174657",
-      "timestamp": "2026-01-02T21:43:24Z"
+      "input_hash": "0a2c168bd6519c7cd8eb261d1e105ec05ae61be90de1487d3ddebd75cad34001",
+      "output_hash": "30c52eed469b568b31fbbc8b7f45e5cdcbb5c405f56572e5594576b238688d64",
+      "timestamp": "2026-01-03T00:08:35Z"
     },
     {
       "step": "frame_qa",
-      "input_hash": "03b155a7df42e4658274605d36579a917018f019599ad0e9bfaa23fc2d174657",
-      "output_hash": "41c76b7a4e6e1ff572ea83d5a5826d5bc6f4f6f7f33496f387ff31b39714246a",
-      "timestamp": "2026-01-02T21:43:25Z"
+      "input_hash": "30c52eed469b568b31fbbc8b7f45e5cdcbb5c405f56572e5594576b238688d64",
+      "output_hash": "54d099f038ad3071efc258150d5ae412b99d3221e5d7b55689d32782717aaa67",
+      "timestamp": "2026-01-03T00:08:36Z"
     },
     {
       "step": "combine_av",
-      "input_hash": "41c76b7a4e6e1ff572ea83d5a5826d5bc6f4f6f7f33496f387ff31b39714246a",
-      "output_hash": "581f60358360d711cdb003f70bb0ef27fd4c8d506cf99acb4e897cc4931f51e8",
-      "timestamp": "2026-01-02T21:43:30Z"
+      "input_hash": "54d099f038ad3071efc258150d5ae412b99d3221e5d7b55689d32782717aaa67",
+      "output_hash": "d5a94bc580d4e1687b26b46ede031e1c3aa39f74efc5377485d9b116f00f65b3",
+      "timestamp": "2026-01-03T00:09:04Z"
     },
     {
       "step": "thumbnail",
-      "input_hash": "581f60358360d711cdb003f70bb0ef27fd4c8d506cf99acb4e897cc4931f51e8",
-      "output_hash": "54a96e2bffa05c14dff4368d07181bac37673152a5b0fef6f9aad9234e75f9a3",
-      "timestamp": "2026-01-02T21:43:30Z"
+      "input_hash": "d5a94bc580d4e1687b26b46ede031e1c3aa39f74efc5377485d9b116f00f65b3",
+      "output_hash": "cdf10bcdee3abd9d40073aaa701f3f32b2d62d1f230b1c1ee50b801a3624b707",
+      "timestamp": "2026-01-03T00:09:04Z"
     },
     {
       "step": "final_qa",
-      "input_hash": "54a96e2bffa05c14dff4368d07181bac37673152a5b0fef6f9aad9234e75f9a3",
-      "output_hash": "9f8ed2fbc4b9a0458282ff2f4f6d4a33299c51f19be01c377da25c708afe5104",
-      "timestamp": "2026-01-02T21:43:31Z"
+      "input_hash": "cdf10bcdee3abd9d40073aaa701f3f32b2d62d1f230b1c1ee50b801a3624b707",
+      "output_hash": "5b0f7685054851363c4a63fa7c138458be677d4f7af8ef48cbf0a41a8b1bdf22",
+      "timestamp": "2026-01-03T00:09:05Z"
     }
   ],
   "status": "ready_to_post"

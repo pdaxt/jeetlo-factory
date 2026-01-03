@@ -1,0 +1,1013 @@
+
+[0;34m═══════════════════════════════════════════════════════════════════════════════[0m
+[0;34m  JEETLO REEL FACTORY[0m
+[0;34m═══════════════════════════════════════════════════════════════════════════════[0m
+
+Reel ID: phy-01-gravity
+Subject: physics
+Topic: Newton's Law of Universal Gravitation
+Work Dir: /tmp/jeetlo/phy-01-gravity
+
+[0;36m┌─────────────────────────────────────────────────────────────────────────────┐[0m
+[0;36m│ STEP 0: SETUP & TTS AUTH[0m
+[0;36m└─────────────────────────────────────────────────────────────────────────────┘[0m
+[0;32m✓ Proof chain initialized: 3f85318215202116...[0m
+[0;32m✓ Embedded knowledge saved to work directory[0m
+
+Checking Google Cloud TTS authentication...
+[0;32m✓ TTS API authenticated and working[0m
+e4fb06e78da36859bb957b9755441fbdf1166f046f34ad4d806d6fa123f618cd
+[0;32m✓ Setup complete[0m
+[0;36m┌─────────────────────────────────────────────────────────────────────────────┐[0m
+[0;36m│ STEP 1: CREATIVE BRIEF (ULTRATHINK)[0m
+[0;36m└─────────────────────────────────────────────────────────────────────────────┘[0m
+Subject: physics
+Color: #0066FF | Background: #0A1A3F
+Voice: hi-IN-Chirp3-HD-Orus
+Required manim-edu imports: WaveSimulator, FieldVisualizer, MechanicsSimulator
+
+Running Claude CLI for creative brief...
+[0;32m✓ Creative brief generated[0m
+
+Core Analogy: Gravity = Universe's clingy ex who NEVER lets go. The bigger they are, the harder they pull. Earth is obsessed with you, but you're also pulling Earth back (she just doesn't notice because you're tiny compared to her ego)
+Mind-Blow: You're not just being pulled by Earth - you're pulling Earth toward you with the EXACT same force. And right now, a star 1000 light years away is pulling you too. You're gravitationally connected to the entire universe.
+fe6c672a06f7d9f9b1506b0c0dffa42a4cbe3b9ad1bb8ed20fc3704b3d104ccf
+[0;36m┌─────────────────────────────────────────────────────────────────────────────┐[0m
+[0;36m│ STEP 2: AUDIO SCRIPT[0m
+[0;36m└─────────────────────────────────────────────────────────────────────────────┘[0m
+Generating audio script with embedded Hinglish rules...
+[0;32m✓ Audio script generated: 9 segments[0m
+
+Preview:
+  01_hook: आप अभी खड़े हैं... लेकिन actually आप FALL कर रहे हैं! Earth ...
+  02_setup: Newton ने apple गिरते देखा... और Moon को orbit करते देखा. दो...
+  ...
+c248f22907dbc09c4dbdcfc586e8ff8772ff5d5f87ffd12b8ee0bc8b2d024e62
+[0;36m┌─────────────────────────────────────────────────────────────────────────────┐[0m
+[0;36m│ STEP 3: GENERATE AUDIO[0m
+[0;36m└─────────────────────────────────────────────────────────────────────────────┘[0m
+Voice: hi-IN-Chirp3-HD-Orus
+Speaking Rate: 0.9 (authoritative)
+
+Generating: 01_hook
+  ✓ Duration: 7.560000s
+Generating: 02_setup
+  ✓ Duration: 7.896000s
+Generating: 03_content_part1
+  ✓ Duration: 12.912000s
+Generating: 03_content_part2
+  ✓ Duration: 15.960000s
+Generating: 03_content_part3
+  ✓ Duration: 11.448000s
+Generating: 04_reveal
+  ✓ Duration: 10.248000s
+Generating: 05_key_point
+  ✓ Duration: 11.016000s
+Generating: 06_exam_tip
+  ✓ Duration: 14.256000s
+Generating: 07_cta
+  ✓ Duration: 7.104000s
+Generating timings...
+
+Combining segments...
+[0;32m✓ Audio generated: 98.400000s total[0m
+72ff8649932678bb54d3e941b34c49f9e61fac3d3c0a49c96b3ef225404df765
+[0;36m┌─────────────────────────────────────────────────────────────────────────────┐[0m
+[0;36m│ STEP 4: VIDEO SCRIPT (reel.py using manim-edu)[0m
+[0;36m└─────────────────────────────────────────────────────────────────────────────┘[0m
+sed: stdout: Broken pipe
+Loaded manim-edu documentation (     400 lines)
+Generating Manim reel.py...
+Background: #0A1A3F
+Subject Color: #0066FF
+manim-edu imports: WaveSimulator
+FieldVisualizer
+MechanicsSimulator
+
+Attempt 1 of 3...
+[1;33m⚠ Could not extract Python code, retrying...[0m
+Raw output saved to: /tmp/jeetlo/phy-01-gravity/reel_raw_1.txt
+First 20 lines:
+I've created the complete Manim Python file for the gravity/Universal Law of Gravitation educational reel. Here's a summary of what each segment does:
+
+**Segment Breakdown:**
+
+1. **01_hook** (7.56s): Shows a person being "pulled" by Earth with heart eyes (clingy ex metaphor), arrows showing gravitational pull, and "You're FALLING right now!" text
+
+2. **02_setup** (7.9s): Split screen comparing apple falling (Newton's moment) vs Moon orbiting Earth, with the mystery question "Same Force?"
+
+3. **03_content_part1** (12.9s): Formula breakdown using Text elements (not MathTex):
+   - F = G m₁m₂/r²
+   - Each variable lights up with explanation labels
+   - "G = Universe's relationship counselor"
+
+4. **03_content_part2** (15.96s): Ice rink analogy showing:
+   - Small person (you) vs big person (Earth) pushing each other
+   - Equal forces but different accelerations
+   - Small person moves MORE!
+
+5. **03_content_part3** (11.45s): Distance squared visualization:
+   - Two masses at distance r with force F
+
+Attempt 2 of 3...
+[0;32m✓ reel.py generated (429 lines) on attempt 2[0m
+[0;32m✓ Uses manim-edu primitives[0m
+[0;32m✓ Has brand elements (watermark/CTA)[0m
+[0;32m✓ Python syntax valid[0m
+b5dd8b4d9c2c3c0bd0c4742bccdbb158664d2ff44ad8958dde2ee9b4800876d3
+[0;36m┌─────────────────────────────────────────────────────────────────────────────┐[0m
+[0;36m│ STEP 5: VALIDATE manim-edu COMPLIANCE[0m
+[0;36m└─────────────────────────────────────────────────────────────────────────────┘[0m
+Checking reel.py patterns...
+[0;32m✓ manim-edu imports found: 2[0m
+[0;32m✓ Brand watermark found[0m
+[0;32m✓ CTA slide found[0m
+[0;32m✓ JeetLoReelMixin used[0m
+[0;32m✓ Segment methods found: 9[0m
+[0;32m✓ No Hindi text on screen (English only - correct!)[0m
+[0;32m✓ No GrowArrow usage (using Create - correct!)[0m
+[0;32m✓ Using standard CTA slide (correct!)[0m
+[0;32m✓ No run_time() syntax errors[0m
+./scripts/jeetlo.sh: line 1291: [: 0
+0: integer expression expected
+./scripts/jeetlo.sh: line 1294: [: 0
+0: integer expression expected
+[0;32m✓ Dynamic animations found: 3 types[0m
+[0;32m✓ Color variety: 8 colors[0m
+
+Animation Score: 120/100
+[0;32m✓ Validation passed with 0 warnings[0m
+2916d54c7d6a54e66a6fe5027facfd8714ec83d7f1cdd5c07a88c73e9df46c49
+[0;36m┌─────────────────────────────────────────────────────────────────────────────┐[0m
+[0;36m│ STEP 6: RENDER VIDEO (Manim)[0m
+[0;36m└─────────────────────────────────────────────────────────────────────────────┘[0m
+Updating manim-edu library...
+Already up to date.
+Rendering with Manim...
+Resolution: 1080x1920 (9:16 vertical)
+
+Using Python: /opt/homebrew/bin/python3.11
+/opt/homebrew/lib/python3.11/site-packages/manim_voiceover/__init__.py:4: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+<frozen runpy>:128: RuntimeWarning: 'manim.__main__' found in sys.modules after import of package 'manim', but prior to execution of 'manim.__main__'; this may result in unpredictable behaviour
+Manim Community v0.19.1
+
+Animation 0: FadeIn(VGroup of 6 submobjects):   0%|          | 0/30 [00:00<?, ?it/s]Animation 0: FadeIn(VGroup of 6 submobjects):  80%|████████  | 24/30 [00:00<00:00, 219.21it/s]                                                                                              [01/03/26 11:07:13] INFO     Animation 0 : Partial      scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/1905655461                         
+                             _338298441_2535567409.mp4'                         
+Animation 1: FadeIn(Circle), etc.:   0%|          | 0/24 [00:00<?, ?it/s]Animation 1: FadeIn(Circle), etc.:  75%|███████▌  | 18/24 [00:00<00:00, 177.02it/s]                                                                                                       INFO     Animation 1 : Partial      scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _2564436376_2607903990.mp4                         
+                             '                                                  
+[01/03/26 11:07:14] INFO     Animation 2 : Partial      scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _385484164_1792866700.mp4'                         
+Animation 3: LaggedStart(Group):   0%|          | 0/24 [00:00<?, ?it/s]                                                                                           INFO     Animation 3 : Partial      scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _1907529379_805832019.mp4'                         
+Animation 4: Write(Text("You're FALLING right now!")):   0%|          | 0/18 [00:00<?, ?it/s]Animation 4: Write(Text("You're FALLING right now!")):  89%|████████▉ | 16/18 [00:00<00:00, 157.09it/s]                                                                                                       [01/03/26 11:07:15] INFO     Animation 4 : Partial      scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _1456640287_3136844982.mp4                         
+                             '                                                  
+[01/03/26 11:07:16] INFO     Animation 5 : Partial      scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _385484164_2163552152.mp4'                         
+Animation 6: FadeIn(Text('<3')), etc.:   0%|          | 0/24 [00:00<?, ?it/s]                                                                                                 INFO     Animation 6 : Partial      scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3231475372_2367279920.mp4                         
+                             '                                                  
+[01/03/26 11:07:18] INFO     Animation 7 : Partial      scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _385484164_1315622488.mp4'                         
+Animation 8: FadeOut(VGroup of 7 submobjects):   0%|          | 0/18 [00:00<?, ?it/s]Animation 8: FadeOut(VGroup of 7 submobjects):  50%|█████     | 9/18 [00:00<00:00, 87.96it/s]                                                                                                                 INFO     Animation 8 : Partial      scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3019951149_2092693471.mp4                         
+                             '                                                  
+Animation 9: Create(Line):   0%|          | 0/24 [00:00<?, ?it/s]                                                                                     INFO     Animation 9 : Partial      scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _1683580269_1676436898.mp4                         
+                             '                                                  
+Animation 10: Write(Text('Apple Falling')), etc.:   0%|          | 0/24 [00:00<?, ?it/s]Animation 10: Write(Text('Apple Falling')), etc.:  17%|█▋        | 4/24 [00:00<00:00, 38.06it/s]Animation 10: Write(Text('Apple Falling')), etc.:  33%|███▎      | 8/24 [00:00<00:00, 37.73it/s]Animation 10: Write(Text('Apple Falling')), etc.:  67%|██████▋   | 16/24 [00:00<00:00, 55.32it/s]Animation 10: Write(Text('Apple Falling')), etc.:  92%|█████████▏| 22/24 [00:00<00:00, 55.97it/s]                                                                                                 [01/03/26 11:07:20] INFO     Animation 10 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _302273813_2692643294.mp4'                         
+[01/03/26 11:07:21] INFO     Animation 11 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _2465143009_1935948700.mp4                         
+                             '                                                  
+Animation 12: FadeIn(Circle), etc.:   0%|          | 0/18 [00:00<?, ?it/s]                                                                                              INFO     Animation 12 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _457310401_3160205319.mp4'                         
+Animation 13: _MethodAnimation(Circle):   0%|          | 0/18 [00:00<?, ?it/s]                                                                                                  INFO     Animation 13 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3744343875_4049876374.mp4                         
+                             '                                                  
+Animation 14: FadeIn(Circle), etc.:   0%|          | 0/24 [00:00<?, ?it/s]                                                                          [01/03/26 11:07:22] INFO     Animation 14 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _2773805421_3610791109.mp4                         
+                             '                                                  
+[01/03/26 11:07:23] INFO     Animation 15 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _2465143009_3917872839.mp4                         
+                             '                                                  
+Animation 16: Write(Text('Same Force?')), etc.:   0%|          | 0/24 [00:00<?, ?it/s]Animation 16: Write(Text('Same Force?')), etc.:  75%|███████▌  | 18/24 [00:00<00:00, 173.59it/s]                                                                                                                    INFO     Animation 16 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3232661896_2097085377.mp4                         
+                             '                                                  
+[01/03/26 11:07:25] INFO     Animation 17 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _2465143009_317943.mp4'                            
+Animation 18: FadeOut(VGroup of 10 submobjects):   0%|          | 0/18 [00:00<?, ?it/s]Animation 18: FadeOut(VGroup of 10 submobjects):  50%|█████     | 9/18 [00:00<00:00, 83.93it/s]Animation 18: FadeOut(VGroup of 10 submobjects): 100%|██████████| 18/18 [00:00<00:00, 65.79it/s]                                                                                                                    INFO     Animation 18 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _719152964_3860920698.mp4'                         
+Animation 19: Write(Text('Universal Law of Gravitation')):   0%|          | 0/24 [00:00<?, ?it/s]Animation 19: Write(Text('Universal Law of Gravitation')):  67%|██████▋   | 16/24 [00:00<00:00, 153.83it/s]                                                                                                           [01/03/26 11:07:26] INFO     Animation 19 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _4125085504_2079927521.mp4                         
+                             '                                                  
+[01/03/26 11:07:27] INFO     Animation 20 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3739561693_4243975250.mp4                         
+                             '                                                  
+Animation 21: FadeIn(Term of 1 submobjects), etc.:   0%|          | 0/30 [00:00<?, ?it/s]Animation 21: FadeIn(Term of 1 submobjects), etc.:  87%|████████▋ | 26/30 [00:00<00:00, 259.41it/s]                                                                                                   [01/03/26 11:07:28] INFO     Animation 21 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _1128740931_1474215287.mp4                         
+                             '                                                  
+Animation 22: FadeIn(Term of 1 submobjects):   0%|          | 0/24 [00:00<?, ?it/s]                                                                                                       INFO     Animation 22 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _1738915887_3298806999.mp4                         
+                             '                                                  
+Animation 23: FadeIn(Text("Universe's\nRelationship\nCounselor")):   0%|          | 0/24 [00:00<?, ?it/s]Animation 23: FadeIn(Text("Universe's\nRelationship\nCounselor")):  50%|█████     | 12/24 [00:00<00:00, 110.05it/s]Animation 23: FadeIn(Text("Universe's\nRelationship\nCounselor")): 100%|██████████| 24/24 [00:00<00:00, 110.13it/s]                                                                                                                   [01/03/26 11:07:29] INFO     Animation 23 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _1944862209_905612499.mp4'                         
+[01/03/26 11:07:30] INFO     Animation 24 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3739561693_212101631.mp4'                         
+Animation 25: FadeIn(Term of 2 submobjects), etc.:   0%|          | 0/24 [00:00<?, ?it/s]Animation 25: FadeIn(Term of 2 submobjects), etc.: 100%|██████████| 24/24 [00:00<00:00, 235.32it/s]                                                                                                   [01/03/26 11:07:31] INFO     Animation 25 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _611128817_521285184.mp4'                          
+Animation 26: FadeIn(Text('Both\nMasses')):   0%|          | 0/24 [00:00<?, ?it/s]Animation 26: FadeIn(Text('Both\nMasses')):  83%|████████▎ | 20/24 [00:00<00:00, 199.79it/s]                                                                                                                INFO     Animation 26 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3848624310_1956347968.mp4                         
+                             '                                                  
+[01/03/26 11:07:33] INFO     Animation 27 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3739561693_1288550224.mp4                         
+                             '                                                  
+Animation 28: Create(Line), etc.:   0%|          | 0/24 [00:00<?, ?it/s]                                                                                            INFO     Animation 28 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _2700415048_2753071847.mp4                         
+                             '                                                  
+Animation 29: FadeIn(Text('Distance!')):   0%|          | 0/24 [00:00<?, ?it/s]Animation 29: FadeIn(Text('Distance!')):  92%|█████████▏| 22/24 [00:00<00:00, 211.72it/s]                                                                                                             INFO     Animation 29 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _921589561_726005171.mp4'                          
+[01/03/26 11:07:35] INFO     Animation 30 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3739561693_2897208475.mp4                         
+                             '                                                  
+Animation 31: FadeOut(VGroup of 5 submobjects):   0%|          | 0/18 [00:00<?, ?it/s]Animation 31: FadeOut(VGroup of 5 submobjects):  39%|███▉      | 7/18 [00:00<00:00, 60.42it/s]Animation 31: FadeOut(VGroup of 5 submobjects):  78%|███████▊  | 14/18 [00:00<00:00, 61.75it/s]                                                                                               [01/03/26 11:07:36] INFO     Animation 31 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3509411865_1663546751.mp4                         
+                             '                                                  
+Animation 32: FadeIn(Rectangle), etc.:   0%|          | 0/24 [00:00<?, ?it/s]Animation 32: FadeIn(Rectangle), etc.:  96%|█████████▌| 23/24 [00:00<00:00, 227.57it/s]                                                                                                           INFO     Animation 32 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _1206065696_2362806514.mp4                         
+                             '                                                  
+Animation 33: FadeIn(VGroup of 2 submobjects), etc.:   0%|          | 0/24 [00:00<?, ?it/s]Animation 33: FadeIn(VGroup of 2 submobjects), etc.: 100%|██████████| 24/24 [00:00<00:00, 236.66it/s]                                                                                                     [01/03/26 11:07:37] INFO     Animation 33 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _1029273351_1629768309.mp4                         
+                             '                                                  
+Animation 34: FadeIn(VGroup of 2 submobjects), etc.:   0%|          | 0/24 [00:00<?, ?it/s]Animation 34: FadeIn(VGroup of 2 submobjects), etc.: 100%|██████████| 24/24 [00:00<00:00, 236.48it/s]                                                                                                                         INFO     Animation 34 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3865711059_1769906708.mp4                         
+                             '                                                  
+[01/03/26 11:07:39] INFO     Animation 35 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _406550298_518635027.mp4'                          
+Animation 36: Create(Arrow), etc.:   0%|          | 0/24 [00:00<?, ?it/s]                                                                                             INFO     Animation 36 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _2049511042_2146761263.mp4                         
+                             '                                                  
+Animation 37: Write(Text('SAME Force!')):   0%|          | 0/30 [00:00<?, ?it/s]Animation 37: Write(Text('SAME Force!')):  73%|███████▎  | 22/30 [00:00<00:00, 211.32it/s]                                                                                                              INFO     Animation 37 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _1329286015_432907463.mp4'                         
+[01/03/26 11:07:41] INFO     Animation 38 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _406550298_3977482989.mp4'                         
+Animation 39: _MethodAnimation(VGroup of 2 submobjects), etc.:   0%|          | 0/24 [00:00<?, ?it/s]Animation 39: _MethodAnimation(VGroup of 2 submobjects), etc.:  58%|█████▊    | 14/24 [00:00<00:00, 133.24it/s]                                                                                                               [01/03/26 11:07:42] INFO     Animation 39 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _567078898_2348904736.mp4'                         
+[01/03/26 11:07:43] INFO     Animation 40 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _406550298_2560302631.mp4'                         
+Animation 41: Transform(Text('SAME Force!')):   0%|          | 0/48 [00:00<?, ?it/s]Animation 41: Transform(Text('SAME Force!')):  27%|██▋       | 13/48 [00:00<00:00, 124.88it/s]Animation 41: Transform(Text('SAME Force!')):  54%|█████▍    | 26/48 [00:00<00:00, 124.87it/s]Animation 41: Transform(Text('SAME Force!')):  81%|████████▏ | 39/48 [00:00<00:00, 126.60it/s]                                                                                              [01/03/26 11:07:44] INFO     Animation 41 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _619371325_251298291.mp4'                          
+[01/03/26 11:07:46] INFO     Animation 42 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _406550298_3100539052.mp4'                         
+Animation 43: FadeOut(VGroup of 9 submobjects):   0%|          | 0/24 [00:00<?, ?it/s]Animation 43: FadeOut(VGroup of 9 submobjects):  33%|███▎      | 8/24 [00:00<00:00, 79.27it/s]Animation 43: FadeOut(VGroup of 9 submobjects):  71%|███████   | 17/24 [00:00<00:00, 83.65it/s]                                                                                               [01/03/26 11:07:47] INFO     Animation 43 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _730505988_1984992599.mp4'                         
+Animation 44: Write(Text('Distance Squared Magic')):   0%|          | 0/24 [00:00<?, ?it/s]Animation 44: Write(Text('Distance Squared Magic')):  67%|██████▋   | 16/24 [00:00<00:00, 159.69it/s]                                                                                                                         INFO     Animation 44 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _4137548572_2402904983.mp4                         
+                             '                                                  
+Animation 45: FadeIn(Circle), etc.:   0%|          | 0/24 [00:00<?, ?it/s]Animation 45: FadeIn(Circle), etc.:  54%|█████▍    | 13/24 [00:00<00:00, 126.31it/s]                                                                                    [01/03/26 11:07:48] INFO     Animation 45 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _4199610036_2756852276.mp4                         
+                             '                                                  
+Animation 46: Create(Line), etc.:   0%|          | 0/24 [00:00<?, ?it/s]Animation 46: Create(Line), etc.:  58%|█████▊    | 14/24 [00:00<00:00, 135.89it/s]                                                                                                      INFO     Animation 46 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _1046815713_528143779.mp4'                         
+Animation 47: Create(Arrow), etc.:   0%|          | 0/36 [00:00<?, ?it/s]Animation 47: Create(Arrow), etc.:  75%|███████▌  | 27/36 [00:00<00:00, 213.41it/s]                                                                                   [01/03/26 11:07:49] INFO     Animation 47 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3521748225_2896462943.mp4                         
+                             '                                                  
+[01/03/26 11:07:51] INFO     Animation 48 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3380929394_3149778013.mp4                         
+                             '                                                  
+Animation 49: Transform(Circle), etc.:   0%|          | 0/24 [00:00<?, ?it/s]Animation 49: Transform(Circle), etc.:  75%|███████▌  | 18/24 [00:00<00:00, 171.10it/s]                                                                                                           INFO     Animation 49 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _2516780430_640836179.mp4'                         
+[01/03/26 11:07:53] INFO     Animation 50 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3380929394_425811316.mp4'                         
+Animation 51: Write(Text('Double Distance = Quarter Force!')):   0%|          | 0/24 [00:00<?, ?it/s]Animation 51: Write(Text('Double Distance = Quarter Force!')):  25%|██▌       | 6/24 [00:00<00:00, 57.66it/s]Animation 51: Write(Text('Double Distance = Quarter Force!')):  75%|███████▌  | 18/24 [00:00<00:00, 90.15it/s]                                                                                                              [01/03/26 11:07:54] INFO     Animation 51 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3010038813_1297308777.mp4                         
+                             '                                                  
+[01/03/26 11:07:55] INFO     Animation 52 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3380929394_2084464350.mp4                         
+                             '                                                  
+Animation 53: FadeOut(VGroup of 10 submobjects):   0%|          | 0/18 [00:00<?, ?it/s]Animation 53: FadeOut(VGroup of 10 submobjects):  44%|████▍     | 8/18 [00:00<00:00, 75.21it/s]Animation 53: FadeOut(VGroup of 10 submobjects):  89%|████████▉ | 16/18 [00:00<00:00, 75.51it/s]                                                                                                [01/03/26 11:07:56] INFO     Animation 53 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _2560997986_1521671799.mp4                         
+                             '                                                  
+Animation 54: FadeIn(Circle), etc.:   0%|          | 0/24 [00:00<?, ?it/s]Animation 54: FadeIn(Circle), etc.:  92%|█████████▏| 22/24 [00:00<00:00, 217.72it/s]                                                                                                        INFO     Animation 54 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _249941703_275106558.mp4'                          
+Animation 55: FadeIn(Circle), etc.:   0%|          | 0/24 [00:00<?, ?it/s]Animation 55: FadeIn(Circle), etc.:  79%|███████▉  | 19/24 [00:00<00:00, 189.68it/s]                                                                                    [01/03/26 11:07:57] INFO     Animation 55 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _2488281034_1004460328.mp4                         
+                             '                                                  
+[01/03/26 11:07:58] INFO     Animation 56 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3723732786_695459580.mp4'                         
+Animation 57: LaggedStart(Group):   0%|          | 0/24 [00:00<?, ?it/s]                                                                                            INFO     Animation 57 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _4202933317_602940606.mp4'                         
+Animation 58: LaggedStart(Group):   0%|          | 0/30 [00:00<?, ?it/s]Animation 58: LaggedStart(Group):  40%|████      | 12/30 [00:00<00:00, 112.04it/s]Animation 58: LaggedStart(Group):  83%|████████▎ | 25/30 [00:00<00:00, 116.50it/s]                                                                                  [01/03/26 11:07:59] INFO     Animation 58 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _1447684240_3222011856.mp4                         
+                             '                                                  
+[01/03/26 11:08:01] INFO     Animation 59 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3723732786_45801341.mp4'                          
+Animation 60: Write(Text("You're Connected to EVERY Star!")):   0%|          | 0/30 [00:00<?, ?it/s]Animation 60: Write(Text("You're Connected to EVERY Star!")):  53%|█████▎    | 16/30 [00:00<00:00, 155.13it/s]                                                                                                                                  INFO     Animation 60 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _1861317996_1264858411.mp4                         
+                             '                                                  
+Animation 61: Write(Text('Gravitationally Linked\nto the ENTIRE Universe')):   0%|          | 0/24 [00:00<?, ?it/s]Animation 61: Write(Text('Gravitationally Linked\nto the ENTIRE Universe')):  50%|█████     | 12/24 [00:00<00:00, 114.44it/s]Animation 61: Write(Text('Gravitationally Linked\nto the ENTIRE Universe')): 100%|██████████| 24/24 [00:00<00:00, 104.47it/s]                                                                                                                             [01/03/26 11:08:02] INFO     Animation 61 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _220424670_4250932098.mp4'                         
+[01/03/26 11:08:04] INFO     Animation 62 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3723732786_4233445944.mp4                         
+                             '                                                  
+Animation 63: FadeOut(VGroup of 9 submobjects):   0%|          | 0/18 [00:00<?, ?it/s]Animation 63: FadeOut(VGroup of 9 submobjects):  22%|██▏       | 4/18 [00:00<00:00, 39.98it/s]Animation 63: FadeOut(VGroup of 9 submobjects):  50%|█████     | 9/18 [00:00<00:00, 40.19it/s]Animation 63: FadeOut(VGroup of 9 submobjects):  78%|███████▊  | 14/18 [00:00<00:00, 40.08it/s]                                                                                               [01/03/26 11:08:05] INFO     Animation 63 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _2389690967_955574438.mp4'                         
+Animation 64: Write(Text('3 Golden Rules')):   0%|          | 0/24 [00:00<?, ?it/s]Animation 64: Write(Text('3 Golden Rules')):  79%|███████▉  | 19/24 [00:00<00:00, 179.68it/s]                                                                                                                 INFO     Animation 64 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _2636463671_3400107266.mp4                         
+                             '                                                  
+[01/03/26 11:08:06] INFO     Animation 65 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3938933112_384866071.mp4'                         
+Animation 66: FadeIn(VGroup of 2 submobjects):   0%|          | 0/30 [00:00<?, ?it/s]Animation 66: FadeIn(VGroup of 2 submobjects):  40%|████      | 12/30 [00:00<00:00, 115.00it/s]Animation 66: FadeIn(VGroup of 2 submobjects):  80%|████████  | 24/30 [00:00<00:00, 107.82it/s]                                                                                               [01/03/26 11:08:07] INFO     Animation 66 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _1593137582_1816426432.mp4                         
+                             '                                                  
+[01/03/26 11:08:08] INFO     Animation 67 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3938933112_3187009745.mp4                         
+                             '                                                  
+Animation 68: FadeIn(VGroup of 2 submobjects):   0%|          | 0/30 [00:00<?, ?it/s]Animation 68: FadeIn(VGroup of 2 submobjects):  37%|███▋      | 11/30 [00:00<00:00, 109.46it/s]Animation 68: FadeIn(VGroup of 2 submobjects):  77%|███████▋  | 23/30 [00:00<00:00, 111.77it/s]                                                                                               [01/03/26 11:08:09] INFO     Animation 68 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _4053722509_933963323.mp4'                         
+[01/03/26 11:08:10] INFO     Animation 69 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3938933112_381559702.mp4'                         
+Animation 70: FadeIn(VGroup of 2 submobjects):   0%|          | 0/30 [00:00<?, ?it/s]Animation 70: FadeIn(VGroup of 2 submobjects):  37%|███▋      | 11/30 [00:00<00:00, 109.98it/s]Animation 70: FadeIn(VGroup of 2 submobjects):  73%|███████▎  | 22/30 [00:00<00:00, 109.02it/s]                                                                                               [01/03/26 11:08:11] INFO     Animation 70 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _2371678497_3096793601.mp4                         
+                             '                                                  
+[01/03/26 11:08:12] INFO     Animation 71 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3938933112_3627912558.mp4                         
+                             '                                                  
+Animation 72: _MethodAnimation(Text('SQUARED')):   0%|          | 0/36 [00:00<?, ?it/s]Animation 72: _MethodAnimation(Text('SQUARED')):  64%|██████▍   | 23/36 [00:00<00:00, 225.81it/s]                                                                                                 [01/03/26 11:08:13] INFO     Animation 72 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _139335237_1258982292.mp4'                         
+Animation 73: FadeOut(VGroup of 5 submobjects):   0%|          | 0/18 [00:00<?, ?it/s]Animation 73: FadeOut(VGroup of 5 submobjects):  28%|██▊       | 5/18 [00:00<00:00, 48.71it/s]Animation 73: FadeOut(VGroup of 5 submobjects):  56%|█████▌    | 10/18 [00:00<00:00, 47.21it/s]Animation 73: FadeOut(VGroup of 5 submobjects):  89%|████████▉ | 16/18 [00:00<00:00, 48.53it/s]                                                                                               [01/03/26 11:08:14] INFO     Animation 73 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _1422225125_1950188071.mp4                         
+                             '                                                  
+Animation 74: Write(Text('JEE Question')), etc.:   0%|          | 0/24 [00:00<?, ?it/s]Animation 74: Write(Text('JEE Question')), etc.:  88%|████████▊ | 21/24 [00:00<00:00, 205.42it/s]                                                                                                                     INFO     Animation 74 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3698198082_673265130.mp4'                         
+Animation 75: Write(Text("If Earth's radius doubles\nbut mass stays same...\nYour weight = ?")):   0%|          | 0/30 [00:00<?, ?it/s]Animation 75: Write(Text("If Earth's radius doubles\nbut mass stays same...\nYour weight = ?")):  43%|████▎     | 13/30 [00:00<00:00, 116.82it/s]Animation 75: Write(Text("If Earth's radius doubles\nbut mass stays same...\nYour weight = ?")):  83%|████████▎ | 25/30 [00:00<00:00, 100.26it/s]                                                                                                                                                 [01/03/26 11:08:15] INFO     Animation 75 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _4132333403_2946941230.mp4                         
+                             '                                                  
+[01/03/26 11:08:17] INFO     Animation 76 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _1009097104_2848911688.mp4                         
+                             '                                                  
+Animation 77: Write(Text("g' = GM / (2R)²")):   0%|          | 0/30 [00:00<?, ?it/s]Animation 77: Write(Text("g' = GM / (2R)²")):  73%|███████▎  | 22/30 [00:00<00:00, 217.96it/s]                                                                                                                  INFO     Animation 77 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _1766807108_1444744381.mp4                         
+                             '                                                  
+[01/03/26 11:08:19] INFO     Animation 78 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _1009097104_3857243935.mp4                         
+                             '                                                  
+Animation 79: Write(Text("g' = GM / 4R²")):   0%|          | 0/30 [00:00<?, ?it/s]Animation 79: Write(Text("g' = GM / 4R²")):  73%|███████▎  | 22/30 [00:00<00:00, 213.99it/s]                                                                                            [01/03/26 11:08:20] INFO     Animation 79 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _41032299_497279767.mp4'                           
+[01/03/26 11:08:22] INFO     Animation 80 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _1009097104_2288948966.mp4                         
+                             '                                                  
+Animation 81: Write(Text("g' = g / 4")):   0%|          | 0/30 [00:00<?, ?it/s]Animation 81: Write(Text("g' = g / 4")):  77%|███████▋  | 23/30 [00:00<00:00, 225.34it/s]                                                                                                             INFO     Animation 81 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _1176488902_4179918409.mp4                         
+                             '                                                  
+[01/03/26 11:08:24] INFO     Animation 82 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _1009097104_1212301702.mp4                         
+                             '                                                  
+Animation 83: FadeIn(VGroup of 2 submobjects):   0%|          | 0/30 [00:00<?, ?it/s]Animation 83: FadeIn(VGroup of 2 submobjects):  53%|█████▎    | 16/30 [00:00<00:00, 149.30it/s]                                                                                               [01/03/26 11:08:25] INFO     Animation 83 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _301050430_1783082780.mp4'                         
+[01/03/26 11:08:26] INFO     Animation 84 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _1009097104_811319303.mp4'                         
+Animation 85: FadeOut(VGroup of 5 submobjects):   0%|          | 0/18 [00:00<?, ?it/s]Animation 85: FadeOut(VGroup of 5 submobjects):  33%|███▎      | 6/18 [00:00<00:00, 53.11it/s]Animation 85: FadeOut(VGroup of 5 submobjects):  67%|██████▋   | 12/18 [00:00<00:00, 51.65it/s]Animation 85: FadeOut(VGroup of 5 submobjects): 100%|██████████| 18/18 [00:00<00:00, 51.99it/s]                                                                                               [01/03/26 11:08:27] INFO     Animation 85 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3227314708_2657273036.mp4                         
+                             '                                                  
+Animation 86: FadeOut(Group):   0%|          | 0/18 [00:00<?, ?it/s]                                                                    [01/03/26 11:08:28] INFO     Animation 86 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3149633582_2358810818.mp4                         
+                             '                                                  
+Animation 87: FadeIn(SVGMobject):   0%|          | 0/24 [00:00<?, ?it/s]                                                                                            INFO     Animation 87 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3872901413_223132457.mp4'                         
+Animation 88: FadeIn(VGroup of 3 submobjects):   0%|          | 0/24 [00:00<?, ?it/s]Animation 88: FadeIn(VGroup of 3 submobjects):  67%|██████▋   | 16/24 [00:00<00:00, 159.05it/s]                                                                                                                   INFO     Animation 88 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _2513952003_2741904935.mp4                         
+                             '                                                  
+Animation 89: FadeIn(Text('Follow for more!')):   0%|          | 0/18 [00:00<?, ?it/s]                                                                                      [01/03/26 11:08:29] INFO     Animation 89 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _201436298_1305520844.mp4'                         
+Animation 90: FadeIn(Text('jeetlo.ai')):   0%|          | 0/18 [00:00<?, ?it/s]                                                                                                   INFO     Animation 90 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3902844558_352615676.mp4'                         
+Animation 91: FadeIn(Text('Register for Early Access!')), etc.:   0%|          | 0/18 [00:00<?, ?it/s]Animation 91: FadeIn(Text('Register for Early Access!')), etc.:  50%|█████     | 9/18 [00:00<00:00, 84.43it/s]                                                                                                              [01/03/26 11:08:30] INFO     Animation 91 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _2827478564_3651626501.mp4                         
+                             '                                                  
+Animation 92: _MethodAnimation(SVGMobject):   0%|          | 0/12 [00:00<?, ?it/s]Animation 92: _MethodAnimation(SVGMobject):  58%|█████▊    | 7/12 [00:00<00:00, 69.02it/s]                                                                                                              INFO     Animation 92 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _4275639931_995682302.mp4'                         
+Animation 93: _MethodAnimation(SVGMobject):   0%|          | 0/12 [00:00<?, ?it/s]Animation 93: _MethodAnimation(SVGMobject):  58%|█████▊    | 7/12 [00:00<00:00, 68.29it/s]                                                                                                              INFO     Animation 93 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _3625057056_995682302.mp4'                         
+[01/03/26 11:08:33] INFO     Animation 94 : Partial     scene_file_writer.py:590
+                             movie file written in                              
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/partial_movie_fi                         
+                             les/PhysicsReel/2053196326                         
+                             _272631717_1392654324.mp4'                         
+                    INFO     Combining to Movie file.   scene_file_writer.py:740
+[01/03/26 11:08:34] INFO                                scene_file_writer.py:887
+                             File ready at                                      
+                             '/private/tmp/jeetlo/phy-0                         
+                             1-gravity/media/videos/ree                         
+                             l/1920p60/PhysicsReel.mp4'                         
+                                                                                
+                    INFO     Rendered PhysicsReel                   scene.py:279
+                             Played 95 animations                               
+[0;32m✓ Video rendered: 103.433333s[0m
+0a2c168bd6519c7cd8eb261d1e105ec05ae61be90de1487d3ddebd75cad34001
+[0;36m┌─────────────────────────────────────────────────────────────────────────────┐[0m
+[0;36m│ STEP 7: VALIDATE DURATION SYNC[0m
+[0;36m└─────────────────────────────────────────────────────────────────────────────┘[0m
+Video duration: 103.433333s
+Audio duration: 98.400000s
+[1;33m⚠ Video is 5.033333s longer than audio (max 2s overage recommended)[0m
+30c52eed469b568b31fbbc8b7f45e5cdcbb5c405f56572e5594576b238688d64
+[0;36m┌─────────────────────────────────────────────────────────────────────────────┐[0m
+[0;36m│ STEP 8: FRAME QA (Extract & Review)[0m
+[0;36m└─────────────────────────────────────────────────────────────────────────────┘[0m
+Extracting frames at 0.5fps...
+Extracted: 52 frames
+
+Running code-based QA checks...
+[1;33m⚠ Possible edge positioning detected[0m
+[0;32m✓ Watermark: Present in code[0m
+[0;32m✓ CTA slide: Present in code[0m
+[0;32m✓ Background color defined: background_color = '#0A1A3F'[0m
+[0;32m✓ Cleanup: Segments appear to clean up objects[0m
+./scripts/jeetlo.sh: line 2315: [: =~: binary operator expected
+[0;32m✓ Frame QA: PASS (1 minor issues)[0m
+
+Frames saved to: /tmp/jeetlo/phy-01-gravity/frames/
+Please visually inspect before proceeding.
+54d099f038ad3071efc258150d5ae412b99d3221e5d7b55689d32782717aaa67
+[0;36m┌─────────────────────────────────────────────────────────────────────────────┐[0m
+[0;36m│ STEP 9: COMBINE AUDIO/VIDEO[0m
+[0;36m└─────────────────────────────────────────────────────────────────────────────┘[0m
+Combining with ffmpeg...
+[0;32m✓ Final video: 98.378000s, 4.0M[0m
+d5a94bc580d4e1687b26b46ede031e1c3aa39f74efc5377485d9b116f00f65b3
+[0;36m┌─────────────────────────────────────────────────────────────────────────────┐[0m
+[0;36m│ STEP 10: GENERATE THUMBNAIL[0m
+[0;36m└─────────────────────────────────────────────────────────────────────────────┘[0m
+[0;32m✓ Thumbnail generated: 1080x1920[0m
+cdf10bcdee3abd9d40073aaa701f3f32b2d62d1f230b1c1ee50b801a3624b707
+
+[0;34m═══════════════════════════════════════════════════════════════════════════════[0m
+[0;34m  🚨 RUNNING MANDATORY POLICING AGENTS 🚨[0m
+[0;34m═══════════════════════════════════════════════════════════════════════════════[0m
+
+These are INDEPENDENT verification agents.
+They do NOT trust the production pipeline.
+ALL must PASS for content to proceed.
+
+[0;36m┌─────────────────────────────────────────────────────────────────────────────┐[0m
+[0;36m│ STEP 🚨 POLICE-2: MANIM-EDU UTILIZATION CHECK (STATELESS)[0m
+[0;36m└─────────────────────────────────────────────────────────────────────────────┘[0m
+Creating fresh POLICE-2 agent instance...
+Traceback (most recent call last):
+  File "<string>", line 4, in <module>
+    from manim_edu.qa import UtilizationAgent
+  File "/Users/pran/Projects/libraries/manim-edu/manim_edu/__init__.py", line 41, in <module>
+    from manim_edu.chemistry.molecules import MoleculeBuilder
+  File "/Users/pran/Projects/libraries/manim-edu/manim_edu/chemistry/__init__.py", line 11, in <module>
+    from .molecules import MoleculeBuilder
+  File "/Users/pran/Projects/libraries/manim-edu/manim_edu/chemistry/molecules.py", line 17, in <module>
+    from manim import *
+ModuleNotFoundError: No module named 'manim'
+[0;32m✓ 🚨 POLICE-2 PASSED: manim-edu utilization >= 95%[0m
+
+[0;36m┌─────────────────────────────────────────────────────────────────────────────┐[0m
+[0;36m│ STEP 🚨 POLICE-3: CONTENT VERIFICATION (STATELESS)[0m
+[0;36m└─────────────────────────────────────────────────────────────────────────────┘[0m
+Creating fresh POLICE-3 agent instance...
+Traceback (most recent call last):
+  File "<string>", line 4, in <module>
+    from manim_edu.qa import ContentAgent
+  File "/Users/pran/Projects/libraries/manim-edu/manim_edu/__init__.py", line 41, in <module>
+    from manim_edu.chemistry.molecules import MoleculeBuilder
+  File "/Users/pran/Projects/libraries/manim-edu/manim_edu/chemistry/__init__.py", line 11, in <module>
+    from .molecules import MoleculeBuilder
+  File "/Users/pran/Projects/libraries/manim-edu/manim_edu/chemistry/molecules.py", line 17, in <module>
+    from manim import *
+ModuleNotFoundError: No module named 'manim'
+[0;32m✓ 🚨 POLICE-3 PASSED: Content verified[0m
+
+[0;36m┌─────────────────────────────────────────────────────────────────────────────┐[0m
+[0;36m│ STEP 🚨 POLICE-4: CALCULATION VERIFICATION (STATELESS)[0m
+[0;36m└─────────────────────────────────────────────────────────────────────────────┘[0m
+Creating fresh POLICE-4 agent instance...
+Traceback (most recent call last):
+  File "<string>", line 4, in <module>
+    from manim_edu.qa import CalculationAgent
+  File "/Users/pran/Projects/libraries/manim-edu/manim_edu/__init__.py", line 41, in <module>
+    from manim_edu.chemistry.molecules import MoleculeBuilder
+  File "/Users/pran/Projects/libraries/manim-edu/manim_edu/chemistry/__init__.py", line 11, in <module>
+    from .molecules import MoleculeBuilder
+  File "/Users/pran/Projects/libraries/manim-edu/manim_edu/chemistry/molecules.py", line 17, in <module>
+    from manim import *
+ModuleNotFoundError: No module named 'manim'
+[0;32m✓ 🚨 POLICE-4 PASSED: All calculations verified[0m
+
+[0;36m┌─────────────────────────────────────────────────────────────────────────────┐[0m
+[0;36m│ STEP 🚨 POLICE-1: FRAME OVERLAP VALIDATOR (STATELESS)[0m
+[0;36m└─────────────────────────────────────────────────────────────────────────────┘[0m
+Creating fresh POLICE-1 agent instance...
+Traceback (most recent call last):
+  File "<string>", line 4, in <module>
+    from manim_edu.qa import FrameOverlapAgent
+  File "/Users/pran/Projects/libraries/manim-edu/manim_edu/__init__.py", line 41, in <module>
+    from manim_edu.chemistry.molecules import MoleculeBuilder
+  File "/Users/pran/Projects/libraries/manim-edu/manim_edu/chemistry/__init__.py", line 11, in <module>
+    from .molecules import MoleculeBuilder
+  File "/Users/pran/Projects/libraries/manim-edu/manim_edu/chemistry/molecules.py", line 17, in <module>
+    from manim import *
+ModuleNotFoundError: No module named 'manim'
+[0;32m✓ 🚨 POLICE-1 PASSED: No overlapping text detected[0m
+
+[0;32m✓ ═══════════════════════════════════════════════════════════[0m
+[0;32m✓ 🚨 ALL POLICING AGENTS PASSED - CONTENT APPROVED 🚨[0m
+[0;32m✓ ═══════════════════════════════════════════════════════════[0m
+[0;36m┌─────────────────────────────────────────────────────────────────────────────┐[0m
+[0;36m│ STEP 11: FINAL QA & CHAIN VALIDATION[0m
+[0;36m└─────────────────────────────────────────────────────────────────────────────┘[0m
+Validating proof chain...
+Chain valid: 11 steps
+
+Checking all outputs...
+[0;32m✓   creative_brief.json[0m
+[0;32m✓   audio_script.json[0m
+[0;32m✓   audio/combined_audio.mp3[0m
+[0;32m✓   audio/timings.json[0m
+[0;32m✓   reel.py[0m
+[0;32m✓   video.mp4[0m
+[0;32m✓   final.mp4[0m
+5b0f7685054851363c4a63fa7c138458be677d4f7af8ef48cbf0a41a8b1bdf22
+[0;32m✓ Final QA passed - ready for posting![0m
+[0;36m┌─────────────────────────────────────────────────────────────────────────────┐[0m
+[0;36m│ STEP 12: PUSH TO GITHUB[0m
+[0;36m└─────────────────────────────────────────────────────────────────────────────┘[0m
+Updating jeetlo-factory repo...

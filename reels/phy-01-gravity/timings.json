@@ -1,58 +1,65 @@
 [
   {
     "id": "01_hook",
-    "text": "अभी इस moment... आप FALL हो रहे हो! हाँ, बैठे बैठे भी... आप Earth की तरफ गिर रहे हो!",
-    "duration": 6.144000,
+    "text": "आप अभी खड़े हैं... लेकिन actually आप FALL कर रहे हैं! Earth एक clingy ex की तरह आपको CONSTANTLY खींच रही है!",
+    "duration": 7.560000,
     "startTime": 0,
-    "endTime": 6.144000
+    "endTime": 7.560000
   },
   {
     "id": "02_setup",
-    "text": "Newton ने apple गिरते देखा... फिर Moon को देखा... और realize किया - SAME force! Apple गिरता है... Moon भी गिर रहा है! लेकिन कैसे?",
-    "duration": 10.104000,
-    "startTime": 6.144000,
-    "endTime": 16.248000
+    "text": "Newton ने apple गिरते देखा... और Moon को orbit करते देखा. दोनों में SAME force? Really? आइए समझते हैं...",
+    "duration": 7.896000,
+    "startTime": 7.560000,
+    "endTime": 15.456000
   },
   {
     "id": "03_content_part1",
-    "text": "सोचो Earth एक CLINGY EX है... जो आपको जाने नहीं देती! Formula है F equals G m one m two over r squared. G है universe का relationship constant. m one m two है कितना mass... मतलब कितना emotional baggage! और r squared? Distance बढ़ी... grip WEAK हुई!",
-    "duration": 18.960000,
-    "startTime": 16.248000,
-    "endTime": 35.208000
+    "text": "Universal Law of Gravitation कहता है... F equals G m one m two divided by r squared. G है universe का relationship counselor... m one और m two दोनों masses हैं... और r है distance!",
+    "duration": 12.912000,
+    "startTime": 15.456000,
+    "endTime": 28.368000
   },
   {
     "id": "03_content_part2",
-    "text": "देखो gravity field... Earth के around spider web जैसा! पास हो? Lines DENSE... pull STRONG! दूर गए? Lines sparse... pull weak! यही inverse square law है भाई!",
-    "duration": 12.048000,
-    "startTime": 35.208000,
-    "endTime": 47.256000
+    "text": "अब interesting part! जब आप Earth को pull करते हैं... Earth भी आपको SAME force से pull करती है! लेकिन... ice rink पर सोचिए... जब छोटा person बड़े person को push करता है... छोटा person ज़्यादा move होता है! Same force... different acceleration!",
+    "duration": 15.960000,
+    "startTime": 28.368000,
+    "endTime": 44.328000
+  },
+  {
+    "id": "03_content_part3",
+    "text": "और distance SQUARED का magic देखिए... distance double करो... force एक-FOURTH हो जाती है! इसीलिए Sun इतना massive होने के बाद भी... आप उसकी gravity ज़्यादा feel नहीं करते!",
+    "duration": 11.448000,
+    "startTime": 44.328000,
+    "endTime": 55.776000
   },
   {
     "id": "04_reveal",
-    "text": "अब MIND BLOW! Moon Earth की तरफ FALL कर रहा है... हर SECOND! लेकिन sideways इतना fast move करता है... कि Earth को MISS करता रहता है! Orbit मतलब... perpetual falling! आप space में float नहीं करते... आप बस गिरते गिरते MISS करते रहते हो!",
-    "duration": 15.696000,
-    "startTime": 47.256000,
-    "endTime": 62.952000
+    "text": "Mind-blow moment... आप अभी EVERY star से connected हैं! एक हज़ार light years दूर का star भी आपको pull कर रहा है! आप gravitationally ENTIRE universe से जुड़े हैं!",
+    "duration": 10.248000,
+    "startTime": 55.776000,
+    "endTime": 66.024000
   },
   {
     "id": "05_key_point",
-    "text": "याद रखो - distance DOUBLE हुई? Force ONE FOURTH हो गई! क्यों? Because r SQUARED है denominator में! Square that distance... SQUARE IT!",
-    "duration": 9.744000,
-    "startTime": 62.952000,
-    "endTime": 72.696000
+    "text": "तीन golden rules याद रखिए! One... हर mass हर mass को attract करती है. Two... force BOTH masses पर depend करती है. Three... distance SQUARED force को kill करती है!",
+    "duration": 11.016000,
+    "startTime": 66.024000,
+    "endTime": 77.040000
   },
   {
     "id": "06_exam_tip",
-    "text": "J. E. E. favourite question - g equals g naught by four कहाँ होगा? Answer - r equals two R! मतलब surface से ONE Earth radius ऊपर! Common mistake - four R from center लिख देते हैं... WRONG!",
-    "duration": 15.144000,
-    "startTime": 72.696000,
-    "endTime": 87.840000
+    "text": "J. E. E. में पूछते हैं... अगर Earth की radius double हो जाए लेकिन mass same रहे... आपका weight? g dash equals G M divided by two R whole squared... equals g by four! आप one-fourth weight हो जाएंगे!",
+    "duration": 14.256000,
+    "startTime": 77.040000,
+    "endTime": 91.296000
   },
   {
     "id": "07_cta",
-    "text": "Gravity कभी छोड़ती नहीं... और हम भी नहीं छोड़ेंगे आपको! JeetLo! Follow कीजिए!",
-    "duration": 5.304000,
-    "startTime": 87.840000,
-    "endTime": 93.144000
+    "text": "Gravity समझ आ गई? Comment में 'G' लिखिए! और ऐसे ही physics mind-blows के लिए... JeetLo! Follow कीजिए!",
+    "duration": 7.104000,
+    "startTime": 91.296000,
+    "endTime": 98.400000
   }
 ]

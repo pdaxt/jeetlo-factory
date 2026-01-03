@@ -1,39 +1,25 @@
 {
-  "core_analogy": "Gravity = Earth is a CLINGY EX who refuses to let you go. The closer you are, the harder they hold on. The more massive they are (emotionally heavy), the stronger their grip. You can run to the moon but they'll STILL pull at you, just weaker.",
-  "subconscious_hook": "Identity challenge + curiosity gap. 'You're falling RIGHT NOW' attacks their sense of reality. Creates instant cognitive dissonance - 'Wait, I'm sitting still, how am I falling?' They MUST keep watching to resolve the mental itch.",
+  "core_analogy": "Gravity = Universe's clingy ex who NEVER lets go. The bigger they are, the harder they pull. Earth is obsessed with you, but you're also pulling Earth back (she just doesn't notice because you're tiny compared to her ego)",
+  "subconscious_hook": "Identity challenge + Curiosity gap: 'You think you're standing still? WRONG. You're in a constant tug-of-war with a 6 trillion trillion kg stalker.' This challenges their perception of reality and creates urgency to understand.",
   "visual_scenes": {
-    "01_hook": "Person sitting on couch, suddenly the 'floor' becomes transparent revealing Earth below. Zoom out to show them actually falling TOWARD Earth's center. Big red arrow pointing down. Text: 'You're FALLING right now'",
-    "02_setup": "Split screen: Left shows apple falling from tree (Newton story), Right shows Moon orbiting Earth. Question mark between them. 'Same force. SAME. FORCE.' The apple and moon get connected by a glowing thread.",
-    "03_content_part1": "Earth visualized as a 'clingy ex' character with grabby hands. Show formula F = Gm\u2081m\u2082/r\u00b2 appearing piece by piece. Each variable gets a metaphor label: m\u2081m\u2082 = 'how much you both care', r\u00b2 = 'distance makes heart grow... weaker', G = 'the universe's relationship constant'",
-    "03_content_part2": "FieldVisualizer showing gravity field lines around Earth like a spider web. Person at different distances - close (strong pull, dense lines), far (weak pull, sparse lines). Numbers showing actual force values.",
-    "04_reveal": "Zoom out from Earth to show Moon also 'falling' toward Earth but missing because it's moving sideways. Draw the curved path. 'Orbiting IS falling. You just keep MISSING the ground!' Mind-explosion animation.",
-    "05_key_point": "MechanicsSimulator showing inverse square relationship. Distance doubles \u2192 force becomes 1/4. Visual: Four identical weights at 1x distance become one weight at 2x distance. 'Square that r. SQUARE IT.'",
-    "06_exam_tip": "JEE question flash: 'At what height is g = g\u2080/4?' Answer appears: 'r = 2R (one Earth radius above surface)'. Common mistake highlighted in red: 'NOT 4R from center!'",
-    "07_cta": "Earth character waving goodbye but still pulling. 'Gravity never lets go. Neither do we. Follow for more physics that hits different.'"
+    "01_hook": "Person standing confidently, then camera zooms out to show arrows pulling them toward Earth's core. Text: 'You're FALLING right now'. Earth shown as a giant magnet with heart eyes staring at the person.",
+    "02_setup": "Split screen: Left shows apple falling (Newton moment), Right shows Moon orbiting. Question mark connecting them. 'Same force? Really?' - builds the mystery gap.",
+    "03_content_part1": "FieldVisualizer showing gravitational field lines emanating from Earth like a spider web. Two spheres (Earth and Moon) with arrows showing mutual attraction. Formula F = Gm\u2081m\u2082/r\u00b2 appears piece by piece with each variable lighting up as explained.",
+    "03_content_part2": "MechanicsSimulator: Two people on ice rink pushing each other - bigger person barely moves, smaller person flies back. 'Same force, different acceleration!' This explains why Earth doesn't visibly move toward us.",
+    "03_content_part3": "Distance squared visualization: Show two masses at distance r, then double the distance to 2r. Force arrows shrink to 1/4 size. 'Double distance = Quarter force. That's why you don't feel the Sun pulling you as much as Earth.'",
+    "04_reveal": "Zoom out from Earth to show Sun, then galaxy, then universe - all connected by invisible gravity strings. 'You're connected to EVERY mass in the universe right now. Every star is pulling you.' Mind-explosion animation.",
+    "05_key_point": "Three golden rules appear as floating cards: '1) Every mass attracts every mass 2) Force depends on BOTH masses 3) Distance SQUARED kills the force'. The 'squared' pulses with emphasis.",
+    "06_exam_tip": "JEE question flash: 'If Earth's radius doubled but mass same, your weight becomes?' Calculator shows: g' = GM/(2R)\u00b2 = g/4. 'You'd weigh 1/4th! This is WHY they ask radius questions.'",
+    "07_cta": "Person floating slightly off ground with Earth reaching up lovingly. 'Want more physics that'll make your brain do THIS? Follow for daily mind-blows. Comment 'G' if gravity just clicked!'"
   },
-  "virality_factor": "The 'orbiting is just falling and missing' revelation. People will screenshot this to show friends. Also the 'clingy ex' analogy is memorable and shareable - students will use this in their friend groups.",
-  "mind_blow_moment": "The Moon is FALLING toward Earth every single second - it just moves sideways fast enough to keep missing. Orbit = perpetual fall. This reframes everything they thought about 'floating' in space.",
+  "virality_factor": "The 'clingy ex' metaphor is screenshot-worthy and shareable in group chats. The revelation that you're pulling Earth back (and connected to every star) creates 'I need to tell someone this' urgency. The ice rink analogy is visually memorable.",
+  "mind_blow_moment": "You're not just being pulled by Earth - you're pulling Earth toward you with the EXACT same force. And right now, a star 1000 light years away is pulling you too. You're gravitationally connected to the entire universe.",
   "duration_target": "80s",
-  "simplification_strategy": "Zero equations until minute 0:30. Start with feeling (you're falling), then everyday object (apple), then scale up (moon). Every Greek letter gets an English translation ON SCREEN. 'r squared' not 'r\u00b2'. Force shown as literal hands pulling, not abstract arrows.",
-  "logic_flow": "Hook (you're falling) \u2192 Setup (apple and moon = same force?!) \u2192 Content (the clingy ex formula explained) \u2192 Reveal (orbiting IS falling!) \u2192 Key Point (distance squared = weak fast) \u2192 Exam Tip (JEE height trick) \u2192 CTA (gravity never lets go)",
+  "simplification_strategy": "G (gravitational constant) = 'Universe's relationship counselor that decides how clingy gravity gets'. m\u2081m\u2082 = 'Both masses matter - it takes two to tango'. r\u00b2 = 'Distance is a relationship killer - double it and the spark drops to 1/4'. Every formula piece gets a human relationship parallel.",
+  "logic_flow": "Hook (you're falling!) \u2192 Setup (apple and Moon same force?) \u2192 Content (formula breakdown with ice rink analogy) \u2192 Reveal (you're connected to universe) \u2192 Key Point (3 golden rules) \u2192 Exam Tip (radius-squared trick) \u2192 CTA (follow for more)",
   "manim_edu_components": [
     "FieldVisualizer",
     "MechanicsSimulator",
     "WaveSimulator"
-  ],
-  "segment_durations": {
-    "01_hook": "5s",
-    "02_setup": "8s",
-    "03_content_part1": "15s",
-    "03_content_part2": "12s",
-    "04_reveal": "12s",
-    "05_key_point": "10s",
-    "06_exam_tip": "10s",
-    "07_cta": "8s"
-  },
-  "audio_notes": {
-    "emotion_arc": "Shock \u2192 Curiosity \u2192 Learning \u2192 WHOA \u2192 Serious \u2192 Practical \u2192 Warm",
-    "pace": "Fast hook, slow down for formula, speed up for reveal, measured for exam tip",
-    "hinglish_moments": "\u092d\u093e\u0908 \u0938\u094b\u091a\u094b - you're falling RIGHT NOW, \u092c\u0938 Earth miss \u0939\u094b \u0930\u0939\u093e \u0939\u0948"
-  }
+  ]
 }
