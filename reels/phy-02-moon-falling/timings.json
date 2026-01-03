@@ -1,0 +1,58 @@
+[
+  {
+    "id": "01_hook",
+    "text": "आपको लगता है Moon आसमान में STABLE खड़ा है? WRONG! वो हर SECOND गिर रहा है... Earth की तरफ़! और ये समझना J. E. E. के लिए CRITICAL है!",
+    "duration": 9.600000,
+    "startTime": 0,
+    "endTime": 9.600000
+  },
+  {
+    "id": "02_setup",
+    "text": "Newton ने सोचा... अगर apple गिरती है gravity से... तो Moon क्यों नहीं गिरता? Same gravity तो Moon पर भी लग रही है ना? तो वो ऊपर कैसे टिका है?",
+    "duration": 9.648000,
+    "startTime": 9.600000,
+    "endTime": 19.248000
+  },
+  {
+    "id": "03_content_part1",
+    "text": "Newton ने imagine किया... एक cannon पहाड़ की चोटी पर। Fire करो... ball गिरती है। ज़्यादा speed से fire करो... ball दूर जाकर गिरती है। और भी FAST... ball आधी Earth घूम के गिरती है!",
+    "duration": 14.016000,
+    "startTime": 19.248000,
+    "endTime": 33.264000
+  },
+  {
+    "id": "03_content_part2",
+    "text": "अब सोचो... अगर PERFECT speed से fire करो... ball गिर रही है... लेकिन Earth भी CURVE हो रही है नीचे से! जितना ball गिरती है... उतना ही Earth हट जाती है! तो ball गिरती रहती है... पर कभी पहुँचती नहीं! यही है ORBIT!",
+    "duration": 15.000000,
+    "startTime": 33.264000,
+    "endTime": 48.264000
+  },
+  {
+    "id": "04_reveal",
+    "text": "देखो... एक आदमी सीधा गिर रहा है... और Moon भी गिर रहा है! फ़र्क़ सिर्फ़ इतना... Moon की speed इतनी है कि वो MISS करता रहता है Earth को! Orbit equals falling... plus MISSING!",
+    "duration": 12.960000,
+    "startTime": 48.264000,
+    "endTime": 61.224000
+  },
+  {
+    "id": "05_key_point",
+    "text": "Formula याद रखो... v equals root of G M over r. Speed कम? CRASH! Speed ज़्यादा? ESCAPE! Goldilocks speed? Perfect ORBIT! और ध्यान दो... satellite का mass matter नहीं करता!",
+    "duration": 13.848000,
+    "startTime": 61.224000,
+    "endTime": 75.072000
+  },
+  {
+    "id": "06_exam_tip",
+    "text": "J. E. E. में यही पूछते हैं! Orbital velocity depend करती है r पर... satellite के mass पर नहीं! ये common mistake है... इसे avoid करो!",
+    "duration": 9.648000,
+    "startTime": 75.072000,
+    "endTime": 84.720000
+  },
+  {
+    "id": "07_cta",
+    "text": "Physics ऐसे समझो... JeetLo! Follow कीजिए!",
+    "duration": 3.552000,
+    "startTime": 84.720000,
+    "endTime": 88.272000
+  }
+]

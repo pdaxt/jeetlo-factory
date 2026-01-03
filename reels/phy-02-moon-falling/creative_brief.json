@@ -1,0 +1,43 @@
+{
+  "core_analogy": "Moon = Bungee jumper \u091c\u094b \u0939\u092e\u0947\u0936\u093e \u0917\u093f\u0930 \u0930\u0939\u093e \u0939\u0948 \u0932\u0947\u0915\u093f\u0928 \u0930\u0938\u094d\u0938\u0940 (velocity) \u0909\u0938\u0947 side \u092e\u0947\u0902 \u0916\u0940\u0902\u091a\u0924\u0940 \u0930\u0939\u0924\u0940 \u0939\u0948\u0964 \u091c\u093f\u0924\u0928\u093e \u0917\u093f\u0930\u0924\u093e \u0939\u0948, \u0909\u0924\u0928\u093e Earth curve \u0939\u094b \u091c\u093e\u0924\u0940 \u0939\u0948 \u0928\u0940\u091a\u0947 \u0938\u0947\u0964 \u0924\u094b \u0917\u093f\u0930\u0924\u093e \u0930\u0939\u0924\u093e \u0939\u0948... \u092a\u0930 \u0915\u092d\u0940 \u092a\u0939\u0941\u0901\u091a\u0924\u093e \u0928\u0939\u0940\u0902!",
+  "subconscious_hook": "Curiosity gap + Identity challenge: '\u0924\u0941\u092e\u094d\u0939\u0947\u0902 \u0932\u0917\u0924\u093e \u0939\u0948 Moon \u0938\u094d\u0925\u093f\u0930 \u0939\u0948? WRONG! \u0935\u094b \u0939\u0930 second \u0917\u093f\u0930 \u0930\u0939\u093e \u0939\u0948 - \u0914\u0930 \u092f\u0947 \u0938\u092e\u091d\u0928\u093e JEE/NEET \u0915\u0947 \u0932\u093f\u090f CRITICAL \u0939\u0948'",
+  "visual_scenes": {
+    "01_hook": "Earth center \u092e\u0947\u0902, Moon \u090a\u092a\u0930\u0964 Arrow \u0926\u093f\u0916\u093e\u0913 Moon \u0938\u0947 Earth \u0915\u0940 \u0924\u0930\u092b pointing (gravity)\u0964 Text flash: 'FALLING... RIGHT NOW!' Moon slightly wobbles \u091c\u0948\u0938\u0947 \u0917\u093f\u0930\u0928\u0947 \u0935\u093e\u0932\u093e \u0939\u094b\u0964 Dramatic zoom\u0964",
+    "02_setup": "Newton under apple tree (simple silhouette)\u0964 Apple \u0917\u093f\u0930\u0924\u0940 \u0939\u0948\u0964 Newton looks up at Moon\u0964 Thought bubble: '\u0905\u0917\u0930 apple \u0917\u093f\u0930\u0924\u0940 \u0939\u0948... \u0924\u094b Moon \u0915\u094d\u092f\u094b\u0902 \u0928\u0939\u0940\u0902?' Question mark appears\u0964",
+    "03_content_part1": "Cannon on mountain top (Newton's cannon thought experiment)\u0964 Fire cannonball - falls to ground (short arc)\u0964 Fire faster - falls further\u0964 Fire EVEN faster - goes halfway around Earth\u0964 Use MechanicsSimulator for projectile trajectories\u0964",
+    "03_content_part2": "Fire at PERFECT speed - ball keeps falling but Earth curves AWAY at same rate! Ball makes complete circle\u0964 Moon replaces cannonball\u0964 Show velocity arrow (horizontal) + gravity arrow (down) = curved path\u0964 FieldVisualizer shows gravity field lines\u3002",
+    "04_reveal": "Split screen: LEFT - person falling straight down\u0964 RIGHT - Moon 'falling' but missing Earth\u0964 Text: '\u0926\u094b\u0928\u094b\u0902 FALL \u0915\u0930 \u0930\u0939\u0947 \u0939\u0948\u0902!' Moon's path shown as continuous 'falling around' Earth\u0964 Mind-blow moment: 'Orbit = Falling + Missing!'",
+    "05_key_point": "Formula appears: v = \u221a(GM/r)\u0964 Break it down visually - G (gravity constant), M (Earth mass), r (distance)\u0964 Show if v too slow = crash\u0964 If v too fast = escape\u0964 Goldilocks zone = orbit\u0964 Use simple speedometer visual\u0964",
+    "06_exam_tip": "JEE 2023 question flash (orbital velocity)\u0964 Quick solve using the formula\u0964 Tip: '\u092f\u093e\u0926 \u0930\u0916\u094b - orbital velocity depends on r, NOT on satellite mass!' Common mistake highlighted with red X\u0964",
+    "07_cta": "Moon orbiting smoothly\u0964 JeetLo logo appears\u0964 'Physics \u0910\u0938\u0947 \u0938\u092e\u091d\u094b - Follow \u0915\u0930\u094b!' Subscribe button animation\u0964"
+  },
+  "virality_factor": "The 'falling but never landing' paradox is screenshot-worthy\u0964 The cannon animation building up speed is satisfying to rewatch\u0964 The split-screen comparison (falling person vs falling Moon) is the 'send to friend' moment\u0964",
+  "mind_blow_moment": "\u091c\u092c viewer realize \u0915\u0930\u0924\u093e \u0939\u0948 \u0915\u093f ORBIT means 'continuously falling but always missing' - \u092f\u0947 brain rewire \u0915\u0930\u0924\u093e \u0939\u0948\u0964 \u0939\u092e orbit \u0915\u094b 'floating' \u0938\u092e\u091d\u0924\u0947 \u0939\u0948\u0902, \u092a\u0930 actually it's 'falling with style'!",
+  "duration_target": "78s",
+  "simplification_strategy": "1) Newton's cannon = perfect visual - no jargon needed\u0964 2) '\u0917\u093f\u0930\u0928\u093e + \u091a\u0942\u0915\u0928\u093e = orbit' - 4 words \u092e\u0947\u0902 \u092a\u0942\u0930\u093e concept\u0964 3) Formula AFTER intuition - \u092a\u0939\u0932\u0947 \u0938\u092e\u091d\u093e\u0913 WHY, \u092b\u093f\u0930 HOW\u0964 4) Speedometer for velocity - everyone understands fast/slow\u0964",
+  "logic_flow": "Hook (Moon \u0917\u093f\u0930 \u0930\u0939\u093e \u0939\u0948!) \u2192 Setup (Newton's question) \u2192 Content Part 1 (cannon experiment - slow to fast) \u2192 Content Part 2 (perfect speed = orbit) \u2192 Reveal (falling + missing = orbit) \u2192 Key Point (formula + Goldilocks velocity) \u2192 Exam Tip (JEE relevance) \u2192 CTA",
+  "manim_edu_components": [
+    "MechanicsSimulator",
+    "FieldVisualizer"
+  ],
+  "segment_timings": {
+    "01_hook": "4s",
+    "02_setup": "7s",
+    "03_content_part1": "18s",
+    "03_content_part2": "15s",
+    "04_reveal": "12s",
+    "05_key_point": "10s",
+    "06_exam_tip": "8s",
+    "07_cta": "4s"
+  },
+  "audio_notes": {
+    "tone": "Excited curiosity building to triumphant revelation",
+    "pace": "Fast hook, medium teaching, dramatic pauses at reveal",
+    "emphasis_words": [
+      "FALL",
+      "\u0939\u0930 SECOND",
+      "MISSING",
+      "Goldilocks"
+    ]
+  }
+}

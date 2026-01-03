@@ -1,0 +1,81 @@
+{
+  "reel_id": "phy-02-moon-falling",
+  "subject": "physics",
+  "created_at": "2026-01-03T00:17:34Z",
+  "genesis_hash": "808700b1fb43c723679b573ad58cf173916090eb6a38688d47fc5fc3c2b2d93b",
+  "steps": [
+    {
+      "step": "setup",
+      "input_hash": "genesis",
+      "output_hash": "e4fb06e78da36859bb957b9755441fbdf1166f046f34ad4d806d6fa123f618cd",
+      "timestamp": "2026-01-03T00:17:37Z"
+    },
+    {
+      "step": "creative_brief",
+      "input_hash": "e4fb06e78da36859bb957b9755441fbdf1166f046f34ad4d806d6fa123f618cd",
+      "output_hash": "e67fbb4b9e5e9d66e77fb45da550fb5c04651e3d15c4e47c4d8c1de04e2516d0",
+      "timestamp": "2026-01-03T00:18:18Z"
+    },
+    {
+      "step": "audio_script",
+      "input_hash": "e67fbb4b9e5e9d66e77fb45da550fb5c04651e3d15c4e47c4d8c1de04e2516d0",
+      "output_hash": "f03e526d64609d0387c6991e3c03417295266ccaf8776583eb8c3317fcde389c",
+      "timestamp": "2026-01-03T00:18:45Z"
+    },
+    {
+      "step": "generate_audio",
+      "input_hash": "f03e526d64609d0387c6991e3c03417295266ccaf8776583eb8c3317fcde389c",
+      "output_hash": "f597441b0a3801b154bf72dc30e530772aa74c25119aa388d9e8de1207f7af10",
+      "timestamp": "2026-01-03T00:19:09Z"
+    },
+    {
+      "step": "video_script",
+      "input_hash": "f597441b0a3801b154bf72dc30e530772aa74c25119aa388d9e8de1207f7af10",
+      "output_hash": "b36e0c04eac4f725b1159de8de44173cea43b2362e094f9e42e3aaef9c7035e3",
+      "timestamp": "2026-01-03T00:26:51Z"
+    },
+    {
+      "step": "validate_manim_edu",
+      "input_hash": "b36e0c04eac4f725b1159de8de44173cea43b2362e094f9e42e3aaef9c7035e3",
+      "output_hash": "a659b2fc2c16e011e29ee71fd15107f2f891e00ae795251b6bcca62a39f98946",
+      "timestamp": "2026-01-03T00:26:51Z"
+    },
+    {
+      "step": "render_video",
+      "input_hash": "a659b2fc2c16e011e29ee71fd15107f2f891e00ae795251b6bcca62a39f98946",
+      "output_hash": "c4af073f885de9d96bfaf12b8d1ecef08b0b53c399927d7ce1f3df251b8a5c69",
+      "timestamp": "2026-01-03T00:28:20Z"
+    },
+    {
+      "step": "validate_sync",
+      "input_hash": "c4af073f885de9d96bfaf12b8d1ecef08b0b53c399927d7ce1f3df251b8a5c69",
+      "output_hash": "6ee69f79e93274fedf1ed6324fd0e619ac56619adc46a3a9849584baf4c31db9",
+      "timestamp": "2026-01-03T00:28:21Z"
+    },
+    {
+      "step": "frame_qa",
+      "input_hash": "6ee69f79e93274fedf1ed6324fd0e619ac56619adc46a3a9849584baf4c31db9",
+      "output_hash": "2c43ab71414ef8a59d2e90f3bfff43c821220a6c98fb157fecba6ebcffffddf0",
+      "timestamp": "2026-01-03T00:28:23Z"
+    },
+    {
+      "step": "combine_av",
+      "input_hash": "2c43ab71414ef8a59d2e90f3bfff43c821220a6c98fb157fecba6ebcffffddf0",
+      "output_hash": "4e10ccfbde4c4e009f3e573a9b8679fe36b8b0961af39224b7ee2f681a2b9cab",
+      "timestamp": "2026-01-03T00:28:51Z"
+    },
+    {
+      "step": "thumbnail",
+      "input_hash": "4e10ccfbde4c4e009f3e573a9b8679fe36b8b0961af39224b7ee2f681a2b9cab",
+      "output_hash": "4c14b763f61bba5f5c78d52be6b5912677c35ff4e489727ea4782049773dde20",
+      "timestamp": "2026-01-03T00:28:51Z"
+    },
+    {
+      "step": "final_qa",
+      "input_hash": "4c14b763f61bba5f5c78d52be6b5912677c35ff4e489727ea4782049773dde20",
+      "output_hash": "30018fe7f91638d18a8853f24c93ab65834ff6d1e506d5b4bf32e8a2b9129bc6",
+      "timestamp": "2026-01-03T00:28:52Z"
+    }
+  ],
+  "status": "ready_to_post"
+}
