@@ -841,6 +841,15 @@ $manim_edu_readme
    - WRONG: (end - start).normalized()
    - RIGHT: normalize(end - start)  # Manim's normalize() function
    - OR: (end - start) / np.linalg.norm(end - start)  # numpy way
+9. NEVER stack formula labels using .next_to(X, DOWN) - they will OVERLAP!
+   - WRONG: g_label.next_to(g_term, DOWN), m_label.next_to(m_term, DOWN)  # Overlaps!
+   - RIGHT: Use SmartLabel or Callout from manim_edu.primitives.annotation
+   - Example for formula F = Gm₁m₂/r²:
+     from manim_edu.primitives.annotation import Callout
+     g_callout = Callout("Universe's Counselor", g_term.get_center(), direction=UL)
+     m_callout = Callout("Both Masses", m_terms.get_center(), direction=UP)
+     r_callout = Callout("Distance!", r_term.get_center(), direction=DR)
+   - Each label gets its OWN direction (UL, UR, DL, DR, UP, DOWN, LEFT, RIGHT)
 
 🟢 REQUIRED (Must include or pipeline will FAIL):
 1. ALWAYS use manim-edu components for formulas and scientific visuals
