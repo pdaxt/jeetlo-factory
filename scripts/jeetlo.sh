@@ -1094,8 +1094,9 @@ Each segment method MUST use this pattern:
 def segment_XX(self, timing):
     duration = timing['duration']
 
-    # 1. Calculate total animation time (sum all run_time values)
-    total_anim_time = 0.5 + 0.3 + 0.4  # example
+    # 1. Calculate total animation time (sum ALL run_time values INCLUDING final FadeOut)
+    # IMPORTANT: Every self.play() MUST have explicit run_time!
+    total_anim_time = 0.5 + 0.3 + 0.4 + 0.3  # animations + final FadeOut(run_time=0.3)
 
     # 2. Count wait() calls
     num_waits = 3  # example
@@ -1111,7 +1112,11 @@ def segment_XX(self, timing):
     self.play(Create(obj3), run_time=0.4)
     self.wait(wait_time)
 
+    # 5. CRITICAL: FadeOut MUST have explicit run_time (included in total_anim_time above!)
+    self.play(*[FadeOut(m) for m in self.mobjects if m != self.mobjects[0]], run_time=0.3)
+
 This ensures: total_anim_time + (num_waits * wait_time) = duration
+⚠️ WITHOUT explicit run_time on FadeOut, Manim uses 1.0s default, causing 7+ second overrun!
 
 Output the complete Python file now:
 PROMPT_EOF
@@ -2378,16 +2383,26 @@ validate_sync() {
     local diff=$(echo "$video_duration - $audio_duration" | bc)
     local abs_diff=$(echo "$diff" | tr -d -)
 
-    # Video should be >= audio (so CTA doesn't get cut)
-    if (( $(echo "$video_duration >= $audio_duration" | bc -l) )); then
-        if (( $(echo "$abs_diff <= 2.0" | bc -l) )); then
-            print_success "Duration sync valid: video is ${diff}s longer than audio"
-        else
-            print_warning "Video is ${diff}s longer than audio (max 2s overage recommended)"
-        fi
+    # STRICT SYNC: Video must be within ±1.0s of audio
+    # If video is too long, CTA gets cut by -shortest
+    # If video is too short, audio gets cut
+    if (( $(echo "$abs_diff <= 1.0" | bc -l) )); then
+        print_success "Duration sync valid: diff is ${diff}s (within ±1.0s tolerance)"
+    elif (( $(echo "$video_duration > $audio_duration" | bc -l) )); then
+        print_error "VIDEO IS ${diff}s LONGER THAN AUDIO"
+        echo "⚠️  The -shortest flag will CUT OFF the CTA slide!"
+        echo ""
+        echo "LIKELY CAUSE: FadeOut calls missing explicit run_time=0.3"
+        echo "Each FadeOut without run_time adds 1.0s default"
+        echo ""
+        echo "FIX: Edit reel.py and add run_time=0.3 to all FadeOut calls:"
+        echo "  self.play(*[FadeOut(m) for m in self.mobjects if m != self.mobjects[0]], run_time=0.3)"
+        echo ""
+        echo "Then re-render: manim render -qh reel.py PhysicsReel"
+        exit 1
     else
         print_error "VIDEO IS SHORTER THAN AUDIO by ${abs_diff}s"
-        echo "CTA will be cut off when combined with -shortest"
+        echo "Audio will be cut off at the end"
         echo "FIX: Add self.wait() calls to segments"
         exit 1
     fi
