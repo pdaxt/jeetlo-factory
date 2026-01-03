@@ -1,17 +1,18 @@
 """
-JeetLo Physics Reel: Gravity - The Universe's Obsessive Stalker
-================================================================
-VIRAL CONCEPT: Everything pulls on everything! Gravity is pathetically weak
-but relentless - that's why it shapes galaxies despite being beaten by a magnet.
+JeetLo Physics Reel: You've NEVER Touched Anything
+===================================================
+VIRAL CONCEPT: You've never touched anything in your entire life!
+At the atomic level, electron clouds repel each other with electromagnetic force.
+You're always floating 0.1 nanometers above everything.
 
 Animation Focus:
-- Person falling with cosmic forces pulling from everywhere
-- Newton's apple + Moon connection
-- Gravity formula with G constant revelation
-- Inverse square law as flashlight analogy
-- Everything pulls everything reveal
-- Weak but relentless key point
-- JEE trap: mass and radius doubled
+- Hand reaching toward table - FREEZE - "This NEVER happens"
+- Zoom to atomic level showing electron clouds
+- Bouncer analogy for electromagnetic repulsion
+- Repulsion force graph going exponential
+- Mind-blow reveal: sitting, walking, phone - all floating!
+- Formula F ~ 1/r^2
+- JEE/NEET: Pauli Exclusion Principle
 """
 
 import sys
@@ -25,8 +26,9 @@ from jeetlo_style import *
 
 # Import manim-edu physics components
 try:
-    from manim_edu.physics import WaveSimulator, FieldVisualizer, MechanicsSimulator
-    from manim_edu.primitives.colors import SUBJECT_COLORS
+    from manim_edu.physics import FieldVisualizer
+    from manim_edu.primitives.atoms import Atom
+    from manim_edu.primitives.transitions import RippleEffect, PulseGlow
 except ImportError:
     pass
 
@@ -42,11 +44,13 @@ PINK = "#FF69B4"
 def load_timings():
     """Load audio timings from JSON file."""
     with open('audio/timings.json', 'r') as f:
-        return {t['id']: t for t in json.load(f)}
+        data = json.load(f)
+        # Filter out combined_audio entry
+        return {t['id']: t for t in data if t['id'] != 'combined_audio'}
 
 
 class PhysicsReel(JeetLoReelMixin, Scene):
-    """Physics reel explaining gravity as the universe's obsessive stalker."""
+    """Physics reel explaining electromagnetic repulsion - you've never touched anything!"""
     subject = "physics"
 
     def construct(self):
@@ -71,758 +75,593 @@ class PhysicsReel(JeetLoReelMixin, Scene):
         self.segment_07_cta(self.timings['07_cta'])
 
     def segment_01_hook(self, timing):
-        """Hook: You're FALLING right now! Creates cognitive dissonance (6.36s)"""
+        """Hook: You've never touched anything in your life! (6.912s)"""
         duration = timing['duration']
 
-        # Calculate timing
-        fixed_time = 0.4 + 0.3 + 0.4 + 0.3 + 0.3 + 0.3  # 2.0s
-        num_waits = 3
-        wait_time = max(0.1, (duration - fixed_time) / num_waits)
+        # Animation timing
+        total_anim_time = 0.5 + 0.6 + 0.4 + 0.5 + 0.4 + 0.3
+        num_waits = 4
+        wait_time = max(0.1, (duration - total_anim_time) / num_waits)
 
-        # Person sitting on chair (simplified stick figure)
-        person_group = VGroup()
-
-        # Chair
-        chair_seat = Line(LEFT * 0.4, RIGHT * 0.4, color=WHITE, stroke_width=3)
-        chair_back = Line(LEFT * 0.4 + UP * 0.5, LEFT * 0.4, color=WHITE, stroke_width=3)
-        chair_legs = VGroup(
-            Line(LEFT * 0.3, LEFT * 0.3 + DOWN * 0.4, color=WHITE, stroke_width=2),
-            Line(RIGHT * 0.3, RIGHT * 0.3 + DOWN * 0.4, color=WHITE, stroke_width=2),
+        # Create hand reaching toward table
+        hand = VGroup()
+        # Palm
+        palm = RoundedRectangle(
+            width=1.2, height=0.8, corner_radius=0.2,
+            fill_color='#F5D0C5', fill_opacity=1, stroke_width=2, stroke_color='#D4A69A'
         )
-        chair = VGroup(chair_seat, chair_back, chair_legs)
-
-        # Stick figure
-        head = Circle(radius=0.2, color=YELLOW, fill_opacity=0.8, stroke_width=2)
-        head.move_to(UP * 0.9)
-        body = Line(UP * 0.7, UP * 0.1, color=WHITE, stroke_width=3)
-        legs = VGroup(
-            Line(UP * 0.1, RIGHT * 0.3 + DOWN * 0.1, color=WHITE, stroke_width=2),
-            Line(UP * 0.1, LEFT * 0.3 + DOWN * 0.1, color=WHITE, stroke_width=2),
+        # Fingers
+        for i in range(4):
+            finger = RoundedRectangle(
+                width=0.25, height=0.6, corner_radius=0.1,
+                fill_color='#F5D0C5', fill_opacity=1, stroke_width=1, stroke_color='#D4A69A'
+            )
+            finger.next_to(palm, UP, buff=0.02)
+            finger.shift(RIGHT * (i - 1.5) * 0.28)
+            hand.add(finger)
+        # Thumb
+        thumb = RoundedRectangle(
+            width=0.5, height=0.25, corner_radius=0.1,
+            fill_color='#F5D0C5', fill_opacity=1, stroke_width=1, stroke_color='#D4A69A'
         )
-        arms = VGroup(
-            Line(UP * 0.5, RIGHT * 0.4 + UP * 0.3, color=WHITE, stroke_width=2),
-            Line(UP * 0.5, LEFT * 0.4 + UP * 0.3, color=WHITE, stroke_width=2),
+        thumb.next_to(palm, LEFT, buff=0.02).shift(DOWN * 0.1)
+        hand.add(palm, thumb)
+        hand.move_to(UP * 2)
+
+        # Table surface
+        table = Rectangle(
+            width=6, height=0.4, fill_color='#8B4513', fill_opacity=1,
+            stroke_color='#5D2E0C', stroke_width=3
         )
-        person = VGroup(head, body, legs, arms)
+        table.move_to(DOWN * 0.5)
 
-        person_group.add(chair, person)
-        person_group.move_to(UP * 2)
-        person_group.scale(0.8)
-
-        # Earth below (big, showing you're on it)
-        earth = Circle(radius=2.5, color=BLUE, fill_opacity=0.3, stroke_width=3)
-        earth.move_to(DOWN * 4.5)
-        earth_label = Text("EARTH", font_size=24, color=BLUE, weight=BOLD)
-        earth_label.move_to(earth.get_center())
-
-        # Gravity arrow from Earth to person (BIG)
-        earth_arrow = Arrow(
-            DOWN * 2, person_group.get_center() + DOWN * 0.5,
-            color=RED, stroke_width=6, buff=0.1
+        # Table top shine
+        table_shine = Line(
+            table.get_left() + UP * 0.15, table.get_right() + UP * 0.15,
+            color='#A0522D', stroke_width=4
         )
 
-        # Moon and Sun pulling too (smaller arrows)
-        moon = Circle(radius=0.4, color=GRAY, fill_opacity=0.6, stroke_width=2)
-        moon.move_to(RIGHT * 3.5 + UP * 3)
-        moon_label = Text("Moon", font_size=16, color=GRAY)
-        moon_label.next_to(moon, UP, buff=0.1)
-
-        sun = Circle(radius=0.6, color=ORANGE, fill_opacity=0.8, stroke_width=2)
-        sun.move_to(LEFT * 3.5 + UP * 4)
-        sun_label = Text("Sun", font_size=16, color=ORANGE)
-        sun_label.next_to(sun, UP, buff=0.1)
-
-        moon_arrow = Arrow(
-            moon.get_center(), person_group.get_center() + RIGHT * 0.3,
-            color=GRAY, stroke_width=2, buff=0.2
-        )
-        sun_arrow = Arrow(
-            sun.get_center(), person_group.get_center() + LEFT * 0.3,
-            color=ORANGE, stroke_width=3, buff=0.2
-        )
-
-        # "You're FALLING" text
-        falling_text = Text("You're FALLING right now!", font_size=40, color=RED, weight=BOLD)
-        falling_text.move_to(DOWN * 1)
-
-        # Animation
-        self.play(FadeIn(person_group, scale=0.8), run_time=0.4)
+        self.play(FadeIn(table), FadeIn(table_shine), run_time=0.5)
+        self.play(FadeIn(hand, shift=DOWN), run_time=0.6)
         self.wait(wait_time)
 
-        self.play(FadeIn(earth, earth_label), run_time=0.3)
-        self.play(FadeIn(moon, moon_label, sun, sun_label), run_time=0.4)
+        # Hand moves down toward table
+        self.play(hand.animate.shift(DOWN * 1.8), run_time=0.4)
+
+        # FREEZE - Big red X
+        freeze_x = VGroup(
+            Line(LEFT + UP, RIGHT + DOWN, color=RED, stroke_width=12),
+            Line(LEFT + DOWN, RIGHT + UP, color=RED, stroke_width=12)
+        ).scale(0.8).move_to(hand.get_center())
+
+        never_text = Text("This NEVER happens", font_size=48, color=RED, weight=BOLD)
+        never_text.move_to(UP * 4.5)
+
+        self.play(Create(freeze_x), run_time=0.5)
+        self.play(Write(never_text), run_time=0.4)
         self.wait(wait_time)
 
-        self.play(Create(earth_arrow), run_time=0.3)
-        self.play(Create(moon_arrow), Create(sun_arrow), run_time=0.3)
-        self.play(Write(falling_text), run_time=0.3)
+        # Show tiny gap
+        gap_indicator = VGroup()
+        gap_line1 = Line(ORIGIN, RIGHT * 0.5, color=YELLOW, stroke_width=3)
+        gap_line2 = Line(ORIGIN, RIGHT * 0.5, color=YELLOW, stroke_width=3)
+        gap_text = Text("0.1 nm gap!", font_size=28, color=YELLOW)
+        gap_line1.next_to(hand, DOWN, buff=0.05)
+        gap_line2.next_to(table, UP, buff=0.05)
+        gap_text.next_to(gap_line1, RIGHT, buff=0.3)
+        gap_indicator.add(gap_line1, gap_line2, gap_text)
+
+        self.play(FadeIn(gap_indicator), run_time=0.3)
+        self.wait(wait_time)
         self.wait(wait_time)
 
         # Clear
         self.play(FadeOut(Group(*[m for m in self.mobjects if m != self.watermark])), run_time=0.3)
 
     def segment_02_setup(self, timing):
-        """Setup: Newton's genius - apple and Moon are same force (11.064s)"""
+        """Setup: What happens at atomic level? (6.6s)"""
         duration = timing['duration']
 
-        # Calculate timing
-        fixed_time = 0.4 + 0.4 + 0.5 + 0.4 + 0.4 + 0.5 + 0.4 + 0.3  # 3.3s
-        num_waits = 4
-        wait_time = max(0.1, (duration - fixed_time) / num_waits)
+        total_anim_time = 0.5 + 0.5 + 0.6 + 0.4 + 0.3
+        num_waits = 3
+        wait_time = max(0.1, (duration - total_anim_time) / num_waits)
 
-        # Split screen divider
-        divider = DashedLine(UP * 6, DOWN * 6, color=WHITE, stroke_width=1, dash_length=0.2)
+        # Title
+        title = Text("Atomic Level", font_size=52, color=BLUE, weight=BOLD)
+        title.move_to(UP * 5)
 
-        # Left side: Apple falling
-        left_title = Text("Apple Falling", font_size=28, color=GREEN, weight=BOLD)
-        left_title.move_to(LEFT * 2 + UP * 5)
+        self.play(Write(title), run_time=0.5)
+        self.wait(wait_time)
 
-        # Tree
-        trunk = Rectangle(width=0.3, height=1.5, color='#8B4513', fill_opacity=0.8, stroke_width=0)
-        trunk.move_to(LEFT * 2 + UP * 1)
-        leaves = Circle(radius=1, color=GREEN, fill_opacity=0.6, stroke_width=0)
-        leaves.move_to(LEFT * 2 + UP * 2.5)
-        tree = VGroup(trunk, leaves)
+        # Zoom effect - finger zooming in
+        zoom_circle = Circle(radius=2, color=WHITE, stroke_width=3)
+        zoom_circle.move_to(ORIGIN)
 
-        apple = Circle(radius=0.15, color=RED, fill_opacity=1, stroke_width=0)
-        apple.move_to(LEFT * 2.3 + UP * 1.8)
+        # Inside zoom: show atoms
+        finger_atom = VGroup()
+        fa_core = Circle(radius=0.4, color=TEAL, fill_opacity=0.9, stroke_width=2)
+        fa_label = Text("C", font_size=24, color=WHITE, weight=BOLD)
+        fa_label.move_to(fa_core)
+        finger_atom.add(fa_core, fa_label)
+        finger_atom.move_to(LEFT * 1.2 + UP * 0.5)
 
-        apple_path = DashedLine(
-            apple.get_center(), LEFT * 2.3 + DOWN * 0.5,
-            color=RED, stroke_width=2, dash_length=0.1
-        )
-        ground_left = Line(LEFT * 3.5 + DOWN * 0.7, LEFT * 0.5 + DOWN * 0.7, color=WHITE, stroke_width=2)
+        table_atom = VGroup()
+        ta_core = Circle(radius=0.4, color=ORANGE, fill_opacity=0.9, stroke_width=2)
+        ta_label = Text("Fe", font_size=24, color=WHITE, weight=BOLD)
+        ta_label.move_to(ta_core)
+        table_atom.add(ta_core, ta_label)
+        table_atom.move_to(RIGHT * 1.2 + DOWN * 0.5)
 
-        # Right side: Moon orbiting Earth
-        right_title = Text("Moon Orbiting", font_size=28, color=TEAL, weight=BOLD)
-        right_title.move_to(RIGHT * 2 + UP * 5)
+        # Electron clouds (fuzzy spheres)
+        cloud1 = Circle(radius=0.9, color=BLUE, fill_opacity=0.15, stroke_color=BLUE, stroke_width=2)
+        cloud1.move_to(finger_atom.get_center())
+        cloud2 = Circle(radius=0.9, color=BLUE, fill_opacity=0.15, stroke_color=BLUE, stroke_width=2)
+        cloud2.move_to(table_atom.get_center())
 
-        earth_small = Circle(radius=0.5, color=BLUE, fill_opacity=0.6, stroke_width=2)
-        earth_small.move_to(RIGHT * 2 + UP * 1)
-        earth_label = Text("Earth", font_size=16, color=BLUE)
-        earth_label.next_to(earth_small, DOWN, buff=0.2)
+        # Labels
+        finger_label = Text("Finger atom", font_size=24, color=TEAL)
+        finger_label.next_to(finger_atom, UP, buff=0.6)
+        table_label = Text("Table atom", font_size=24, color=ORANGE)
+        table_label.next_to(table_atom, DOWN, buff=0.6)
 
-        orbit = Circle(radius=1.8, color=GRAY, stroke_width=1, stroke_opacity=0.5)
-        orbit.move_to(earth_small.get_center())
-
-        moon_small = Circle(radius=0.2, color=GRAY, fill_opacity=0.8, stroke_width=1)
-        moon_small.move_to(RIGHT * 2 + UP * 2.8)
-
-        orbit_arrow = Arrow(
-            RIGHT * 3.8 + UP * 1, RIGHT * 3.5 + UP * 1.5,
-            color=TEAL, stroke_width=2, buff=0
-        )
-
-        # Connection line with question
-        connection = DashedLine(
-            LEFT * 0.3 + UP * 1, RIGHT * 0.3 + UP * 1,
-            color=YELLOW, stroke_width=3, dash_length=0.15
-        )
-        same_force = Text("SAME FORCE?", font_size=36, color=YELLOW, weight=BOLD)
-        same_force.move_to(DOWN * 2)
-
-        # Newton silhouette
-        newton = VGroup()
-        newton_head = Circle(radius=0.25, color=WHITE, fill_opacity=0.3, stroke_width=2)
-        newton_body = Rectangle(width=0.5, height=0.8, color=WHITE, fill_opacity=0.2, stroke_width=2)
-        newton_body.next_to(newton_head, DOWN, buff=0)
-        newton.add(newton_head, newton_body)
-        newton.move_to(DOWN * 4.5)
-        think_bubble = Text("?", font_size=48, color=WHITE, weight=BOLD)
-        think_bubble.next_to(newton, UP + RIGHT, buff=0.2)
-
-        # Animation
-        self.play(Create(divider), run_time=0.4)
-
-        # Left side
-        self.play(Write(left_title), FadeIn(tree, ground_left), run_time=0.4)
-        self.play(FadeIn(apple), run_time=0.5)
+        self.play(Create(zoom_circle), run_time=0.5)
         self.play(
-            apple.animate.move_to(LEFT * 2.3 + DOWN * 0.5),
-            Create(apple_path),
-            run_time=0.4
+            FadeIn(finger_atom), FadeIn(table_atom),
+            FadeIn(cloud1), FadeIn(cloud2),
+            run_time=0.6
         )
         self.wait(wait_time)
 
-        # Right side
-        self.play(Write(right_title), FadeIn(earth_small, earth_label, orbit), run_time=0.4)
-        self.play(FadeIn(moon_small), Create(orbit_arrow), run_time=0.5)
-        self.wait(wait_time)
+        # Question mark
+        question = Text("What happens here?", font_size=40, color=YELLOW, weight=BOLD)
+        question.move_to(DOWN * 3.5)
 
-        # Connection
-        self.play(Create(connection), run_time=0.4)
-        self.play(Write(same_force), run_time=0.3)
-        self.wait(wait_time)
-
-        # Newton
-        self.play(FadeIn(newton, think_bubble), run_time=0.4)
+        self.play(Write(question), run_time=0.4)
         self.wait(wait_time)
 
         # Clear
         self.play(FadeOut(Group(*[m for m in self.mobjects if m != self.watermark])), run_time=0.3)
 
     def segment_03_content_part1(self, timing):
-        """Content Part 1: The gravity formula - G is TINY! (14.4s)"""
+        """Content Part 1: Electron clouds repel like bouncers (15.096s)"""
         duration = timing['duration']
 
-        # Calculate timing
-        fixed_time = 0.4 + 0.5 + 0.3 + 0.3 + 0.3 + 0.4 + 0.5 + 0.4 + 0.3  # 3.4s
-        num_waits = 5
-        wait_time = max(0.1, (duration - fixed_time) / num_waits)
+        total_anim_time = 0.5 + 0.6 + 0.8 + 0.5 + 0.6 + 0.5 + 0.6 + 0.5 + 0.5 + 0.3
+        num_waits = 6
+        wait_time = max(0.1, (duration - total_anim_time) / num_waits)
 
         # Title
-        title = Text("Gravity Formula", font_size=36, color=YELLOW, weight=BOLD)
+        title = Text("Electron Cloud Repulsion", font_size=44, color=TEAL, weight=BOLD)
         title.move_to(UP * 5.5)
+        self.play(Write(title), run_time=0.5)
 
-        # Create gravitational field using manim-edu
-        field_viz = FieldVisualizer(scale=0.5)
-        grav_field = field_viz.gravitational_field()
-        grav_field.move_to(UP * 2.5)
-        grav_field.scale(0.8)
+        # Two atoms approaching
+        atom1_core = Circle(radius=0.35, color=TEAL, fill_opacity=0.9, stroke_width=2)
+        atom1_label = Text("C", font_size=20, color=WHITE, weight=BOLD)
+        atom1_label.move_to(atom1_core)
+        atom1 = VGroup(atom1_core, atom1_label)
+        atom1.move_to(LEFT * 3 + UP * 1.5)
 
-        # Formula: F = G(M1 × M2) / r²
-        f_text = Text("F", font_size=56, color=RED, weight=BOLD)
-        equals = Text("=", font_size=48, color=WHITE, weight=BOLD)
-        g_text = Text("G", font_size=56, color=GREEN, weight=BOLD)
+        atom2_core = Circle(radius=0.35, color=ORANGE, fill_opacity=0.9, stroke_width=2)
+        atom2_label = Text("Fe", font_size=20, color=WHITE, weight=BOLD)
+        atom2_label.move_to(atom2_core)
+        atom2 = VGroup(atom2_core, atom2_label)
+        atom2.move_to(RIGHT * 3 + UP * 1.5)
 
-        # Masses
-        m1_text = Text("M", font_size=48, color=ORANGE, weight=BOLD)
-        m1_sub = Text("1", font_size=28, color=ORANGE)
-        m1_sub.next_to(m1_text, DOWN + RIGHT, buff=-0.1).shift(UP * 0.15)
-        m1_group = VGroup(m1_text, m1_sub)
+        # Electron clouds with glow
+        cloud1 = Circle(radius=1.0, color=BLUE, fill_opacity=0.15, stroke_color=BLUE, stroke_width=2)
+        cloud1.move_to(atom1.get_center())
+        cloud2 = Circle(radius=1.0, color=BLUE, fill_opacity=0.15, stroke_color=BLUE, stroke_width=2)
+        cloud2.move_to(atom2.get_center())
 
-        times_sym = Text("x", font_size=40, color=WHITE)
+        atoms_group = VGroup(atom1, cloud1, atom2, cloud2)
 
-        m2_text = Text("M", font_size=48, color=TEAL, weight=BOLD)
-        m2_sub = Text("2", font_size=28, color=TEAL)
-        m2_sub.next_to(m2_text, DOWN + RIGHT, buff=-0.1).shift(UP * 0.15)
-        m2_group = VGroup(m2_text, m2_sub)
-
-        # Fraction line and r²
-        frac_line = Line(LEFT * 1.5, RIGHT * 1.5, color=WHITE, stroke_width=3)
-
-        r_text = Text("r", font_size=48, color=PURPLE, weight=BOLD)
-        r_sq = Text("2", font_size=28, color=PURPLE)
-        r_sq.next_to(r_text, UP + RIGHT, buff=-0.1).shift(DOWN * 0.15)
-        r_group = VGroup(r_text, r_sq)
-
-        # Arrange formula
-        f_text.move_to(LEFT * 2.5 + DOWN * 1)
-        equals.next_to(f_text, RIGHT, buff=0.3)
-
-        numerator = VGroup(g_text, m1_group, times_sym, m2_group)
-        g_text.move_to(ORIGIN)
-        m1_group.next_to(g_text, RIGHT, buff=0.15)
-        times_sym.next_to(m1_group, RIGHT, buff=0.1)
-        m2_group.next_to(times_sym, RIGHT, buff=0.1)
-        numerator.move_to(RIGHT * 0.5 + DOWN * 0.5)
-
-        frac_line.next_to(numerator, DOWN, buff=0.15)
-        r_group.next_to(frac_line, DOWN, buff=0.15)
-
-        formula = VGroup(f_text, equals, numerator, frac_line, r_group)
-        formula.move_to(DOWN * 1.5)
-
-        # G value callout
-        g_value = Text("G = 6.67 x 10", font_size=28, color=GREEN)
-        g_exp = Text("-11", font_size=18, color=GREEN)
-        g_exp.next_to(g_value, UP + RIGHT, buff=-0.05).shift(DOWN * 0.1)
-        g_val_group = VGroup(g_value, g_exp)
-        g_val_group.move_to(DOWN * 4)
-
-        g_comment = Text("Universe's WEAKEST force!", font_size=24, color=YELLOW, weight=BOLD)
-        g_comment.next_to(g_val_group, DOWN, buff=0.3)
-
-        # Animation
-        self.play(Write(title), run_time=0.4)
-        self.play(FadeIn(grav_field, scale=0.8), run_time=0.5)
+        self.play(FadeIn(atoms_group), run_time=0.6)
         self.wait(wait_time)
 
-        # Build formula piece by piece
-        self.play(Write(f_text), Write(equals), run_time=0.3)
+        # Move atoms closer - clouds start repelling
+        self.play(
+            atom1.animate.shift(RIGHT * 1.5),
+            cloud1.animate.shift(RIGHT * 1.5),
+            atom2.animate.shift(LEFT * 1.5),
+            cloud2.animate.shift(LEFT * 1.5),
+            run_time=0.8
+        )
         self.wait(wait_time)
 
-        self.play(Write(g_text), run_time=0.3)
-        self.play(Write(m1_group), Write(times_sym), Write(m2_group), run_time=0.3)
+        # Show repulsion arrows between clouds
+        repulsion_arrows = VGroup()
+        for i in range(5):
+            y_offset = (i - 2) * 0.4
+            arrow1 = Arrow(
+                cloud1.get_right() + UP * y_offset,
+                cloud1.get_right() + LEFT * 0.5 + UP * y_offset,
+                color=RED, stroke_width=3, buff=0
+            )
+            arrow2 = Arrow(
+                cloud2.get_left() + UP * y_offset,
+                cloud2.get_left() + RIGHT * 0.5 + UP * y_offset,
+                color=RED, stroke_width=3, buff=0
+            )
+            repulsion_arrows.add(arrow1, arrow2)
+
+        repulsion_label = Text("PUSH!", font_size=36, color=RED, weight=BOLD)
+        repulsion_label.move_to(UP * 1.5)
+
+        self.play(
+            LaggedStart(*[Create(a) for a in repulsion_arrows], lag_ratio=0.05),
+            run_time=0.5
+        )
+        self.play(Write(repulsion_label), run_time=0.6)
         self.wait(wait_time)
 
-        self.play(Create(frac_line), Write(r_group), run_time=0.4)
+        # Clear atoms, show bouncer analogy
+        self.play(FadeOut(atoms_group, repulsion_arrows, repulsion_label), run_time=0.5)
+
+        # Bouncer analogy
+        analogy_title = Text("Bouncer Analogy", font_size=40, color=GOLD, weight=BOLD)
+        analogy_title.move_to(UP * 4)
+
+        # Two bouncers (rectangles with arms)
+        bouncer1 = VGroup()
+        body1 = RoundedRectangle(width=1, height=1.8, corner_radius=0.2, fill_color='#2C3E50', fill_opacity=1)
+        head1 = Circle(radius=0.35, fill_color='#F5D0C5', fill_opacity=1, stroke_width=1)
+        head1.next_to(body1, UP, buff=-0.1)
+        arm1 = Line(body1.get_right() + UP * 0.4, body1.get_right() + RIGHT * 0.8 + UP * 0.4, stroke_width=8, color='#F5D0C5')
+        bouncer1.add(body1, head1, arm1)
+        bouncer1.move_to(LEFT * 2 + DOWN * 0.5)
+
+        bouncer2 = VGroup()
+        body2 = RoundedRectangle(width=1, height=1.8, corner_radius=0.2, fill_color='#2C3E50', fill_opacity=1)
+        head2 = Circle(radius=0.35, fill_color='#F5D0C5', fill_opacity=1, stroke_width=1)
+        head2.next_to(body2, UP, buff=-0.1)
+        arm2 = Line(body2.get_left() + UP * 0.4, body2.get_left() + LEFT * 0.8 + UP * 0.4, stroke_width=8, color='#F5D0C5')
+        bouncer2.add(body2, head2, arm2)
+        bouncer2.move_to(RIGHT * 2 + DOWN * 0.5)
+
+        # Push effect in middle
+        push_text = Text("PUSH", font_size=32, color=RED, weight=BOLD)
+        push_text.move_to(DOWN * 0.5)
+
+        # Club door
+        door = Rectangle(width=0.8, height=2, fill_color='#8B0000', fill_opacity=0.8, stroke_color=GOLD, stroke_width=3)
+        door.move_to(ORIGIN + DOWN * 0.5)
+
+        self.play(Write(analogy_title), run_time=0.6)
+        self.play(FadeIn(bouncer1, shift=RIGHT), FadeIn(bouncer2, shift=LEFT), run_time=0.5)
         self.wait(wait_time)
 
-        # G value reveal
-        self.play(Write(g_val_group), run_time=0.5)
-        self.play(Write(g_comment), run_time=0.4)
+        self.play(FadeIn(door), Write(push_text), run_time=0.6)
+        self.wait(wait_time)
+
+        # Label: electrons same charge
+        charge_text = Text("Same charge = REPEL", font_size=36, color=YELLOW, weight=BOLD)
+        charge_text.move_to(DOWN * 3.5)
+        self.play(Write(charge_text), run_time=0.5)
         self.wait(wait_time)
 
         # Clear
         self.play(FadeOut(Group(*[m for m in self.mobjects if m != self.watermark])), run_time=0.3)
 
     def segment_03_content_part2(self, timing):
-        """Content Part 2: Inverse square law - like flashlight spreading (15.864s)"""
+        """Content Part 2: Repulsion force increases exponentially (9.312s)"""
         duration = timing['duration']
 
-        # Calculate timing
-        fixed_time = 0.4 + 0.5 + 0.3 + 0.3 + 0.3 + 0.3 + 0.4 + 0.4 + 0.3 + 0.3  # 3.5s
-        num_waits = 6
-        wait_time = max(0.1, (duration - fixed_time) / num_waits)
+        total_anim_time = 0.5 + 0.6 + 1.0 + 0.5 + 0.4 + 0.3
+        num_waits = 4
+        wait_time = max(0.1, (duration - total_anim_time) / num_waits)
 
         # Title
-        title = Text("Inverse Square Law", font_size=40, color=YELLOW, weight=BOLD)
+        title = Text("Repulsion Force", font_size=48, color=ORANGE, weight=BOLD)
         title.move_to(UP * 5.5)
+        self.play(Write(title), run_time=0.5)
 
-        # Flashlight visual
-        flashlight = VGroup()
-        fl_body = Rectangle(width=0.4, height=0.8, color=YELLOW, fill_opacity=0.8, stroke_width=2)
-        fl_body.move_to(LEFT * 3 + UP * 2)
-        fl_head = Polygon(
-            fl_body.get_right() + UP * 0.3,
-            fl_body.get_right() + DOWN * 0.3,
-            fl_body.get_right() + RIGHT * 0.3,
-            color=YELLOW, fill_opacity=0.9, stroke_width=0
+        # Create axes for graph
+        axes = Axes(
+            x_range=[0, 5, 1],
+            y_range=[0, 10, 2],
+            x_length=5,
+            y_length=4,
+            axis_config={"color": WHITE, "stroke_width": 2},
+            tips=False
+        ).move_to(LEFT * 0.5 + UP * 0.5)
+
+        x_label = Text("Distance", font_size=24, color=WHITE)
+        x_label.next_to(axes.x_axis, DOWN, buff=0.3)
+        y_label = Text("Force", font_size=24, color=WHITE)
+        y_label.next_to(axes.y_axis, LEFT, buff=0.3)
+
+        self.play(Create(axes), Write(x_label), Write(y_label), run_time=0.6)
+        self.wait(wait_time)
+
+        # Draw exponential curve (1/r^2 behavior, goes to infinity at small r)
+        graph = axes.plot(
+            lambda x: min(9.5, 0.5 / max(0.1, x - 0.3)**2) if x > 0.35 else 9.5,
+            x_range=[0.4, 5],
+            color=RED,
+            stroke_width=4
         )
-        flashlight.add(fl_body, fl_head)
 
-        # Light spreading cone
-        light_cone = Polygon(
-            fl_head.get_right(),
-            fl_head.get_right() + RIGHT * 3 + UP * 1.5,
-            fl_head.get_right() + RIGHT * 3 + DOWN * 1.5,
-            color=YELLOW, fill_opacity=0.15, stroke_width=0
+        self.play(Create(graph), run_time=1.0)
+        self.wait(wait_time)
+
+        # Label the curve going vertical
+        infinite_label = Text("INFINITE WALL", font_size=32, color=RED, weight=BOLD)
+        infinite_label.move_to(RIGHT * 2 + UP * 2)
+
+        arrow_to_curve = Arrow(
+            infinite_label.get_left(), axes.c2p(0.5, 8),
+            color=YELLOW, stroke_width=3
         )
 
-        # Distance markers
-        d1_line = Line(LEFT * 2.5 + UP * 2, LEFT * 1.5 + UP * 2, color=WHITE, stroke_width=2)
-        d1_label = Text("1x", font_size=24, color=WHITE)
-        d1_label.next_to(d1_line, DOWN, buff=0.1)
-
-        d2_line = Line(LEFT * 2.5 + UP * 2, LEFT * 0.5 + UP * 2, color=TEAL, stroke_width=2)
-        d2_label = Text("2x", font_size=24, color=TEAL)
-        d2_label.next_to(d2_line, DOWN, buff=0.1)
-
-        d3_line = Line(LEFT * 2.5 + UP * 2, RIGHT * 0.5 + UP * 2, color=PURPLE, stroke_width=2)
-        d3_label = Text("3x", font_size=24, color=PURPLE)
-        d3_label.next_to(d3_line, DOWN, buff=0.1)
-
-        # Force arrows (thickness = strength)
-        force1 = Arrow(LEFT * 1.5 + DOWN * 0.5, LEFT * 0.5 + DOWN * 0.5,
-                       color=RED, stroke_width=8, buff=0)
-        f1_label = Text("F", font_size=28, color=RED, weight=BOLD)
-        f1_label.next_to(force1, DOWN, buff=0.1)
-
-        force2 = Arrow(LEFT * 1.5 + DOWN * 1.5, LEFT * 0.9 + DOWN * 1.5,
-                       color=TEAL, stroke_width=3, buff=0)
-        f2_label = Text("F/4", font_size=24, color=TEAL, weight=BOLD)
-        f2_label.next_to(force2, DOWN, buff=0.1)
-
-        force3 = Arrow(LEFT * 1.5 + DOWN * 2.5, LEFT * 1.1 + DOWN * 2.5,
-                       color=PURPLE, stroke_width=2, buff=0)
-        f3_label = Text("F/9", font_size=20, color=PURPLE, weight=BOLD)
-        f3_label.next_to(force3, DOWN, buff=0.1)
-
-        # Key insight boxes
-        box1 = VGroup()
-        bg1 = RoundedRectangle(width=3, height=1, corner_radius=0.1,
-                               color=TEAL, fill_opacity=0.2, stroke_width=2)
-        txt1 = Text("2x distance", font_size=22, color=TEAL)
-        txt1b = Text("= 1/4 force", font_size=22, color=WHITE, weight=BOLD)
-        box1_content = VGroup(txt1, txt1b).arrange(DOWN, buff=0.1)
-        box1.add(bg1, box1_content)
-        box1.move_to(RIGHT * 2 + UP * 2)
-
-        box2 = VGroup()
-        bg2 = RoundedRectangle(width=3, height=1, corner_radius=0.1,
-                               color=PURPLE, fill_opacity=0.2, stroke_width=2)
-        txt2 = Text("3x distance", font_size=22, color=PURPLE)
-        txt2b = Text("= 1/9 force", font_size=22, color=WHITE, weight=BOLD)
-        box2_content = VGroup(txt2, txt2b).arrange(DOWN, buff=0.1)
-        box2.add(bg2, box2_content)
-        box2.move_to(RIGHT * 2 + DOWN * 0.5)
-
-        # Explanation
-        explain = Text("Like flashlight spreading!", font_size=28, color=YELLOW, weight=BOLD)
-        explain.move_to(DOWN * 4.5)
-
-        r_squared = Text("r SQUARED in denominator!", font_size=26, color=RED, weight=BOLD)
-        r_squared.move_to(DOWN * 5.5)
-
-        # Animation
-        self.play(Write(title), run_time=0.4)
-        self.play(FadeIn(flashlight), Create(light_cone), run_time=0.5)
+        self.play(Write(infinite_label), Create(arrow_to_curve), run_time=0.5)
         self.wait(wait_time)
 
-        # Distance markers
-        self.play(Create(d1_line), Write(d1_label), run_time=0.3)
-        self.play(Create(force1), Write(f1_label), run_time=0.3)
-        self.wait(wait_time)
-
-        self.play(Create(d2_line), Write(d2_label), run_time=0.3)
-        self.play(Create(force2), Write(f2_label), run_time=0.3)
-        self.play(FadeIn(box1), run_time=0.4)
-        self.wait(wait_time)
-
-        self.play(Create(d3_line), Write(d3_label), run_time=0.3)
-        self.play(Create(force3), Write(f3_label), run_time=0.3)
-        self.play(FadeIn(box2), run_time=0.4)
-        self.wait(wait_time)
-
-        self.play(Write(explain), run_time=0.3)
-        self.play(Write(r_squared), run_time=0.3)
+        # Distance label
+        distance_text = Text("10^-10 meters", font_size=36, color=TEAL, weight=BOLD)
+        distance_text.move_to(DOWN * 3)
+        self.play(Write(distance_text), run_time=0.4)
         self.wait(wait_time)
 
         # Clear
         self.play(FadeOut(Group(*[m for m in self.mobjects if m != self.watermark])), run_time=0.3)
 
     def segment_04_reveal(self, timing):
-        """Reveal: EVERYTHING pulls EVERYTHING - mind blow moment (13.848s)"""
+        """Reveal: You're floating 0.1 nanometer above EVERYTHING (11.808s)"""
         duration = timing['duration']
 
-        # Calculate timing
-        fixed_time = 0.4 + 0.4 + 0.3 + 0.3 + 0.3 + 0.3 + 0.4 + 0.5 + 0.4 + 0.3  # 3.6s
+        total_anim_time = 0.5 + 0.6 + 0.5 + 0.5 + 0.5 + 0.5 + 0.6 + 0.3
         num_waits = 5
-        wait_time = max(0.1, (duration - fixed_time) / num_waits)
+        wait_time = max(0.1, (duration - total_anim_time) / num_waits)
 
-        # Title
-        title = Text("Mind Blowing Fact!", font_size=40, color=RED, weight=BOLD)
-        title.move_to(UP * 5.5)
+        # Big reveal text
+        reveal_text = Text("YOU'RE FLOATING!", font_size=56, color=GOLD, weight=BOLD)
+        reveal_text.move_to(UP * 5)
 
-        # Phone/hand visual (you holding phone)
-        phone = RoundedRectangle(width=1, height=1.8, corner_radius=0.1,
-                                 color=GRAY, fill_opacity=0.8, stroke_width=2)
-        phone.move_to(ORIGIN)
-        screen = RoundedRectangle(width=0.85, height=1.5, corner_radius=0.05,
-                                  color=BLUE, fill_opacity=0.3, stroke_width=0)
-        screen.move_to(phone.get_center() + UP * 0.1)
-        phone_group = VGroup(phone, screen)
-        phone_group.scale(0.8)
-
-        # Earth (BIG arrow from below)
-        earth = Circle(radius=0.8, color=BLUE, fill_opacity=0.5, stroke_width=2)
-        earth.move_to(DOWN * 4.5)
-        earth_label = Text("Earth", font_size=18, color=BLUE)
-        earth_label.next_to(earth, DOWN, buff=0.1)
-        earth_arrow = Arrow(
-            DOWN * 3.5, phone.get_center() + DOWN * 0.5,
-            color=BLUE, stroke_width=8, buff=0.1
-        )
-
-        # Moon (small arrow from right)
-        moon = Circle(radius=0.3, color=GRAY, fill_opacity=0.7, stroke_width=1)
-        moon.move_to(RIGHT * 3.5 + UP * 4)
-        moon_label = Text("Moon", font_size=14, color=GRAY)
-        moon_label.next_to(moon, RIGHT, buff=0.1)
-        moon_arrow = Arrow(
-            RIGHT * 3 + UP * 3.5, phone.get_center() + RIGHT * 0.3 + UP * 0.3,
-            color=GRAY, stroke_width=2, buff=0.1
-        )
-
-        # Sun (medium arrow from left)
-        sun = Circle(radius=0.5, color=ORANGE, fill_opacity=0.8, stroke_width=2)
-        sun.move_to(LEFT * 3.5 + UP * 4.5)
-        sun_label = Text("Sun", font_size=14, color=ORANGE)
-        sun_label.next_to(sun, LEFT, buff=0.1)
-        sun_arrow = Arrow(
-            LEFT * 3 + UP * 4, phone.get_center() + LEFT * 0.3 + UP * 0.3,
-            color=ORANGE, stroke_width=4, buff=0.1
-        )
-
-        # Person next to you (tiny arrow)
-        person_icon = VGroup()
-        p_head = Circle(radius=0.15, color=YELLOW, fill_opacity=0.7, stroke_width=1)
-        p_body = Line(ORIGIN, DOWN * 0.3, color=YELLOW, stroke_width=2)
-        p_body.next_to(p_head, DOWN, buff=0)
-        person_icon.add(p_head, p_body)
-        person_icon.move_to(LEFT * 3 + DOWN * 1)
-        person_label = Text("Person", font_size=12, color=YELLOW)
-        person_label.next_to(person_icon, LEFT, buff=0.1)
-        person_arrow = Arrow(
-            LEFT * 2.8 + DOWN * 1, phone.get_center() + LEFT * 0.5,
-            color=YELLOW, stroke_width=1, buff=0.1
-        )
-
-        # More micro arrows from random directions
-        micro_arrows = VGroup()
-        for angle in [PI/6, PI/3, 2*PI/3, 5*PI/6, -PI/6, -PI/3]:
-            pos = np.array([np.cos(angle) * 2.5, np.sin(angle) * 2, 0])
-            micro_arrow = Arrow(
-                pos, phone.get_center() + np.array([np.cos(angle) * 0.3, np.sin(angle) * 0.2, 0]),
-                color=WHITE, stroke_width=0.5, stroke_opacity=0.5, buff=0.1
-            )
-            micro_arrows.add(micro_arrow)
-
-        # Revelation text
-        reveal_text = Text("EVERYTHING pulls EVERYTHING!", font_size=34, color=YELLOW, weight=BOLD)
-        reveal_text.move_to(DOWN * 2.5)
-
-        always_text = Text("Always. Forever.", font_size=28, color=WHITE)
-        always_text.next_to(reveal_text, DOWN, buff=0.3)
-
-        # Animation
-        self.play(Write(title), run_time=0.4)
-        self.play(FadeIn(phone_group), run_time=0.4)
+        self.play(Write(reveal_text), run_time=0.5)
         self.wait(wait_time)
 
-        # Earth
-        self.play(FadeIn(earth, earth_label), run_time=0.3)
-        self.play(Create(earth_arrow), run_time=0.3)
+        # Person sitting on chair
+        # Chair
+        chair_seat = Rectangle(width=1.5, height=0.2, fill_color='#8B4513', fill_opacity=1)
+        chair_back = Rectangle(width=0.15, height=1.2, fill_color='#8B4513', fill_opacity=1)
+        chair_back.next_to(chair_seat, LEFT, buff=0).shift(UP * 0.5)
+        chair_legs = VGroup(
+            Line(chair_seat.get_corner(DL), chair_seat.get_corner(DL) + DOWN * 0.8),
+            Line(chair_seat.get_corner(DR), chair_seat.get_corner(DR) + DOWN * 0.8)
+        ).set_color('#8B4513').set_stroke(width=5)
+        chair = VGroup(chair_seat, chair_back, chair_legs)
+        chair.move_to(LEFT * 2 + DOWN * 1)
+
+        # Stick figure person
+        person_head = Circle(radius=0.25, fill_color='#F5D0C5', fill_opacity=1, stroke_width=2)
+        person_body = Line(ORIGIN, DOWN * 0.8, stroke_width=5, color='#333333')
+        person_legs = VGroup(
+            Line(ORIGIN, DOWN * 0.5 + LEFT * 0.3, stroke_width=5, color='#333333'),
+            Line(ORIGIN, DOWN * 0.5 + RIGHT * 0.3, stroke_width=5, color='#333333')
+        )
+        person_body.next_to(person_head, DOWN, buff=0)
+        person_legs.move_to(person_body.get_end())
+
+        person = VGroup(person_head, person_body, person_legs)
+        person.move_to(chair_seat.get_center() + UP * 0.8)
+
+        self.play(FadeIn(chair), FadeIn(person), run_time=0.6)
         self.wait(wait_time)
 
-        # Moon and Sun
-        self.play(FadeIn(moon, moon_label, sun, sun_label), run_time=0.3)
-        self.play(Create(moon_arrow), Create(sun_arrow), run_time=0.3)
+        # Gap indicator
+        gap_line = DashedLine(
+            chair_seat.get_top() + LEFT * 0.5,
+            chair_seat.get_top() + RIGHT * 0.5,
+            color=YELLOW, stroke_width=3, dash_length=0.1
+        )
+        gap_line.shift(UP * 0.1)
+
+        gap_label = Text("0.1 nm", font_size=28, color=YELLOW, weight=BOLD)
+        gap_label.next_to(gap_line, RIGHT, buff=0.2)
+
+        self.play(Create(gap_line), Write(gap_label), run_time=0.5)
         self.wait(wait_time)
 
-        # Person
-        self.play(FadeIn(person_icon, person_label), Create(person_arrow), run_time=0.4)
+        # Walking person
+        walking_person = VGroup()
+        w_head = Circle(radius=0.2, fill_color='#F5D0C5', fill_opacity=1, stroke_width=2)
+        w_body = Line(ORIGIN, DOWN * 0.6, stroke_width=4, color='#333333')
+        w_leg1 = Line(ORIGIN, DOWN * 0.4 + LEFT * 0.2, stroke_width=4, color='#333333')
+        w_leg2 = Line(ORIGIN, DOWN * 0.4 + RIGHT * 0.2, stroke_width=4, color='#333333')
+        w_body.next_to(w_head, DOWN, buff=0)
+        w_leg1.move_to(w_body.get_end())
+        w_leg2.move_to(w_body.get_end())
+        walking_person.add(w_head, w_body, w_leg1, w_leg2)
+        walking_person.move_to(RIGHT * 2 + DOWN * 0.5)
 
-        # Micro arrows
-        self.play(LaggedStart(*[Create(a) for a in micro_arrows], lag_ratio=0.05), run_time=0.5)
+        # Ground
+        ground = Line(LEFT * 1 + DOWN * 1.5, RIGHT * 3.5 + DOWN * 1.5, color='#654321', stroke_width=6)
+
+        walk_label = Text("Walking = Floating", font_size=28, color=TEAL, weight=BOLD)
+        walk_label.next_to(walking_person, UP, buff=0.5)
+
+        self.play(FadeIn(walking_person), FadeIn(ground), run_time=0.5)
+        self.play(Write(walk_label), run_time=0.5)
         self.wait(wait_time)
 
-        # Revelation
-        self.play(Write(reveal_text), run_time=0.4)
-        self.play(Write(always_text), run_time=0.3)
+        # Phone holding
+        phone = RoundedRectangle(width=0.4, height=0.7, corner_radius=0.05, fill_color='#1a1a2e', fill_opacity=1, stroke_color=WHITE, stroke_width=2)
+        phone.move_to(LEFT * 2 + DOWN * 3.5)
+        phone_label = Text("Phone = Floating", font_size=28, color=PURPLE, weight=BOLD)
+        phone_label.next_to(phone, RIGHT, buff=0.3)
+
+        self.play(FadeIn(phone), Write(phone_label), run_time=0.5)
+        self.wait(wait_time)
+
+        # Mind blown finale
+        mind_blown = Text("Never TRULY touched!", font_size=42, color=RED, weight=BOLD)
+        mind_blown.move_to(DOWN * 5)
+
+        self.play(Write(mind_blown), run_time=0.6)
         self.wait(wait_time)
 
         # Clear
         self.play(FadeOut(Group(*[m for m in self.mobjects if m != self.watermark])), run_time=0.3)
 
     def segment_05_key_point(self, timing):
-        """Key Point: Gravity is weak but RELENTLESS (14.304s)"""
+        """Key Point: Electromagnetic repulsion, F proportional to 1/r^2 (12.696s)"""
         duration = timing['duration']
 
-        # Calculate timing
-        fixed_time = 0.4 + 0.4 + 0.3 + 0.5 + 0.3 + 0.4 + 0.4 + 0.5 + 0.3  # 3.5s
-        num_waits = 6
-        wait_time = max(0.1, (duration - fixed_time) / num_waits)
+        total_anim_time = 0.5 + 0.6 + 0.5 + 0.6 + 0.5 + 0.5 + 0.4 + 0.3
+        num_waits = 5
+        wait_time = max(0.1, (duration - total_anim_time) / num_waits)
 
         # Title
-        title = Text("Gravity's Secret Power", font_size=38, color=YELLOW, weight=BOLD)
+        title = Text("KEY POINT", font_size=48, color=GOLD, weight=BOLD)
         title.move_to(UP * 5.5)
+        self.play(Write(title), run_time=0.5)
 
-        # Arm wrestling visual - EM vs Gravity
-        # EM Force (HUGE)
-        em_body = RoundedRectangle(width=1.2, height=2, corner_radius=0.1,
-                                   color=BLUE, fill_opacity=0.8, stroke_width=2)
-        em_body.move_to(LEFT * 2.5 + UP * 1.5)
-        em_arm = Line(em_body.get_right() + UP * 0.5, em_body.get_right() + RIGHT * 1 + UP * 0.5,
-                     color=BLUE, stroke_width=8)
-        em_label = Text("EM Force", font_size=20, color=BLUE, weight=BOLD)
-        em_label.next_to(em_body, DOWN, buff=0.2)
-        em_size = Text("HUGE!", font_size=16, color=WHITE)
-        em_size.move_to(em_body.get_center())
-        em_wrestler = VGroup(em_body, em_arm, em_label, em_size)
+        # Main concept box
+        concept_box = RoundedRectangle(
+            width=6.5, height=1.4, corner_radius=0.2,
+            fill_color='#1a2744', fill_opacity=0.8,
+            stroke_color=BLUE, stroke_width=3
+        )
+        concept_box.move_to(UP * 3)
 
-        # Gravity (tiny)
-        grav_body = RoundedRectangle(width=0.4, height=0.6, corner_radius=0.05,
-                                     color=ORANGE, fill_opacity=0.8, stroke_width=1)
-        grav_body.move_to(RIGHT * 2.5 + UP * 1.8)
-        grav_arm = Line(grav_body.get_left() + UP * 0.1, grav_body.get_left() + LEFT * 0.5 + UP * 0.1,
-                       color=ORANGE, stroke_width=2)
-        grav_label = Text("Gravity", font_size=16, color=ORANGE, weight=BOLD)
-        grav_label.next_to(grav_body, DOWN, buff=0.1)
-        grav_size = Text("tiny", font_size=12, color=WHITE)
-        grav_size.move_to(grav_body.get_center())
-        grav_wrestler = VGroup(grav_body, grav_arm, grav_label, grav_size)
+        concept_text = Text("Electromagnetic Repulsion", font_size=36, color=TEAL, weight=BOLD)
+        concept_text.move_to(concept_box.get_center())
 
-        vs_text = Text("VS", font_size=36, color=RED, weight=BOLD)
-        vs_text.move_to(UP * 1.5)
-
-        # Magnet example
-        mag_body = Rectangle(width=1.2, height=0.4, color=RED, fill_opacity=0.8, stroke_width=2)
-        mag_body.set_color([RED, BLUE])
-        mag_n = Text("N", font_size=16, color=WHITE, weight=BOLD)
-        mag_n.move_to(mag_body.get_left() + RIGHT * 0.25)
-        mag_s = Text("S", font_size=16, color=WHITE, weight=BOLD)
-        mag_s.move_to(mag_body.get_right() + LEFT * 0.25)
-        magnet = VGroup(mag_body, mag_n, mag_s)
-        magnet.move_to(LEFT * 2 + DOWN * 1.5)
-        magnet.scale(0.8)
-
-        # Paperclip
-        clip = Rectangle(width=0.15, height=0.3, color=GRAY, fill_opacity=0.8, stroke_width=1)
-        clip.move_to(magnet.get_center() + DOWN * 0.5)
-
-        # Earth
-        earth_mini = Circle(radius=0.6, color=BLUE, fill_opacity=0.3, stroke_width=2)
-        earth_mini.move_to(LEFT * 2 + DOWN * 3.5)
-        earth_lbl = Text("Earth's\nGravity", font_size=14, color=BLUE, line_spacing=0.8)
-        earth_lbl.next_to(earth_mini, DOWN, buff=0.1)
-
-        beat_text = Text("Magnet WINS!", font_size=20, color=RED, weight=BOLD)
-        beat_text.move_to(LEFT * 2 + DOWN * 0.5)
-
-        # Galaxy
-        galaxy = VGroup()
-        galaxy_core = Circle(radius=0.3, color=YELLOW, fill_opacity=0.6, stroke_width=0)
-        galaxy_arm1 = Arc(radius=1, start_angle=0, angle=PI, color=WHITE, stroke_width=2, stroke_opacity=0.5)
-        galaxy_arm2 = Arc(radius=1, start_angle=PI, angle=PI, color=WHITE, stroke_width=2, stroke_opacity=0.5)
-        galaxy.add(galaxy_core, galaxy_arm1, galaxy_arm2)
-        galaxy.move_to(RIGHT * 2 + DOWN * 2)
-        galaxy_label = Text("Galaxies form\nby GRAVITY!", font_size=18, color=YELLOW, weight=BOLD, line_spacing=0.8)
-        galaxy_label.next_to(galaxy, DOWN, buff=0.2)
-
-        # Key insight
-        insight_box = RoundedRectangle(width=6.5, height=1.5, corner_radius=0.15,
-                                       color=ORANGE, fill_opacity=0.2, stroke_width=2)
-        insight_box.move_to(DOWN * 5)
-        insight_text = Text("Weak but RELENTLESS = Shapes Universe!",
-                           font_size=24, color=ORANGE, weight=BOLD)
-        insight_text.move_to(insight_box.get_center())
-
-        sub_insight = Text("Never repels - Always attracts - Never gives up",
-                          font_size=18, color=WHITE)
-        sub_insight.next_to(insight_box, UP, buff=0.2)
-
-        # Animation
-        self.play(Write(title), run_time=0.4)
-        self.play(FadeIn(em_wrestler), FadeIn(grav_wrestler), Write(vs_text), run_time=0.4)
+        self.play(Create(concept_box), Write(concept_text), run_time=0.6)
         self.wait(wait_time)
 
-        # Magnet example
-        self.play(FadeIn(magnet, clip, earth_mini, earth_lbl), run_time=0.3)
-        self.play(clip.animate.shift(UP * 0.3), run_time=0.5)
-        self.play(Write(beat_text), run_time=0.3)
+        # Formula: F proportional to 1/r^2
+        formula_text = Text("F  ~  1 / r", font_size=48, color=WHITE)
+        formula_text.move_to(UP * 0.5)
+
+        # Superscript 2
+        superscript = Text("2", font_size=28, color=WHITE)
+        superscript.next_to(formula_text, UR, buff=0.05).shift(DOWN * 0.3)
+
+        formula_group = VGroup(formula_text, superscript)
+
+        self.play(Write(formula_group), run_time=0.5)
         self.wait(wait_time)
 
-        # Galaxy
-        self.play(FadeIn(galaxy, scale=0.5), run_time=0.4)
-        self.play(Write(galaxy_label), run_time=0.4)
+        # Explanation
+        explanation = VGroup(
+            Text("Closer distance", font_size=32, color=YELLOW),
+            Text("=", font_size=32, color=WHITE),
+            Text("STRONGER pushback", font_size=32, color=RED, weight=BOLD)
+        ).arrange(RIGHT, buff=0.3)
+        explanation.move_to(DOWN * 1.5)
+
+        self.play(Write(explanation), run_time=0.6)
         self.wait(wait_time)
 
-        # Insight
-        self.play(FadeIn(insight_box), Write(sub_insight), run_time=0.5)
-        self.play(Write(insight_text), run_time=0.3)
+        # Magnet analogy
+        magnet_analogy = Text("Like same poles of magnets", font_size=34, color=PURPLE, weight=BOLD)
+        magnet_analogy.move_to(DOWN * 3)
+
+        # Two magnets pushing each other
+        magnet1 = VGroup()
+        m1_north = Rectangle(width=1, height=0.6, fill_color=RED, fill_opacity=0.9, stroke_width=2)
+        m1_south = Rectangle(width=1, height=0.6, fill_color=BLUE, fill_opacity=0.9, stroke_width=2)
+        m1_south.next_to(m1_north, LEFT, buff=0)
+        m1_n_label = Text("N", font_size=24, color=WHITE, weight=BOLD).move_to(m1_north)
+        m1_s_label = Text("S", font_size=24, color=WHITE, weight=BOLD).move_to(m1_south)
+        magnet1.add(m1_north, m1_south, m1_n_label, m1_s_label)
+        magnet1.move_to(LEFT * 2 + DOWN * 5)
+
+        magnet2 = VGroup()
+        m2_north = Rectangle(width=1, height=0.6, fill_color=RED, fill_opacity=0.9, stroke_width=2)
+        m2_south = Rectangle(width=1, height=0.6, fill_color=BLUE, fill_opacity=0.9, stroke_width=2)
+        m2_north.next_to(m2_south, LEFT, buff=0)
+        m2_n_label = Text("N", font_size=24, color=WHITE, weight=BOLD).move_to(m2_north)
+        m2_s_label = Text("S", font_size=24, color=WHITE, weight=BOLD).move_to(m2_south)
+        magnet2.add(m2_north, m2_south, m2_n_label, m2_s_label)
+        magnet2.move_to(RIGHT * 2 + DOWN * 5)
+
+        # Repulsion arrows between magnets
+        repel_arrow1 = Arrow(ORIGIN + DOWN * 5 + LEFT * 0.2, LEFT * 0.8 + DOWN * 5, color=YELLOW, stroke_width=4)
+        repel_arrow2 = Arrow(ORIGIN + DOWN * 5 + RIGHT * 0.2, RIGHT * 0.8 + DOWN * 5, color=YELLOW, stroke_width=4)
+
+        self.play(Write(magnet_analogy), run_time=0.5)
+        self.play(FadeIn(magnet1), FadeIn(magnet2), run_time=0.5)
+        self.play(Create(repel_arrow1), Create(repel_arrow2), run_time=0.4)
+        self.wait(wait_time)
         self.wait(wait_time)
 
         # Clear
         self.play(FadeOut(Group(*[m for m in self.mobjects if m != self.watermark])), run_time=0.3)
 
     def segment_06_exam_tip(self, timing):
-        """Exam Tip: JEE trap - Earth mass and radius doubled (20.4s)"""
+        """Exam tip: JEE/NEET - Pauli Exclusion Principle (11.064s)"""
         duration = timing['duration']
 
-        # Calculate timing
-        fixed_time = 0.4 + 0.4 + 0.3 + 0.5 + 0.4 + 0.4 + 0.5 + 0.5 + 0.5 + 0.5 + 0.3  # 4.7s
-        num_waits = 7
-        wait_time = max(0.1, (duration - fixed_time) / num_waits)
+        total_anim_time = 0.5 + 0.6 + 0.5 + 0.6 + 0.5 + 0.5 + 0.3
+        num_waits = 5
+        wait_time = max(0.1, (duration - total_anim_time) / num_waits)
 
-        # Alert header
-        alert = Text("JEE TRAP Alert!", font_size=44, color=RED, weight=BOLD)
-        alert.move_to(UP * 5.5)
+        # Exam badge
+        exam_badge = RoundedRectangle(
+            width=5, height=1, corner_radius=0.2,
+            fill_color='#FF6B35', fill_opacity=0.9,
+            stroke_color=WHITE, stroke_width=2
+        )
+        exam_badge.move_to(UP * 5.5)
 
-        # Warning icon
-        warning = Text("!", font_size=36, color=RED, weight=BOLD)
-        warning_bg = Circle(radius=0.4, color=RED, fill_opacity=0.2, stroke_width=3, stroke_color=RED)
-        warning_group = VGroup(warning_bg, warning)
-        warning_group.next_to(alert, LEFT, buff=0.3)
+        exam_text = Text("JEE & NEET", font_size=40, color=WHITE, weight=BOLD)
+        exam_text.move_to(exam_badge.get_center())
 
-        # Problem statement
-        problem = Text("If Earth's mass DOUBLES and radius DOUBLES...",
-                      font_size=26, color=WHITE)
-        problem.move_to(UP * 4)
+        self.play(FadeIn(exam_badge), Write(exam_text), run_time=0.5)
 
-        question = Text("What happens to g?", font_size=32, color=YELLOW, weight=BOLD)
-        question.next_to(problem, DOWN, buff=0.3)
+        # Principle name
+        principle_box = RoundedRectangle(
+            width=6.5, height=1.2, corner_radius=0.15,
+            fill_color='#1a2744', fill_opacity=0.9,
+            stroke_color=GOLD, stroke_width=3
+        )
+        principle_box.move_to(UP * 3)
 
-        # Formula box
-        formula_bg = RoundedRectangle(width=5, height=1.5, corner_radius=0.15,
-                                      color=BLUE, fill_opacity=0.2, stroke_width=2)
-        formula_bg.move_to(UP * 1.5)
+        principle_text = Text("Pauli Exclusion Principle", font_size=38, color=GOLD, weight=BOLD)
+        principle_text.move_to(principle_box.get_center())
 
-        # g = GM/R²
-        g_text = Text("g", font_size=48, color=YELLOW, weight=BOLD)
-        equals = Text("=", font_size=40, color=WHITE)
-        gm_text = Text("GM", font_size=40, color=GREEN, weight=BOLD)
-        frac_line = Line(LEFT * 0.8, RIGHT * 0.8, color=WHITE, stroke_width=3)
-        r_text = Text("R", font_size=40, color=RED, weight=BOLD)
-        r_sq = Text("2", font_size=24, color=RED)
-        r_sq.next_to(r_text, UP + RIGHT, buff=-0.1).shift(DOWN * 0.1)
-        r_group = VGroup(r_text, r_sq)
-
-        g_text.move_to(formula_bg.get_center() + LEFT * 1.5)
-        equals.next_to(g_text, RIGHT, buff=0.2)
-        gm_text.move_to(formula_bg.get_center() + RIGHT * 0.8 + UP * 0.3)
-        frac_line.next_to(gm_text, DOWN, buff=0.1)
-        r_group.next_to(frac_line, DOWN, buff=0.1)
-
-        formula = VGroup(g_text, equals, gm_text, frac_line, r_group)
-
-        # Analysis arrows
-        mass_arrow = Arrow(LEFT * 2.5 + DOWN * 0.8, LEFT * 0.5 + DOWN * 0.8,
-                          color=GREEN, stroke_width=3, buff=0)
-        mass_text = Text("M x 2", font_size=28, color=GREEN, weight=BOLD)
-        mass_text.next_to(mass_arrow, UP, buff=0.1)
-        mass_result = Text("Numerator x 2", font_size=22, color=GREEN)
-        mass_result.next_to(mass_arrow, DOWN, buff=0.1)
-        mass_analysis = VGroup(mass_arrow, mass_text, mass_result)
-
-        r_arrow = Arrow(RIGHT * 0.5 + DOWN * 0.8, RIGHT * 2.5 + DOWN * 0.8,
-                       color=RED, stroke_width=3, buff=0)
-        r_text2 = Text("R x 2", font_size=28, color=RED, weight=BOLD)
-        r_text2.next_to(r_arrow, UP, buff=0.1)
-        r_sq_text = Text("R squared x 4!", font_size=24, color=RED, weight=BOLD)
-        r_sq_text.next_to(r_arrow, DOWN, buff=0.1)
-        r_analysis = VGroup(r_arrow, r_text2, r_sq_text)
-
-        # Calculation
-        calc_bg = RoundedRectangle(width=5.5, height=1.2, corner_radius=0.1,
-                                   color=YELLOW, fill_opacity=0.15, stroke_width=2)
-        calc_bg.move_to(DOWN * 2.5)
-
-        calc_text = Text("g' = (2M)/(2R)squared = 2M/4Rsquared = M/2Rsquared",
-                        font_size=20, color=WHITE)
-        calc_text.move_to(calc_bg.get_center())
-
-        # Answer
-        answer_bg = RoundedRectangle(width=4, height=1.2, corner_radius=0.15,
-                                     color=GREEN, fill_opacity=0.3, stroke_width=3)
-        answer_bg.move_to(DOWN * 4.5)
-
-        answer = Text("g becomes HALF!", font_size=32, color=GREEN, weight=BOLD)
-        answer.move_to(answer_bg.get_center())
-
-        # Key reminder
-        reminder = Text("R SQUARED in denominator!", font_size=26, color=RED, weight=BOLD)
-        reminder.move_to(DOWN * 6)
-
-        circle_r = Circle(radius=0.7, color=RED, stroke_width=4, fill_opacity=0)
-        circle_r.move_to(r_group.get_center())
-
-        # Animation
-        self.play(Write(alert), FadeIn(warning_group), run_time=0.4)
-        self.play(Write(problem), run_time=0.4)
-        self.play(Write(question), run_time=0.3)
+        self.play(Create(principle_box), Write(principle_text), run_time=0.6)
         self.wait(wait_time)
 
-        # Formula
-        self.play(FadeIn(formula_bg), run_time=0.5)
-        self.play(Write(formula), run_time=0.4)
-        self.wait(wait_time)
+        # Question format
+        question_box = Rectangle(
+            width=6.5, height=2, fill_color='#0d1117', fill_opacity=0.9,
+            stroke_color=TEAL, stroke_width=2
+        )
+        question_box.move_to(UP * 0.3)
 
-        # Analysis
-        self.play(FadeIn(mass_analysis), run_time=0.4)
-        self.wait(wait_time)
+        question_text = Text("Why can't two electrons", font_size=30, color=WHITE)
+        question_text2 = Text("be in the same state?", font_size=30, color=WHITE)
+        question_group = VGroup(question_text, question_text2).arrange(DOWN, buff=0.2)
+        question_group.move_to(question_box.get_center())
 
-        self.play(FadeIn(r_analysis), run_time=0.5)
-        self.wait(wait_time)
-
-        # Calculation
-        self.play(FadeIn(calc_bg), Write(calc_text), run_time=0.5)
+        self.play(Create(question_box), run_time=0.5)
+        self.play(Write(question_group), run_time=0.6)
         self.wait(wait_time)
 
         # Answer
-        self.play(FadeIn(answer_bg), Write(answer), run_time=0.5)
+        answer_text = Text("SAME REASON!", font_size=42, color=YELLOW, weight=BOLD)
+        answer_text.move_to(DOWN * 2)
+
+        self.play(Write(answer_text), run_time=0.5)
         self.wait(wait_time)
 
-        # Highlight R²
-        self.play(Create(circle_r), Write(reminder), run_time=0.3)
+        # Explanation
+        explanation = Text("Electron clouds can't overlap", font_size=34, color=TEAL, weight=BOLD)
+        explanation.move_to(DOWN * 3.5)
+
+        self.play(Write(explanation), run_time=0.5)
+        self.wait(wait_time)
         self.wait(wait_time)
 
         # Clear
         self.play(FadeOut(Group(*[m for m in self.mobjects if m != self.watermark])), run_time=0.3)
 
     def segment_07_cta(self, timing):
-        """CTA: JeetLo Physics! - Use pre-built CTA slide (10.248s)"""
+        """CTA: JeetLo Physics! - Use pre-built CTA slide (7.056s)"""
         duration = timing['duration']
 
         # Remove watermark for CTA slide

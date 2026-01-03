@@ -1,0 +1,111 @@
+{
+  "reel_id": "phy-07-cant-touch",
+  "subject": "physics",
+  "created_at": "2026-01-03T18:59:03Z",
+  "genesis_hash": "5e30b812820ecd84c86029f4262a3ee50628a0467dd865d017f777043d1075da",
+  "steps": [
+    {
+      "step": "setup",
+      "input_hash": "genesis",
+      "output_hash": "e4fb06e78da36859bb957b9755441fbdf1166f046f34ad4d806d6fa123f618cd",
+      "timestamp": "2026-01-03T18:59:06Z"
+    },
+    {
+      "step": "creative_brief",
+      "input_hash": "e4fb06e78da36859bb957b9755441fbdf1166f046f34ad4d806d6fa123f618cd",
+      "output_hash": "cc2803f5be955953692e85f4435c559c5252cce436000b61333d51297a4b5bca",
+      "timestamp": "2026-01-03T19:00:59Z"
+    },
+    {
+      "step": "audio_script",
+      "input_hash": "cc2803f5be955953692e85f4435c559c5252cce436000b61333d51297a4b5bca",
+      "output_hash": "cce40ad61656525c468e7cc505982ce422219ed18212f1abb80a9b36ea17f8c7",
+      "timestamp": "2026-01-03T19:01:29Z"
+    },
+    {
+      "step": "generate_audio",
+      "input_hash": "cce40ad61656525c468e7cc505982ce422219ed18212f1abb80a9b36ea17f8c7",
+      "output_hash": "261bd88f390c522262b9f8793c08a90de93027dac5e66bd1d79f2137e56ca3b2",
+      "timestamp": "2026-01-03T19:01:52Z"
+    },
+    {
+      "step": "video_script",
+      "input_hash": "261bd88f390c522262b9f8793c08a90de93027dac5e66bd1d79f2137e56ca3b2",
+      "output_hash": "e421ede0a720fa1730b377f1a90b7c7eef9a9ebdcb81c87c0b2e2bf01bcdf2e4",
+      "timestamp": "2026-01-03T19:04:19Z"
+    },
+    {
+      "step": "setup",
+      "input_hash": "e421ede0a720fa1730b377f1a90b7c7eef9a9ebdcb81c87c0b2e2bf01bcdf2e4",
+      "output_hash": "e4fb06e78da36859bb957b9755441fbdf1166f046f34ad4d806d6fa123f618cd",
+      "timestamp": "2026-01-03T19:08:04Z"
+    },
+    {
+      "step": "creative_brief",
+      "input_hash": "e4fb06e78da36859bb957b9755441fbdf1166f046f34ad4d806d6fa123f618cd",
+      "output_hash": "2c6eed531f593e14f42b99275ec631930a60b99c6a7c1bc4b6f6c8192d590c8d",
+      "timestamp": "2026-01-03T19:08:54Z"
+    },
+    {
+      "step": "audio_script",
+      "input_hash": "2c6eed531f593e14f42b99275ec631930a60b99c6a7c1bc4b6f6c8192d590c8d",
+      "output_hash": "f0b64579b275dbde4b0214b3ec93164dd7d2233fbd83d900684597ba7ae72957",
+      "timestamp": "2026-01-03T19:09:22Z"
+    },
+    {
+      "step": "generate_audio",
+      "input_hash": "f0b64579b275dbde4b0214b3ec93164dd7d2233fbd83d900684597ba7ae72957",
+      "output_hash": "29ec5410416a2cda30e45ea84f00e9625a4675f1bd75b05fb2e98183c15f05d7",
+      "timestamp": "2026-01-03T19:09:43Z"
+    },
+    {
+      "step": "video_script",
+      "input_hash": "29ec5410416a2cda30e45ea84f00e9625a4675f1bd75b05fb2e98183c15f05d7",
+      "output_hash": "800cb3bddbf4cb39da0f62b360cbb0705b0a6641250321979707b0af7ae5275a",
+      "timestamp": "2026-01-03T19:17:50Z"
+    },
+    {
+      "step": "validate_manim_edu",
+      "input_hash": "800cb3bddbf4cb39da0f62b360cbb0705b0a6641250321979707b0af7ae5275a",
+      "output_hash": "aa61c6e20264afdf0e73ca700c56840ce6beb2b7ce33959a75d0445a8dd7f4eb",
+      "timestamp": "2026-01-03T19:17:50Z"
+    },
+    {
+      "step": "render_video",
+      "input_hash": "aa61c6e20264afdf0e73ca700c56840ce6beb2b7ce33959a75d0445a8dd7f4eb",
+      "output_hash": "fcaf294dcb4559ee4b8e2825c163b8c6f41d658eaf7695a95a401492cf28e38f",
+      "timestamp": "2026-01-03T19:18:49Z"
+    },
+    {
+      "step": "validate_sync",
+      "input_hash": "fcaf294dcb4559ee4b8e2825c163b8c6f41d658eaf7695a95a401492cf28e38f",
+      "output_hash": "04a94dfba7472a243f06d1ca6665df4f1765cedf48a8aeda823cb0b1d71acb11",
+      "timestamp": "2026-01-03T19:18:50Z"
+    },
+    {
+      "step": "frame_qa",
+      "input_hash": "04a94dfba7472a243f06d1ca6665df4f1765cedf48a8aeda823cb0b1d71acb11",
+      "output_hash": "63374a45acfef37f5d1acc8f5be5dd752fb3446d965d74fb62b9f7e25294caa5",
+      "timestamp": "2026-01-03T19:18:51Z"
+    },
+    {
+      "step": "combine_av",
+      "input_hash": "63374a45acfef37f5d1acc8f5be5dd752fb3446d965d74fb62b9f7e25294caa5",
+      "output_hash": "42fd7b4853e37d2b8b2679dab6c88361b646ff84138f417d3f94dcb4fbc04503",
+      "timestamp": "2026-01-03T19:18:59Z"
+    },
+    {
+      "step": "thumbnail",
+      "input_hash": "42fd7b4853e37d2b8b2679dab6c88361b646ff84138f417d3f94dcb4fbc04503",
+      "output_hash": "81aa89baeb10289b4291eb3823c552c122a56228c83f8872dbfbb4c386ac699d",
+      "timestamp": "2026-01-03T19:18:59Z"
+    },
+    {
+      "step": "final_qa",
+      "input_hash": "81aa89baeb10289b4291eb3823c552c122a56228c83f8872dbfbb4c386ac699d",
+      "output_hash": "d8d546ed12ab3e99dfdb0c1ec96318419e2fb1dc5a44bfd7bb7b9e43be6a19ee",
+      "timestamp": "2026-01-03T19:18:59Z"
+    }
+  ],
+  "status": "ready_to_post"
+}

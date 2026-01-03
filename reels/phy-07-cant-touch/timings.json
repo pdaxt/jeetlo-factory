@@ -1,0 +1,65 @@
+[
+  {
+    "id": "01_hook",
+    "text": "आपने अपनी पूरी life में कभी कुछ touch नहीं किया। Seriously! वो phone जो आप पकड़े हो? You're not touching it!",
+    "duration": 6.912000,
+    "startTime": 0,
+    "endTime": 6.912000
+  },
+  {
+    "id": "02_setup",
+    "text": "जब आपकी finger table को 'touch' करती है... atomic level पर actually क्या होता है? चलिए zoom करते हैं।",
+    "duration": 6.600000,
+    "startTime": 6.912000,
+    "endTime": 13.512000
+  },
+  {
+    "id": "03_content_part1",
+    "text": "हर atom के around एक electron cloud होता है। जब दो atoms पास आते हैं... ये clouds एक दूसरे को push करते हैं! Imagine कीजिए दो bouncers club के entrance पर... कोई भी अंदर नहीं जा सकता। Electrons same charge हैं, तो वो repel करते हैं।",
+    "duration": 15.096000,
+    "startTime": 13.512000,
+    "endTime": 28.608000
+  },
+  {
+    "id": "03_content_part2",
+    "text": "और ये repulsion force? जितना close जाओ, उतना strong होता है। Exponentially! Ten to the power minus ten meters पर... it's basically an infinite wall।",
+    "duration": 9.312000,
+    "startTime": 28.608000,
+    "endTime": 37.920000
+  },
+  {
+    "id": "04_reveal",
+    "text": "So right now, आप अपनी chair पर float कर रहे हो। Zero point one nanometer ऊपर! आप walk करते हो? Floating। Phone पकड़े हो? Floating। आपने कभी कुछ truly touch नहीं किया!",
+    "duration": 11.808000,
+    "startTime": 37.920000,
+    "endTime": 49.728000
+  },
+  {
+    "id": "05_key_point",
+    "text": "याद रखिए: Electromagnetic repulsion between electron clouds। Force is proportional to one by r square। जितना close, उतना ज़्यादा pushback। Same poles of magnets की तरह... never touch।",
+    "duration": 12.696000,
+    "startTime": 49.728000,
+    "endTime": 62.424000
+  },
+  {
+    "id": "06_exam_tip",
+    "text": "J. E. E. और N. E. E. T. में यही Pauli Exclusion Principle है। दो electrons same state में क्यों नहीं हो सकते? Same reason... electron clouds overlap नहीं कर सकते।",
+    "duration": 11.064000,
+    "startTime": 62.424000,
+    "endTime": 73.488000
+  },
+  {
+    "id": "07_cta",
+    "text": "आपने अभी सीखा कि आपने life में कुछ भी touch नहीं किया। ऐसी और physics के लिए follow कीजिए। JeetLo!",
+    "duration": 7.056000,
+    "startTime": 73.488000,
+    "endTime": 80.544000
+  },
+  {
+    "id": "combined_audio",
+    "text": "",
+    "duration": 87.672000,
+    "startTime": 80.544000,
+    "endTime": 168.216000
+  }
+]

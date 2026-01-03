@@ -1,0 +1,66 @@
+{
+  "core_analogy": "Touching = Two bouncers (electron clouds) pushing each other away at the VIP rope. You NEVER actually enter the club - you just feel the push.",
+  "subconscious_hook": "Identity challenge + Mind-blow. 'You've been living a lie your whole life' triggers ego defense \u2192 must watch to prove/disprove. Also existential curiosity - challenges fundamental assumption about reality.",
+  "visual_scenes": {
+    "01_hook": "Hand reaching toward table surface. Just before contact - FREEZE. Big red 'X' appears. Text: 'This NEVER happens'. Hand and table shown with tiny gap between them, zoom into the gap.",
+    "02_setup": "Zoom into finger and table at atomic level. Show atoms as spheres with fuzzy electron clouds around them. Two clouds approaching each other. Question mark floating: 'What actually happens here?'",
+    "03_content_part1": "Show two atoms approaching. Electron clouds visualized as glowing fuzzy spheres. As they get close, clouds start repelling - show field lines pushing against each other. Label: 'Electromagnetic Repulsion'. Bouncer analogy: two buff bouncers at club entrances pushing against each other, neither letting anyone through.",
+    "03_content_part2": "Graph showing repulsion force vs distance. As distance decreases, force SKYROCKETS exponentially. Show the curve going vertical. Text: '10^-10 meters = INFINITE WALL'. Visual of atoms vibrating but maintaining gap.",
+    "04_reveal": "Pull back to show hand 'touching' table. Zoom reveals nanometer gap between surfaces. Electron clouds shown pushing. Text: 'You're floating 0.1 nanometers above EVERYTHING'. Show person sitting on chair - actually hovering. Walking - actually hovering. Mind-blown emoji effect.",
+    "05_key_point": "Split screen: What you THINK (solid contact) vs REALITY (electron cloud repulsion). Key formula: F \u221d 1/r\u00b2. 'The closer you try, the harder it pushes back'. Like trying to push same poles of magnets together.",
+    "06_exam_tip": "JEE/NEET connection: This is Pauli Exclusion Principle + Electromagnetic Force in action. Question flash: 'Why can't two electrons occupy same orbital?' Same reason - electron clouds REFUSE to overlap. Show quick MCQ format.",
+    "07_cta": "You just learned why you've never TRULY touched anything in your life. Follow for more physics that breaks your brain. JeetLo logo with tagline."
+  },
+  "virality_factor": "Existential revelation that challenges DAILY experience. Every time viewer touches something after watching, they'll remember this. Highly shareable 'did you know' content. Screenshot moment: 'You're floating 0.1 nanometers above EVERYTHING'",
+  "mind_blow_moment": "The reveal that sitting, walking, typing - you're ALWAYS hovering. You've never touched anything in your entire life. Not your phone, not your loved ones, not anything. Just electron clouds pushing back.",
+  "duration_target": "78s",
+  "simplification_strategy": "Bouncer analogy makes electromagnetic repulsion intuitive. No equations except simple inverse square mention. 'Electron cloud' not 'probability density function'. 'Push back' not 'Coulomb repulsion'. Nanometer = 'thickness of 1/1000th of a hair'",
+  "logic_flow": "Hook (you can't touch) \u2192 Setup (what happens at atomic level?) \u2192 Content (electron clouds repel like bouncers) \u2192 Reveal (you're always floating!) \u2192 Key Point (this is electromagnetic force) \u2192 Exam Tip (Pauli Exclusion Principle) \u2192 CTA",
+  "manim_edu_components": [
+    "FieldVisualizer",
+    "WaveSimulator"
+  ],
+  "segments": {
+    "01_hook": {
+      "text_hinglish": "\u0924\u0941\u092e\u0928\u0947 \u0905\u092a\u0928\u0940 \u092a\u0942\u0930\u0940 life \u092e\u0947\u0902 \u0915\u092d\u0940 \u0915\u0941\u091b TOUCH \u0928\u0939\u0940\u0902 \u0915\u093f\u092f\u093e\u0964 Seriously. \u0935\u094b phone \u091c\u094b \u0924\u0941\u092e \u092a\u0915\u0921\u093c\u0947 \u0939\u094b? You're NOT touching it.",
+      "duration": 5,
+      "emotion": "excited"
+    },
+    "02_setup": {
+      "text_hinglish": "\u091c\u092c \u0924\u0941\u092e\u094d\u0939\u093e\u0930\u0940 finger table \u0915\u094b 'touch' \u0915\u0930\u0924\u0940 \u0939\u0948, atomic level \u092a\u0930 actually \u0915\u094d\u092f\u093e \u0939\u094b\u0924\u093e \u0939\u0948? Zoom \u0915\u0930\u0924\u0947 \u0939\u0948\u0902\u0964",
+      "duration": 6,
+      "emotion": "curious"
+    },
+    "03_content_part1": {
+      "text_hinglish": "\u0939\u0930 atom \u0915\u0947 around \u090f\u0915 electron cloud \u0939\u094b\u0924\u093e \u0939\u0948\u0964 \u091c\u092c \u0926\u094b atoms \u092a\u093e\u0938 \u0906\u0924\u0947 \u0939\u0948\u0902, \u092f\u0947 clouds \u090f\u0915 \u0926\u0942\u0938\u0930\u0947 \u0915\u094b PUSH \u0915\u0930\u0924\u0947 \u0939\u0948\u0902\u0964 Imagine \u0915\u0930\u094b \u0926\u094b bouncers club \u0915\u0947 entrance \u092a\u0930 - \u0915\u094b\u0908 \u092d\u0940 \u0905\u0902\u0926\u0930 \u0928\u0939\u0940\u0902 \u091c\u093e \u0938\u0915\u0924\u093e\u0964 Electrons same charge \u0939\u0948\u0902, \u0924\u094b \u0935\u094b repel \u0915\u0930\u0924\u0947 \u0939\u0948\u0902\u0964",
+      "duration": 15,
+      "emotion": "informative"
+    },
+    "03_content_part2": {
+      "text_hinglish": "\u0914\u0930 \u092f\u0947 repulsion force? \u091c\u093f\u0924\u0928\u093e close \u091c\u093e\u0913, \u0909\u0924\u0928\u093e STRONG \u0939\u094b\u0924\u093e \u0939\u0948\u0964 Exponentially! 10 to the power minus 10 meters \u092a\u0930, it's basically an INFINITE wall\u0964",
+      "duration": 10,
+      "emotion": "informative"
+    },
+    "04_reveal": {
+      "text_hinglish": "So right now, \u0924\u0941\u092e \u0905\u092a\u0928\u0940 chair \u092a\u0930 FLOAT \u0915\u0930 \u0930\u0939\u0947 \u0939\u094b\u0964 Zero point one nanometer \u090a\u092a\u0930\u0964 \u0924\u0941\u092e walk \u0915\u0930\u0924\u0947 \u0939\u094b? Floating. Phone \u092a\u0915\u0921\u093c\u0947 \u0939\u094b? Floating. \u0924\u0941\u092e\u0928\u0947 \u0915\u092d\u0940 \u0915\u0941\u091b TRULY touch \u0928\u0939\u0940\u0902 \u0915\u093f\u092f\u093e!",
+      "duration": 10,
+      "emotion": "triumphant"
+    },
+    "05_key_point": {
+      "text_hinglish": "\u092f\u093e\u0926 \u0930\u0916\u094b: Electromagnetic repulsion between electron clouds. Force is proportional to one by r square. \u091c\u093f\u0924\u0928\u093e close, \u0909\u0924\u0928\u093e \u091c\u093c\u094d\u092f\u093e\u0926\u093e pushback. Same poles of magnets \u0915\u0940 \u0924\u0930\u0939 - NEVER touch\u0964",
+      "duration": 8,
+      "emotion": "serious"
+    },
+    "06_exam_tip": {
+      "text_hinglish": "J. E. E. \u0914\u0930 N. E. E. T. \u092e\u0947\u0902 \u092f\u0939\u0940 Pauli Exclusion Principle \u0939\u0948\u0964 \u0926\u094b electrons same state \u092e\u0947\u0902 \u0915\u094d\u092f\u094b\u0902 \u0928\u0939\u0940\u0902 \u0939\u094b \u0938\u0915\u0924\u0947? SAME reason - electron clouds overlap \u0928\u0939\u0940\u0902 \u0915\u0930 \u0938\u0915\u0924\u0947\u0964",
+      "duration": 8,
+      "emotion": "informative"
+    },
+    "07_cta": {
+      "text_hinglish": "\u0924\u0941\u092e\u0928\u0947 \u0905\u092d\u0940 \u0938\u0940\u0916\u093e \u0915\u093f \u0924\u0941\u092e\u0928\u0947 life \u092e\u0947\u0902 \u0915\u0941\u091b \u092d\u0940 touch \u0928\u0939\u0940\u0902 \u0915\u093f\u092f\u093e\u0964 \u0910\u0938\u0940 \u0914\u0930 physics \u0915\u0947 \u0932\u093f\u090f follow \u0915\u0930\u094b\u0964 JeetLo\u0964",
+      "duration": 5,
+      "emotion": "warm"
+    }
+  },
+  "total_duration_estimate": 67
+}
