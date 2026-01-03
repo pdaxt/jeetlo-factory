@@ -533,11 +533,13 @@ $(echo "$HINGLISH_RULES" | jq '.')
 SEGMENT STRUCTURE:
 $(echo "$SEGMENT_STRUCTURE" | jq '.')
 
-EMOTION ENGINEERING (USE THESE):
-- CAPS for emphasis: 'Ice FLOATS on water!'
-- ... for dramatic pause: 'लेकिन actually...'
-- ! for energy: 'Secret है hydrogen bonding!'
-- ? for curiosity: 'क्यों?'
+EMOTION ENGINEERING (USE THESE - TTS-FRIENDLY):
+- NEVER use ALL CAPS (TTS reads letter-by-letter: 'DEATH' becomes 'D-E-A-T-H')
+- Use '...' for dramatic pause: 'लेकिन actually...'
+- Use '!' for energy and emphasis: 'Secret है hydrogen bonding!'
+- Use '?' for curiosity: 'क्यों?'
+- Use repetition for emphasis: 'हर... हर एक solid sink करता है!'
+- Use word isolation: 'और ये... shocking है!'
 
 BRAND VOICE:
 - Use 'aap' (respectful), never 'tu/tum'
@@ -547,7 +549,7 @@ BRAND VOICE:
 EXAMPLE SEGMENT:
 {
   \"id\": \"01_hook\",
-  \"text\": \"Ice पानी पर FLOAT करती है... लेकिन हर दूसरा solid SINK करता है! क्यों?\"
+  \"text\": \"Ice पानी पर float करती है... लेकिन हर दूसरा solid sink करता है! क्यों?\"
 }
 
 Output ONLY valid JSON array:
@@ -951,34 +953,37 @@ rbc = cell.red_blood_cell()
 from manim_edu.mathematics import GraphAnimator
 graph = GraphAnimator()
 
-=== OVERLAP PREVENTION & SMART LAYOUT (Uses existing validator!) ===
+=== AUTO-BOUNDED TEXT & SAFE POSITIONING (MANDATORY!) ===
 
-# manim-edu has FrameValidator for overlap detection. For vertical (9:16) reels, use:
-from manim_edu.primitives import (
-    # EXISTING: Overlap detection & auto-fix
-    FrameValidator,        # Original validator
-    SmartLayout,           # Auto-validates text lists
-    ensure_clarity,        # Validate + auto-fix
-    validate_frame,        # Quick validation
+# Use SafeText from layout module - it auto-clamps to safe zone and auto-scales
+from manim_edu.layout import (
+    SafeText,              # Drop-in Text replacement with auto-bounds
+    SafeMarkupText,        # MarkupText with auto-bounds
+    safe_title,            # Pre-configured title helper
+    safe_body,             # Pre-configured body text helper
+    safe_label,            # Label with optional background
+    check_bounds,          # Verify mobject is in safe zone
+    fit_to_safe_zone,      # Scale/position to fit
 
-    # VERTICAL EXTENSIONS: Pre-configured for 9:16 reels
-    VerticalFrameValidator,  # Validator for vertical format
-    SmartText,               # Text with auto-scale + clamp
-    SmartVGroup,             # VGroup with auto-validation
-    validate_vertical,       # Quick validation for vertical
-    ensure_no_overlaps,      # Auto-fix overlaps
-
-    # Convenience functions
-    smart_title, smart_subtitle, smart_body, smart_label,
-
-    # Frame constants
-    SAFE_X_MIN, SAFE_X_MAX,  # -3.5 to 3.5
-    SAFE_Y_MIN, SAFE_Y_MAX,  # -6.0 to 6.0
+    # Constants for 9:16 vertical reels
+    SAFE_X_MIN, SAFE_X_MAX,  # -3.0 to 3.0 (with padding)
+    SAFE_Y_MIN, SAFE_Y_MAX,  # -5.5 to 5.5 (with padding)
+    MAX_TEXT_WIDTH,          # 6.0 units max
+    POSITIONS,               # Named positions dict
 )
 
-# ✅ SmartText auto-scales and clamps to safe zone
-title = SmartText("Very Long Title That Might Overflow", font_size=48, color=YELLOW)
-title.at_zone('title')
+# ✅ SafeText auto-scales and clamps to safe zone
+title = SafeText("WRONG BLOOD = DEATH", font_size=48, color=YELLOW)
+title.move_to(UP * 4)  # Will be clamped to safe zone automatically
+
+# ✅ Use safe_title for guaranteed fit
+title = safe_title("Very Long Title That Would Overflow", position="top")
+
+# ✅ Use safe_body for auto-wrapped body text
+explanation = safe_body("Long explanation text that needs to wrap...", wrap_width=35)
+
+# ✅ Use safe_label for labels with background
+label = safe_label("Important!", bg_color="#FF4444", font_size=28)
 
 # ✅ Chain positioning with .below()
 subtitle = SmartText("Subtitle text", font_size=36, color=GRAY).below(title)
@@ -1557,14 +1562,24 @@ qa_audio_script_viral() {
         issues+=("weak_cta")
     fi
 
-    # VIRAL ELEMENT 7: Emotional hooks (CAPS, ..., !)
-    local caps_count=$(jq -r '.[].text' "$audio_script" | grep -oE '\b[A-Z]{3,}\b' | wc -l)
-    local ellipsis_count=$(jq -r '.[].text' "$audio_script" | grep -o '\.\.\.' | wc -l)
-    if [ "$caps_count" -ge 3 ] && [ "$ellipsis_count" -ge 2 ]; then
-        print_success "✅ Emotional hooks present (CAPS: $caps_count, pauses: $ellipsis_count)"
+    # VIRAL ELEMENT 7: Emotional hooks (pauses, exclamations, questions)
+    # Note: We NO LONGER use CAPS (TTS reads them letter-by-letter)
+    local ellipsis_count=$(jq -r '.[].text' "$audio_script" | grep -o '\.\.\.' | wc -l | tr -d ' ')
+    local exclaim_count=$(jq -r '.[].text' "$audio_script" | grep -o '!' | wc -l | tr -d ' ')
+    local question_count=$(jq -r '.[].text' "$audio_script" | grep -o '?' | wc -l | tr -d ' ')
+
+    # WARN if CAPS are present (bad for TTS)
+    local caps_count=$(jq -r '.[].text' "$audio_script" | grep -oE '\b[A-Z]{3,}\b' | wc -l | tr -d ' ')
+    if [ "$caps_count" -gt 0 ]; then
+        print_warning "⚠️ Found $caps_count ALL-CAPS words (TTS will spell letter-by-letter!)"
+        issues+=("caps_in_audio")
+    fi
+
+    if [ "$ellipsis_count" -ge 3 ] && [ "$exclaim_count" -ge 3 ]; then
+        print_success "✅ Emotional hooks present (pauses: $ellipsis_count, energy: $exclaim_count, curiosity: $question_count)"
         score=$((score + 10))
     else
-        print_warning "⚠️ Need more CAPS emphasis and '...' pauses"
+        print_warning "⚠️ Need more '...' pauses and '!' energy markers"
         issues+=("weak_emotion")
     fi
 
